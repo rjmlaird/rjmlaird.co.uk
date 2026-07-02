@@ -1,0 +1,26 @@
+---
+import TimelineItem from "./TimelineItem.astro";
+
+interface Props {
+  items?: {
+    id?: number;
+    date: string;
+    title: string;
+    company?: string;
+    summary?: string;
+    location?: string;
+  }[];
+}
+
+const { items = [] } = Astro.props;
+---
+
+{Array.isArray(items) && items.length > 0 ? (
+  <div class="thread">
+    {items.map((item) => (
+      <TimelineItem {...item} />
+    ))}
+  </div>
+) : (
+  <p>No timeline items available.</p>
+)}

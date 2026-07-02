@@ -1,0 +1,105 @@
+{
+   "languages": [
+      "Python",
+      "JavaScript",
+      "TypeScript",
+      "C++",
+      "Java",
+      "SQL",
+      "HCL",
+      "C#",
+      "R",
+      "HTML/CSS"
+   ],
+   "frontend": [
+      "React",
+      "Next.js",
+      "Vite",
+      "Tailwind CSS",
+      "Three.js",
+      "Motion",
+      "Redux",
+      "Material-UI"
+   ],
+   "backend": [
+      "Node.js",
+      "Express.js",
+      "FastAPI",
+      "REST API",
+      "MongoDB",
+      "PostgreSQL",
+      "MySQL",
+      "Redis",
+      "SQLite"
+   ],
+   "cloud_devops": [
+      "AWS (EC2, ECS, S3, Lambda, RDS, CloudFront)",
+      "AWS (CodePipeline, CodeBuild, CodeDeploy)",
+      "AWS (VPC, ALB, SNS, EventBridge, CloudWatch)",
+      "AWS (CloudFormation, X-Ray, Detective)",
+      "AWS (Organizations, SCPs, GuardDuty, Security Hub)",
+      "Terraform",
+      "Docker",
+      "Ansible",
+      "GitHub Actions",
+      "Jenkins",
+      "CI/CD Pipelines",
+      "Blue-Green Deployment",
+      "AWS CDK",
+      "AWS Step Functions",
+      "Infrastructure as Code"
+   ],
+   "ai_ml": [
+      "AWS SageMaker",
+      "AWS Bedrock",
+      "Amazon Q",
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Pandas / NumPy",
+      "LSTM / Neural Networks",
+      "OpenCV / Image Processing",
+      "Deep Learning",
+      "MLOps",
+      "LLM APIs",
+      "RAG Pipelines"
+   ],
+   "tools_platforms": [
+      "Claude Code",
+      "Kiro",
+      "Cursor AI",
+      "GitHub Copilot",
+      "Git",
+      "VS Code",
+      "Jupyter Notebook",
+      "Postman",
+      "Figma",
+      "MCP Protocol",
+      "AI Agent Frameworks",
+      "SonarQube"
+   ],
+   "cs_fundamentals": [
+      "Data Structures & Algorithms",
+      "Object-Oriented Programming",
+      "Computer Networks",
+      "Operating Systems",
+      "Software Engineering",
+      "Database Management Systems"
+   ],
+   "soft_skills": [
+      "Leadership",
+      "Problem Solving",
+      "Communication",
+      "Teamwork",
+      "Critical Thinking",
+      "Adaptability"
+   ],
+   "areas_of_interest": [
+      "Full-Stack Development",
+      "AI/ML Engineering",
+      "DevOps & Cloud",
+      "Open Source",
+      "AI Agents & MCP",
+      "Game Development"
+   ]
+}

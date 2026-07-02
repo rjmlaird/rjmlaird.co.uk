@@ -1,0 +1,4 @@
+# Pan-STARRS Asteroid Search Campaign
+
+Experience: Team Lead, UKSEDS Asteroid Chasers (https://app.notion.com/p/Team-Lead-UKSEDS-Asteroid-Chasers-3813a96540ad80289a62fa5eabb7e2c4?pvs=21)
+Organisations: UKSEDS (https://app.notion.com/p/UKSEDS-37b3a96540ad80c0ab89f463c38899dd?pvs=21)

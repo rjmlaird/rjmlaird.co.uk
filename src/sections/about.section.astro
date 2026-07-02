@@ -1,0 +1,65 @@
+---
+import profile from "../data/profile.json";
+import contact from "../data/contact.json";
+import credentialsData from "../data/credentials.json";
+
+/** Core profile fields */
+const headline = profile?.headline ?? "";
+const biography = profile?.biography ?? "";
+
+/** Credentials (first-class graph nodes) */
+const credentials = credentialsData ?? [];
+
+/** Social / external links */
+const links = contact?.about_links ?? [];
+---
+
+<section id="about">
+  <p class="sl">About</p>
+
+  <div class="about-grid">
+    <!-- LEFT COLUMN -->
+    <div>
+      <h3 class="ah fade">
+        {headline}<br />
+        <em>{profile?.preferredName ?? ""}</em>
+      </h3>
+
+      <div class="ab fade">
+        {biography}
+      </div>
+
+      <div class="cred-row fade">
+        {credentials.map((c) => (
+          <span
+            class={`cred-badge ${
+              c.type === "professional-accreditation"
+                ? "cb-teal"
+                : c.type === "certification"
+                ? "cb-v"
+                : "cb-m"
+            }`}
+            title={`${c.name} — ${c.issuer}`}
+          >
+            {c.name}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="sp fade">
+      <div class="sp-h">Find me elsewhere</div>
+
+      {links.map((link) => (
+        <a class="si" href={link.url} target="_blank" rel="noopener noreferrer">
+          <div class="sl2">
+            <span class="su">{link.title}</span>
+            <span class="sd2">{link.description}</span>
+          </div>
+          <span class="sa">→</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

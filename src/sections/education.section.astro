@@ -1,0 +1,233 @@
+---
+import education from "../data/education.json";
+import teaching from "../data/teaching.json";
+import talksData from "../data/talks.json";
+
+/**
+ * ----------------------------
+ * EDUCATION (FLAT LAYER)
+ * ----------------------------
+ */
+const educationItems = education ?? [];
+
+/**
+ * ----------------------------
+ * TEACHING (STRUCTURED LAYER)
+ * ----------------------------
+ */
+const institution = teaching?.institution ?? "Institution";
+
+const programmes = (teaching?.programmes ?? []).map((p) => ({
+  id: p.id,
+  name: p.programme,
+  level: p.level ?? "",
+  modules: (p.modules ?? []).map((m) => ({
+    code: m.code,
+    title: m.title,
+    term: m.term ?? "",
+    type: m.type ?? "",
+    credits: m.credits ?? "",
+    tags: m.tags ?? [],
+  })),
+}));
+
+const modules = programmes.flatMap((p) =>
+  p.modules.map((m) => ({
+    ...m,
+    programme: p.name,
+    level: p.level,
+  }))
+);
+
+/**
+ * ----------------------------
+ * TALKS SERIES (SCHEMA LAYER)
+ * ----------------------------
+ */
+const talkSeries = (talksData?.talk_series ?? []).map((talk) => ({
+  id: talk.id,
+  series: talk.series ?? "",
+  title: talk.title ?? "Untitled Talk",
+  type: talk.type ?? "talk",
+  level: talk.level ?? "",
+  summary: talk.summary ?? "",
+  tags: talk.tags ?? [],
+  audience: talk.audience ?? [],
+  duration: talk.duration_minutes ?? null,
+  format: talk.format ?? "",
+  status: talk.status ?? "",
+  date: talk.date ?? null,
+  location: talk.location ?? "",
+}));
+---
+
+<section id="teaching-talks">
+  <p class="sl">Teaching, education & talks</p>
+
+  <!-- =========================
+       EDUCATION LAYER
+  ========================== -->
+  <p class="tlbl">Education</p>
+
+  <div class="edu-grid">
+    {educationItems.length > 0 ? (
+      educationItems.map((item) => (
+        <div class="ec">
+          <h4>{item.title}</h4>
+
+          {item.description && <p>{item.description}</p>}
+
+          {item.status && <span class="tag">{item.status}</span>}
+        </div>
+      ))
+    ) : (
+      <p>No education data available.</p>
+    )}
+  </div>
+
+  <!-- =========================
+       TEACHING LAYER
+  ========================== -->
+  <!-- =========================
+     TEACHING LAYER (CLEANED)
+========================== -->
+
+<p class="tlbl">Teaching</p>
+
+<!-- INSTITUTION SUMMARY (SINGLE SOURCE OF TRUTH) -->
+<div class="edu-grid">
+  <div class="ec">
+    <h4>{institution}</h4>
+    <p>Physics & scientific computing teaching portfolio</p>
+    <span class="tag">
+      {programmes.length} programmes · {modules.length} modules
+    </span>
+  </div>
+</div>
+
+<!-- PROGRAMME GROUPS (PRIMARY STRUCTURE) -->
+<div class="edu-grid">
+  {programmes.map((programme) => (
+    <div class="ec">
+      <h4>{programme.name}</h4>
+
+      <p class="muted">
+        {programme.level || "Academic level not specified"}
+      </p>
+
+      <!-- compact metadata row -->
+      <div class="pt">
+        <span class="tag">
+          {programme.modules.length} modules
+        </span>
+
+        {programme.modules.some(m => m.term) && (
+          <span class="tag">
+            structured teaching
+          </span>
+        )}
+      </div>
+
+      <!-- OPTIONAL: top modules preview (keeps UI light) -->
+      <div style="margin-top: .75rem; display: flex; flex-direction: column; gap: .4rem;">
+        {programme.modules.slice(0, 2).map((m) => (
+          <div class="tr" style="padding: .5rem 0; border: none;">
+            <div>
+              <p class="tr-t">
+                {m.code} — {m.title}
+              </p>
+
+              <p class="tr-v">
+                {m.term || "No term specified"}
+              </p>
+            </div>
+
+            {m.credits && (
+              <span class="tr-v">{m.credits}cr</span>
+            )}
+          </div>
+        ))}
+
+        {programme.modules.length > 2 && (
+          <p class="tr-v">
+            +{programme.modules.length - 2} more modules
+          </p>
+        )}
+      </div>
+    </div>
+  ))}
+</div>
+
+<!-- OPTIONAL FULL MODULE EXPANSION (GRAPH VIEW) -->
+<p class="tlbl">Module archive</p>
+
+<div class="thread">
+  {modules.map((m) => (
+    <div class="tr">
+      <div>
+        <p class="tr-t">
+          {m.code} — {m.title}
+        </p>
+
+        <p class="tr-v">
+          {m.programme}
+          {m.term ? ` · ${m.term}` : ""}
+        </p>
+
+        {m.tags.length > 0 && (
+          <div class="pt">
+            {m.tags.slice(0, 3).map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:.3rem;">
+        {m.type && <span class="tr-y">{m.type}</span>}
+        {m.credits && <span class="tr-v">{m.credits} credits</span>}
+      </div>
+    </div>
+  ))}
+</div>
+
+  <!-- =========================
+       TALKS LAYER
+  ========================== -->
+  <p class="tlbl">Talks</p>
+
+  <div class="thread">
+    {talkSeries.length > 0 ? (
+      talkSeries.map((talk) => (
+        <div class="tr">
+          <div>
+            <p class="tr-t">{talk.title}</p>
+
+            <p class="tr-v">
+              {talk.series}
+              {talk.location ? ` · ${talk.location}` : ""}
+            </p>
+
+            {talk.summary && <p class="tr-v">{talk.summary}</p>}
+
+            {talk.tags.length > 0 && (
+              <div class="pt">
+                {talk.tags.slice(0, 4).map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div style="display:flex; flex-direction:column; align-items:flex-end; gap:.3rem;">
+            {talk.level && <span class="tr-y">{talk.level}</span>}
+            {talk.duration && <span class="tr-v">{talk.duration} min</span>}
+            {talk.status && <span class="tag">{talk.status}</span>}
+          </div>
+        </div>
+      ))
+    ) : (
+      <p>No talks available.</p>
+    )}
+  </div>
+</section>

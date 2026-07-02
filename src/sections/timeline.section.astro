@@ -1,0 +1,20 @@
+---
+import { experience } from "../lib/data";
+import TimelineItem from "../components/Story/TimelineItem.astro";
+
+const timeline = experience ?? [];
+---
+
+<section id="timeline">
+  <p class="sl">Career timeline</p>
+
+  <div class="thread">
+    {timeline.length > 0 ? (
+      timeline.map((item) => (
+        <TimelineItem item={item} />
+      ))
+    ) : (
+      <p>No experience data available.</p>
+    )}
+  </div>
+</section>

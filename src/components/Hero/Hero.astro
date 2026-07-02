@@ -1,0 +1,41 @@
+---
+import OrbitGraphic from "./OrbitGraphic.astro";
+import Credentials from "./Credentials.astro";
+
+interface Props {
+  title: string;
+  surname: string;
+  tagline: string;
+  description: string;
+}
+
+const {
+  title,
+  surname,
+  tagline,
+  description
+} = Astro.props;
+---
+
+<section id="hero">
+  <OrbitGraphic />
+
+  <p class="kk">{tagline}</p>
+
+  <h1 class="nm">
+    {title}<br />
+    <span class="d">{surname}</span>
+  </h1>
+
+  <Credentials />
+
+  <p class="hp">
+    {description}
+  </p>
+
+  <div class="hb">
+    <a href="#story" class="bp">Read my story</a>
+    <a href="#work" class="bo">Projects</a>
+    <a href="#journalism" class="bo">Journalism</a>
+  </div>
+</section>

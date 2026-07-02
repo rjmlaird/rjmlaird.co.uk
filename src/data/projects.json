@@ -1,0 +1,269 @@
+{
+  "featured_projects": [
+    {
+      "id": 37,
+      "title": "GitScope",
+      "description": "A Chrome extension plus web dashboard that adds deep GitHub profile insights including stats grids, coding personality analysis, language breakdowns, activity heatmaps, contribution tracking, and cross-profile leaderboards. Includes GitHub OAuth analytics tracking.",
+      "date": "March 2026",
+      "tools_tech": [
+        "JavaScript",
+        "TypeScript",
+        "Chrome Extension",
+        "Manifest V3",
+        "GitHub GraphQL API",
+        "Cloudflare Workers",
+        "esbuild"
+      ],
+      "features": [
+        "9-stat profile grid with coding personality insights",
+        "Language breakdown and activity heatmap visualisation",
+        "Contribution donut and repo growth timeline",
+        "Head-to-head profile comparison system (17 metrics)",
+        "Leaderboard across followed GitHub users",
+        "GitHub OAuth-based traffic analytics dashboard"
+      ],
+      "github": "https://github.com/Sagargupta16/GitScope",
+      "live": "https://chromewebstore.google.com/detail/gitscope/fndaanihifimmlnmkjdmjbbkbdajolff"
+    },
+    {
+      "id": 15,
+      "title": "Ledger Sync",
+      "description": "A self-hosted personal finance intelligence platform with AI chatbot capabilities, supporting CSV/Excel ingestion, financial forecasting, tax estimation, FIRE planning, and multi-metric financial health scoring.",
+      "date": "January 2026",
+      "tools_tech": [
+        "TypeScript",
+        "React 19",
+        "FastAPI",
+        "SQLite",
+        "Tailwind CSS",
+        "AWS Bedrock",
+        "OpenAI",
+        "Anthropic"
+      ],
+      "features": [
+        "AI finance chatbot with 15 tool-based query system",
+        "CSV/Excel bank statement ingestion with deduplication",
+        "FIRE modelling (Lean, Barista, Standard, Fat)",
+        "India FY tax estimation engine",
+        "Sankey cash flow visualisation",
+        "Financial Health Score across 8 metrics"
+      ],
+      "github": "https://github.com/Sagargupta16/ledger-sync",
+      "live": "https://sagargupta.online/ledger-sync/"
+    },
+    {
+      "id": 2,
+      "title": "LeetCode Rating Predictor",
+      "description": "A full-stack ML system that predicts LeetCode contest ratings using a dense neural network trained on 121K+ contest records, with FastAPI backend and React frontend.",
+      "date": "December 2023",
+      "tools_tech": [
+        "Python",
+        "React",
+        "FastAPI",
+        "TensorFlow",
+        "Keras",
+        "GraphQL"
+      ],
+      "features": [
+        "Dense neural network trained on 121K+ contest records",
+        "LeetCode GraphQL-based data pipeline",
+        "Glassmorphism UI with live contest selection",
+        "Full test suite with 40+ backend/frontend tests",
+        "Dockerised deployment pipeline"
+      ],
+      "github": "https://github.com/Sagargupta16/LeetCode_Rating_Predictor",
+      "live": "https://leetcode-rating-predictor.onrender.com/"
+    },
+    {
+      "id": 13,
+      "title": "Blue Green AWS Terraform",
+      "description": "Infrastructure-as-code system implementing zero-downtime Blue-Green deployments on AWS using Terraform, ECS Fargate, ALB, and CodePipeline.",
+      "date": "July 2025",
+      "tools_tech": [
+        "Terraform",
+        "AWS",
+        "Docker",
+        "ECS Fargate",
+        "CodePipeline",
+        "HCL"
+      ],
+      "features": [
+        "Zero-downtime Blue-Green deployments",
+        "Automated CI/CD pipeline with CodePipeline and CodeBuild",
+        "ECS Fargate container orchestration",
+        "ALB health check-based traffic switching",
+        "KMS encryption and IAM least-privilege security model"
+      ],
+      "github": "https://github.com/Sagargupta16/Blue_Green_AWS_Terraform",
+      "live": ""
+    },
+    {
+      "id": 20,
+      "title": "Instagram Likes Leaderboard",
+      "description": "Browser-based Instagram analytics tool with leaderboard ranking, follower insights, ghost follower detection, and engagement tracking. Runs entirely client-side.",
+      "date": "February 2026",
+      "tools_tech": [
+        "TypeScript",
+        "Preact",
+        "Browser API",
+        "Instagram API",
+        "SCSS"
+      ],
+      "features": [
+        "Likes leaderboard across posts",
+        "Ghost follower and non-mutual detection",
+        "Multi-mode analytics dashboard",
+        "Pause/resume scanning system",
+        "No login required, fully client-side"
+      ],
+      "github": "https://github.com/Sagargupta16/InstagramLikesLeaderboard",
+      "live": "https://sagargupta.online/InstagramLikesLeaderboard/"
+    },
+    {
+      "id": 3,
+      "title": "Personal Portfolio",
+      "description": "A dark-themed interactive portfolio with 3D WebGL hero scene, particle effects, and data-driven architecture.",
+      "date": "October 2022",
+      "tools_tech": [
+        "React",
+        "Vite",
+        "Tailwind CSS",
+        "Three.js",
+        "Framer Motion",
+        "EmailJS"
+      ],
+      "features": [
+        "3D WebGL interactive hero scene",
+        "Glassmorphism UI design system",
+        "Particle animation system",
+        "GitHub activity integration",
+        "Fully data-driven architecture"
+      ],
+      "github": "https://github.com/Sagargupta16/portfolio-react",
+      "live": "https://sagargupta.online/portfolio-react/"
+    }
+  ],
+
+  "collaborative_projects": [
+    {
+      "id": 39,
+      "title": "Code Arena",
+      "description": "Real-time competitive coding platform with multiplayer races, sandboxed execution, and live WebSocket-based competition system.",
+      "date": "April 2026",
+      "tools_tech": [
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "WebSocket",
+        "MongoDB",
+        "Monaco Editor",
+        "Piston API",
+        "GitHub OAuth"
+      ],
+      "features": [
+        "2–5 player real-time coding races",
+        "Sandboxed code execution (C++/Python)",
+        "Blind race mode for fair competition",
+        "Live status board and timer sync",
+        "Monaco editor with test case runner"
+      ],
+      "github": "https://github.com/Sagargupta16/code-arena",
+      "live": ""
+    },
+    {
+      "id": 21,
+      "title": "Placemento",
+      "description": "Placement management system for MCA NIT Warangal with analytics dashboards, role-based access control, and student/company tracking.",
+      "date": "January 2024",
+      "tools_tech": [
+        "React",
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "JWT",
+        "AG Grid",
+        "Email OTP"
+      ],
+      "features": [
+        "Role-based authentication system",
+        "Placement analytics dashboards",
+        "Interview experience sharing system",
+        "Company and student data management",
+        "Automated notification system"
+      ],
+      "github": "https://github.com/MCA-NITW/placemento",
+      "live": ""
+    }
+  ],
+
+  "other_projects": [
+    {
+      "id": 40,
+      "title": "Instagram Autopilot",
+      "description": "AI-powered automation system for generating and posting Instagram content using AWS Bedrock and scheduled workflows.",
+      "date": "March 2026",
+      "tools_tech": [
+        "Python",
+        "AWS Bedrock",
+        "Nova Canvas",
+        "Nova Reel",
+        "GitHub Actions",
+        "Cloudinary"
+      ],
+      "features": [
+        "Daily AI content generation pipeline",
+        "Image and video generation system",
+        "Automated posting via GitHub Actions",
+        "Content pillar scheduling system"
+      ],
+      "github": "https://github.com/Sagargupta16/instagram-autopilot",
+      "live": ""
+    },
+    {
+      "id": 19,
+      "title": "Financial Dashboard",
+      "description": "Personal finance analytics dashboard with Excel ingestion, investment tracking, tax planning, and lifestyle optimisation tools.",
+      "date": "February 2026",
+      "tools_tech": [
+        "TypeScript",
+        "React",
+        "Tailwind CSS",
+        "Chart.js",
+        "Vite"
+      ],
+      "features": [
+        "Excel bank statement import",
+        "Investment performance tracking",
+        "Tax planning calculator",
+        "Lifestyle optimisation insights",
+        "Budget visualisation dashboards"
+      ],
+      "github": "https://github.com/Sagargupta16/Financial-Dashboard",
+      "live": "https://sagargupta.online/Financial-Dashboard/"
+    }
+  ],
+
+  "community_projects": [
+    {
+      "id": 38,
+      "title": "Claude Skills",
+      "description": "Plugin marketplace for Claude Code with reusable automation skills, agents, hooks, and slash commands.",
+      "date": "March 2026",
+      "tools_tech": [
+        "Claude Code",
+        "Markdown",
+        "JSON",
+        "GitHub Actions"
+      ],
+      "features": [
+        "25 production-ready plugins",
+        "29 AI agents",
+        "9 workflow hooks",
+        "Slash command system",
+        "CI validation pipeline"
+      ],
+      "github": "https://github.com/Sagargupta16/claude-skills",
+      "live": ""
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+---
+interface Props {
+  variant?: "teal" | "violet" | "coral";
+  text: string;
+}
+
+const {
+  variant = "teal",
+  text
+} = Astro.props;
+---
+
+{text && (
+  <div class={`po po-${variant}`}>
+    <p class="pol">Outcome</p>
+    <p class="pot">{text}</p>
+  </div>
+)}
