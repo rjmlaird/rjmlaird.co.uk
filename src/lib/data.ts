@@ -25,7 +25,9 @@ import eventsAttending from "../data/eventsAttending.json";
 
 import nav from "../data/nav.json";
 import tools from "../data/tools.js";
-import unCountries from "../data/unCountries.js";
+
+// FIXED: named import with alias to match existing export style
+import { UN_COUNTRIES as unCountries } from "../data/unCountries.js";
 
 export {
   profile,
