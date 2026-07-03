@@ -25,9 +25,7 @@ import eventsAttending from "../data/eventsAttending.json";
 
 import nav from "../data/nav.json";
 import tools from "../data/tools.js";
-import languages from "../data/languages.ts";
-
-// FIXED: named import with alias to match existing export style
+import { languages } from "../data/languages.ts";
 import { UN_COUNTRIES as unCountries } from "../data/unCountries.js";
 
 export {
@@ -52,5 +50,5 @@ export {
   nav,
   tools,
   languages,
-  unCountries
+  unCountries,
 };
