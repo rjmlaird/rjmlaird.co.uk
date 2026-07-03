@@ -34,6 +34,7 @@ export * from "./tool.schema";
 export * from "./certification.schema";
 export * from "./award.schema";
 export * from "./achievement.schema";
+export * from "./languages.schema";
 
 // Community
 export * from "./organisation.schema";
