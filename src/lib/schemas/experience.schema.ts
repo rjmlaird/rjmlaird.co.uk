@@ -1,25 +1,102 @@
-import { z } from "zod";
+export type ExperienceType =
+  | "agency"
+  | "company"
+  | "freelance"
+  | "programme"
+  | "non_profit"
+  | "network"
+  | "research_organisation"
+  | "university"
+  | "education_programme"
+  | "government"
+  | "local_authority"
+  | "media"
+  | "consortium"
+  | "school"
+  | "internship"
+  | "outreach";
 
-export const experienceSchema = z.object({
-  organisation: z.string(),
+export type CompanyType =
+  | "agency"
+  | "company"
+  | "programme"
+  | "contract"
+  | "network"
+  | "non_profit"
+  | "research_centre"
+  | "university"
+  | "school"
+  | "government"
+  | "consortium"
+  | "media"
+  | "education_programme";
 
-  title: z.string(),
+export interface ExperienceLink {
+  label: string;
+  url: string;
+}
 
-  location: z.string(),
+export interface ExperienceItem {
+  /** Unique identifier for ordering and references */
+  id: number | string;
 
-  employmentType: z.string(),
+  /** Date range (human readable for CV rendering) */
+  date: string;
 
-  startDate: z.string(),
+  /** Job title / role */
+  title: string;
 
-  endDate: z.string().optional(),
+  /** Organisation name */
+  company: string;
 
-  current: z.boolean().default(false),
+  /** Optional classification of organisation */
+  companyType?: CompanyType;
 
-  description: z.string(),
+  /** Optional sector classification */
+  type?: ExperienceType;
 
-  achievements: z.array(z.string()).default([]),
+  /** Location of role */
+  location: string;
 
-  skills: z.array(z.string()).default([]),
-});
+  /** Short summary of role */
+  summary: string;
 
-export type Experience = z.infer<typeof experienceSchema>;
+  /** Key responsibilities / outputs */
+  responsibilities: string[];
+
+  /** Skills demonstrated or used in role */
+  skills: string[];
+
+  /** Optional external links */
+  links?: ExperienceLink[];
+
+  /** Optional metadata for graph linking */
+  organisationSlug?: string;
+
+  /** Optional CMS / CRM integration */
+  hubspotId?: string;
+
+  /** Optional tags for search + filtering */
+  keywords?: string[];
+
+  /** Optional date parsing for analytics */
+  startDate?: string; // ISO
+  endDate?: string;   // ISO | "present"
+
+  /** Optional impact metrics (future-proofing) */
+  impact?: {
+    metric: string;
+    value: string | number;
+  }[];
+
+  /** Optional media references */
+  media?: {
+    type: "image" | "video" | "article";
+    url: string;
+    caption?: string;
+  }[];
+}
+
+export interface ExperienceSchema {
+  experience: ExperienceItem[];
+}

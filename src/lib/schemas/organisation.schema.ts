@@ -1,21 +1,33 @@
-import { z } from "zod";
+// lib/schemas/organisation.schema.ts
+import type { Slug } from "./base.schema";
 
-export const organisationSchema = z.object({
-  name: z.string(),
+export type OrganisationType =
+  | "partner"
+  | "client"
+  | "employer"
+  | "publisher"
+  | "community"
+  | "institution"
+  | "other";
 
-  shortName: z.string().optional(),
+export type OrganisationIndustry =
+  | "space"
+  | "marketing"
+  | "climate"
+  | "technology"
+  | "education"
+  | "research"
+  | "other";
 
-  website: z.string().url().optional(),
-
-  logo: z.string().optional(),
-
-  description: z.string(),
-
-  sector: z.string(),
-
-  location: z.string(),
-
-  memberships: z.array(z.string()).default([]),
-});
-
-export type Organisation = z.infer<typeof organisationSchema>;
+export type Organisation = {
+  organisation: string;
+  slug: Slug;
+  description?: string;
+  url?: string;
+  hubspotId?: string;
+  industry?: OrganisationIndustry;
+  category?: string;
+  type?: OrganisationType;
+  logo?: string;
+  featured?: boolean;
+};
