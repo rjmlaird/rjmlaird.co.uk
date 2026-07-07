@@ -1,12 +1,13 @@
 import { z } from 'astro/zod';
 
-import { experienceItemSchema, type ExperienceItem } from '@/lib/schemas/experience.schema';
-import { educationItemSchema, type EducationItem } from '@/lib/schemas/education.schema';
-import { skillItemSchema, type SkillItem } from '@/lib/schemas/skill.schema';
-import { certificationItemSchema, type CertificationItem } from '@/lib/schemas/certification.schema';
-import { membershipItemSchema, type MembershipItem } from '@/lib/schemas/membership.schema';
 import { awardItemSchema, type AwardItem } from '@/lib/schemas/award.schema';
+import { educationItemSchema, type EducationItem } from '@/lib/schemas/education.schema';
+import { membershipItemSchema, type MembershipItem } from '@/lib/schemas/membership.schema';
+import { certificationItemSchema, type CertificationItem } from '@/lib/schemas/certification.schema';
+import { experienceItemSchema, type ExperienceItem } from '@/lib/schemas/experience.schema';
 import { languageItemSchema, type LanguageItem } from '@/lib/schemas/languages.schema';
+import { languageItemSchema, type LanguageItem } from '@/lib/schemas/tools.schema';
+import { skillItemSchema, type SkillItem } from '@/lib/schemas/skill.schema';
 
 const API_BASE = 'https://api.rjmlaird.co.uk/api';
 
@@ -17,6 +18,7 @@ type ApiCollectionName =
   | 'certifications'
   | 'experience'
   | 'languages'
+  | 'tools'
   | 'skills';
 
 async function fetchJson<T>(path: string): Promise<T> {
