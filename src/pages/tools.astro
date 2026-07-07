@@ -1,10 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Nav from "../sections/nav.section.astro";
-import { getCollectionSafe } from "../lib/api";
-import localTools from "../data/tools.json";
+import { getTools } from "../lib/api";
 
-const apiTools = await getCollectionSafe<any[]>("tools" as any, []);
+const allTools = await getTools();
 const tools = apiTools.length ? apiTools : localTools.tools;
 ---
 
