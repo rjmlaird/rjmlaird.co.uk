@@ -25,18 +25,16 @@ export const mediaTypeSchema = z.enum([
 ]);
 
 export const projectLinksSchema = z
-  .record(z.string().url().optional())
-  .or(
-    z.object({
-      github: z.string().url().optional(),
-      live: z.string().url().optional(),
-      demo: z.string().url().optional(),
-      docs: z.string().url().optional(),
-      video: z.string().url().optional(),
-      store: z.string().url().optional(),
-      api: z.string().url().optional(),
-    }).passthrough()
-  );
+  .object({
+    github: z.string().url().optional(),
+    live: z.string().url().optional(),
+    demo: z.string().url().optional(),
+    docs: z.string().url().optional(),
+    video: z.string().url().optional(),
+    store: z.string().url().optional(),
+    api: z.string().url().optional(),
+  })
+  .passthrough();
 
 export const clientSchema = z.object({
   name: z.string(),
@@ -132,6 +130,8 @@ export const projectSchema = z.discriminatedUnion('type', [
   otherProjectSchema,
 ]);
 
+export const projectItemSchema = projectSchema;
+
 export const projectsSchema = z.object({
   featured_projects: z.array(featuredProjectSchema),
   collaborative_projects: z.array(collaborativeProjectSchema),
@@ -154,4 +154,5 @@ export type CollaborativeProject = z.infer<typeof collaborativeProjectSchema>;
 export type CommunityProject = z.infer<typeof communityProjectSchema>;
 export type OtherProject = z.infer<typeof otherProjectSchema>;
 export type Project = z.infer<typeof projectSchema>;
+export type ProjectItem = Project;
 export type ProjectsSchema = z.infer<typeof projectsSchema>;
