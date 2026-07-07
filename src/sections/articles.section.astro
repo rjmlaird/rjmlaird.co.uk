@@ -1,0 +1,79 @@
+---
+import articlesData from "../data/articles.json";
+import PublicationsCard from "../components/Publications/ArticlesCard.astro";
+
+const toTime = (value) => {
+  const time = new Date(value || 0).getTime();
+  return Number.isFinite(time) ? time : 0;
+};
+
+const articles = Array.isArray(articlesData?.articles) ? articlesData.articles : [];
+const sortedArticles = [...articles].sort((a, b) => toTime(b.date) - toTime(a.date));
+
+const publications = [...new Set(sortedArticles.map((a) => a.publication).filter(Boolean))].sort();
+
+const topicList = [
+  ...new Set(
+    sortedArticles.flatMap((article) => {
+      if (Array.isArray(article.topics) && article.topics.length > 0) return article.topics;
+      if (article.topic) return [article.topic];
+      return [];
+    })
+  ),
+].sort();
+---
+<section id="Articles">
+  <p class="sl">Articles</p>
+ <div class="thread">
+    <div class="pg-grid" id="publicationGrid">
+      {sortedArticles.map((article, index) => (
+        <div
+          class="publication-item"
+          data-publication={article.publication || ""}
+          data-topics={(Array.isArray(article.topics) && article.topics.length > 0
+            ? article.topics
+            : article.topic
+              ? [article.topic]
+              : []
+          ).join(",")}
+        >
+          <PublicationsCard
+            article={{
+              ...article,
+              id: article.id ?? index + 1,
+              topic: Array.isArray(article.topics) ? article.topics[0] ?? article.topic : article.topic,
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const norm = (s) => (s || "").toLowerCase().trim();
+
+  const publicationSelect = document.getElementById("publicationSelect");
+  const topicSelect = document.getElementById("topicSelect");
+  const items = document.querySelectorAll("#publicationGrid .publication-item");
+
+  const applyFilters = () => {
+    const activePublication = norm(publicationSelect?.value || "all");
+    const activeTopic = norm(topicSelect?.value || "all");
+
+    items.forEach((el) => {
+      const publication = norm(el.dataset.publication);
+      const topics = norm(el.dataset.topics);
+      const topicList = topics ? topics.split(",").map((t) => t.trim()).filter(Boolean) : [];
+
+      const publicationOk = activePublication === "all" || publication === activePublication;
+      const topicOk = activeTopic === "all" || topicList.includes(activeTopic);
+
+      el.hidden = !(publicationOk && topicOk);
+    });
+  };
+
+  publicationSelect?.addEventListener("change", applyFilters);
+  topicSelect?.addEventListener("change", applyFilters);
+  applyFilters();
+</script>

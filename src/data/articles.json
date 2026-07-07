@@ -4,6 +4,8 @@
       "title": "Satellites drive golfing performance success",
       "url": "https://business.esa.int/news/satellites-drive-golfing-performance-success",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192137_small_ShotScopeApp.jpg",
+      "imageCredit": "Shot Scope / ESA Business Applications",
+      "topics": ["sports", "analytics", "space applications"],
       "excerpt": "With support from an ESA Demonstration Project, golfing performance specialist Shot Scope has delivered new solutions for performance analytics.",
       "date": "2022-09-13",
       "publication": "ESA Business Applications"
@@ -12,6 +14,8 @@
       "title": "It always pays to B-SURE",
       "url": "https://business.esa.int/news/it-always-pays-to-b-sure",
       "image": "https://media.muckrack.com/portfolio/images/79259/Capture2.jpg",
+      "imageCredit": "UNOSAT / ESA Business Applications",
+      "topics": ["humanitarian mapping", "disaster response", "satellite intelligence"],
       "excerpt": "The United Nations Satellite Centre (UNOSAT) launched its Humanitarian Rapid Mapping service in 2003, using satellite-based intelligence.",
       "date": "2022-08-31",
       "publication": "ESA Business Applications"
@@ -20,6 +24,8 @@
       "title": "Satellites and AI in new generation forest management",
       "url": "https://business.esa.int/news/satellites-and-ai-new-generation-forest-management",
       "image": "https://media.muckrack.com/portfolio/images/79259/ENVInavigator_image1.jpg",
+      "imageCredit": "ENVInavigator / ESA Business Applications",
+      "topics": ["forestry", "ai", "environment"],
       "excerpt": "According to the World Wildlife Fund, forests are vital to life on Earth, and satellite AI is transforming monitoring and management.",
       "date": "2022-08-18",
       "publication": "ESA Business Applications"
@@ -28,6 +34,8 @@
       "title": "Using Space Applications as a Transition Accelerator",
       "url": "https://business.esa.int/news/using-space-applications-transition-accelerator-memorandum-intent-between-muncipality-genoa-esa-and-enel",
       "image": "https://media.muckrack.com/portfolio/images/79259/shutterstock_1410992927-web.jpg",
+      "imageCredit": "Shutterstock / ESA Business Applications",
+      "topics": ["urban transition", "sustainability", "smart cities"],
       "excerpt": "A Memorandum of Intent launching Genoa as a pilot city for ecological transition using space applications.",
       "date": "2022-01-18",
       "publication": "ESA Business Applications"
@@ -36,6 +44,8 @@
       "title": "Horizons are brightening for Peru's farmers",
       "url": "https://business.esa.int/news/horizons-are-brightening-for-perus-farmers",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192082_weatherforce1.png.jpg",
+      "imageCredit": "Weatherforce / ESA Business Applications",
+      "topics": ["agriculture", "climate resilience", "satellite data"],
       "excerpt": "Satellite data helps agriculture adapt to Peru's challenging climatic conditions and improve productivity.",
       "date": "2022-01-11",
       "publication": "ESA Business Applications"
@@ -44,6 +54,8 @@
       "title": "Space in Response to COVID-19 Outbreak in Italy - Final Presentation Day",
       "url": "https://business.esa.int/news/space-response-to-covid-19-outbreak-italy-final-presentation-day",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192080_shutterstock_16767596502028129.jpg",
+      "imageCredit": "Shutterstock / ESA Business Applications",
+      "topics": ["health", "covid-19", "rapid response"],
       "excerpt": "Final presentations from ESA-supported COVID-19 response projects in Italy.",
       "date": "2022-01-10",
       "publication": "ESA Business Applications"
@@ -52,6 +64,8 @@
       "title": "Space tech meets HR to revolutionise hiring processes",
       "url": "https://business.esa.int/news/space-tech-meets-hr-to-revolutionise-hiring-processes",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192079_shutterstock_1017309067-web.jpg",
+      "imageCredit": "Shutterstock / ESA Business Applications",
+      "topics": ["workforce", "hr tech", "ai"],
       "excerpt": "Recruitment technology start-up MeVitae applies space-enabled data approaches to hiring systems.",
       "date": "2021-12-15",
       "publication": "ESA Business Applications"
@@ -60,6 +74,8 @@
       "title": "Autonomous shuttle launched at Harwell Campus",
       "url": "https://business.esa.int/news/autonomous-shuttle-launched-harwell-campus",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192078_Darwin20Car.png",
+      "imageCredit": "Darwin / ESA Business Applications",
+      "topics": ["mobility", "autonomy", "smart transport"],
       "excerpt": "Harwell Campus becomes a testbed for autonomous mobility solutions in the UK.",
       "date": "2021-12-09",
       "publication": "ESA Business Applications"
@@ -68,6 +84,8 @@
       "title": "Faster, greener and cheaper - your customised bus service",
       "url": "https://business.esa.int/news/faster-greener-and-cheaper-your-customised-bus-service",
       "image": "https://media.muckrack.com/portfolio/images/79259/phone_mockup_-_tandem.png",
+      "imageCredit": "Tandem / ESA Business Applications",
+      "topics": ["mobility", "sustainability", "public transport"],
       "excerpt": "On-demand transport services reduce emissions and improve urban mobility efficiency.",
       "date": "2021-12-08",
       "publication": "ESA Business Applications"
@@ -76,6 +94,8 @@
       "title": "Assessing insurance risk and damage in the digital age",
       "url": "https://business.esa.int/news/assessing-insurance-risk-and-damage-digital-age",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192076_shutterstock_1659090466-web.jpg",
+      "imageCredit": "Shutterstock / ESA Business Applications",
+      "topics": ["insurance", "risk", "satellite data"],
       "excerpt": "McKenzie Intelligence Services launches GEO platform for insurance risk analysis using satellite data.",
       "date": "2021-11-30",
       "publication": "ESA Business Applications"
@@ -84,6 +104,8 @@
       "title": "ESA and PSCE cooperate on Space Applications and Digital Transformation in Public Safety",
       "url": "https://business.esa.int/news/esa-and-psce-cooperate-space-applications-and-digital-transformation-public-safety",
       "image": "https://media.muckrack.com/portfolio/images/79259/MicrosoftTeams-image.png.220x220_q85_crop.png",
+      "imageCredit": "ESA / PSCE",
+      "topics": ["public safety", "digital transformation", "emergency response"],
       "excerpt": "ESA and Public Safety Communication Europe collaborate to advance digital transformation in public safety using space applications.",
       "date": "2021-11-29",
       "publication": "ESA Business Applications"
@@ -92,6 +114,8 @@
       "title": "Harnessing space technology for better investment planning",
       "url": "https://business.esa.int/news/harnessing-space-technology-for-better-investment-planning",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192074_Morbihan_France.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "Morbihan / ESA Business Applications",
+      "topics": ["finance", "investment", "geospatial data"],
       "excerpt": "Satellite data is being used to improve financial and investment decision-making processes.",
       "date": "2021-11-22",
       "publication": "ESA Business Applications"
@@ -100,6 +124,8 @@
       "title": "Carbon Farming's Eye in the Sky",
       "url": "https://business.esa.int/news/carbon-farmings-eye-sky",
       "image": "https://media.muckrack.com/portfolio/images/79259/Picture1_upd-web.jpeg.220x220_q85_crop.jpg",
+      "imageCredit": "ESA Business Applications",
+      "topics": ["carbon farming", "climate", "agriculture"],
       "excerpt": "Satellite imagery is helping monitor and verify carbon farming and environmental impact initiatives.",
       "date": "2021-11-11",
       "publication": "ESA Business Applications"
@@ -108,6 +134,8 @@
       "title": "ESA and CEO Water Mandate cooperate on space technologies and applications for Net Positive Water Impact",
       "url": "https://business.esa.int/news/esa-and-ceo-water-mandate-to-cooperate-space-technologies-and-applications-for-net-positive-water-impact",
       "image": "https://media.muckrack.com/portfolio/images/79259/WhatsApp_Image_2021-11-11_at_10.16.36.jpeg.220x220_q85_crop.jpg",
+      "imageCredit": "ESA / UN Global Compact CEO Water Mandate",
+      "topics": ["water", "sustainability", "space technologies"],
       "excerpt": "ESA and the UN Global Compact CEO Water Mandate collaborate on water sustainability solutions using space technologies.",
       "date": "2021-11-10",
       "publication": "ESA Business Applications"
@@ -116,6 +144,8 @@
       "title": "Using AI and satellites to combat poaching of endangered species",
       "url": "https://business.esa.int/news/using-ai-and-satellites-to-combat-poaching-endangered-species",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192069_Clouded20Leopard20Detetection20-20conv.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "ESA Business Applications",
+      "topics": ["wildlife", "ai", "conservation"],
       "excerpt": "AI and satellite data are being used to track and prevent wildlife poaching in protected ecosystems.",
       "date": "2021-10-27",
       "publication": "ESA Business Applications"
@@ -124,6 +154,8 @@
       "title": "ESA and City of Essen collaborate to protect urban and suburban areas",
       "url": "https://business.esa.int/news/esa-and-city-essen-collaborate-to-protect-urban-and-suburban-areas-power-space-applications",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192067_2016_stadtgarten_kassenberg_1-web.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "City of Essen / ESA Business Applications",
+      "topics": ["urban resilience", "environment", "public sector"],
       "excerpt": "Space-enabled applications are being deployed to improve urban resilience and environmental monitoring in Essen.",
       "date": "2021-10-26",
       "publication": "ESA Business Applications"
@@ -132,6 +164,8 @@
       "title": "Farmers use smart farming app in the field to boost crop yields",
       "url": "https://business.esa.int/news/farmers-use-smart-farming-app-field-to-boost-crop-yields",
       "image": "https://media.muckrack.com/portfolio/images/79259/2191658_FieldScout-mockup-overview.png.220x220_q85_crop.png",
+      "imageCredit": "FieldScout / ESA Business Applications",
+      "topics": ["agriculture", "precision farming", "satellite data"],
       "excerpt": "Precision agriculture tools using satellite data help farmers optimise crop productivity.",
       "date": "2021-10-25",
       "publication": "ESA Business Applications"
@@ -140,6 +174,8 @@
       "title": "COP26: Connectivity, Space and Digital Technologies for Green Value",
       "url": "https://business.esa.int/news/cop26-connectivity-space-and-digital-technologies-for-green-value",
       "image": "https://media.muckrack.com/portfolio/images/79259/2191656_cop26-esa.png.220x220_q85_crop.png",
+      "imageCredit": "ESA / COP26",
+      "topics": ["climate action", "digital technologies", "connectivity"],
       "excerpt": "A COP26 initiative highlights how space and digital technologies support climate action and sustainability.",
       "date": "2021-10-12",
       "publication": "ESA Business Applications"
@@ -148,6 +184,8 @@
       "title": "Meet ESA BIC Lazio",
       "url": "https://business.esa.int/news/meet-esa-bic-lazio",
       "image": "https://media.muckrack.com/portfolio/images/79259/2191654_banner-Lazio.png.220x220_q85_crop.png",
+      "imageCredit": "ESA BIC Lazio",
+      "topics": ["startup support", "incubation", "innovation"],
       "excerpt": "Overview of ESA BIC Lazio and its role in supporting space startups and innovation.",
       "date": "2021-09-16",
       "publication": "ESA Business Applications"
@@ -156,6 +194,8 @@
       "title": "Eureka Investment Readiness Programme: European Space Agency",
       "url": "https://business.esa.int/news/eureka-investment-readiness-programme-european-space-agency",
       "image": "https://media.muckrack.com/portfolio/images/79259/2191653_shutterstock_1694214232.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "Shutterstock / European Space Agency",
+      "topics": ["investment readiness", "startups", "scale-up"],
       "excerpt": "A programme helping space startups and SMEs prepare for investment and scale-up opportunities.",
       "date": "2021-09-09",
       "publication": "ESA Business Applications"
@@ -164,6 +204,8 @@
       "title": "ESA BIC Bavaria helps Atlas Aero take off",
       "url": "https://business.esa.int/news/esa-bic-bavaria-helps-atlas-aero-take",
       "image": "https://media.muckrack.com/portfolio/images/79259/2191652_3-ZugspitzeStart.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "ESA BIC Bavaria",
+      "topics": ["startup", "aviation", "incubation"],
       "excerpt": "ESA BIC Bavaria supports Atlas Aero in developing aerospace innovation and technologies.",
       "date": "2021-09-02",
       "publication": "ESA Business Applications"
@@ -172,6 +214,8 @@
       "title": "Captivating hearts and minds - Room: The Space Journal",
       "url": "https://room.eu.com/article/captivating-hearts-and-minds",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192085_article260.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "Room - The Space Journal",
+      "topics": ["space communication", "outreach", "editorial"],
       "excerpt": "A feature exploring space outreach and communication efforts in the context of ESA missions.",
       "date": "2016-07-13",
       "publication": "Room - The Space Journal"
@@ -180,6 +224,8 @@
       "title": "ESO Signs Contract for Deformable Shell Mirrors for E-ELT",
       "url": "https://www.eso.org/public/announcements/ann15055/",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192086_ann15055a.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "ESO",
+      "topics": ["astronomy", "optics", "telescopes"],
       "excerpt": "ESO signs a major contract for advanced adaptive mirror technology for the Extremely Large Telescope.",
       "date": "2015-07-08",
       "publication": "ESO"
@@ -188,6 +234,8 @@
       "title": "Revolutionary New High-speed Infrared Detector Sees First Light",
       "url": "https://www.eso.org/public/announcements/ann15042/",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192088_ann15042a.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "ESO",
+      "topics": ["astronomy", "detectors", "instrumentation"],
       "excerpt": "A new generation infrared detector achieves first light, advancing astronomical observation capabilities.",
       "date": "2015-06-15",
       "publication": "ESO"
@@ -196,6 +244,8 @@
       "title": "ESO Ultra HD Expedition: New clarity for astronomy outreach",
       "url": "https://www.capjournal.org/issues/16/16_33.php",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192096_16_33.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "CAP Journal / ESO",
+      "topics": ["astronomy outreach", "video", "education"],
       "excerpt": "An outreach initiative using ultra high definition imaging to communicate astronomy discoveries.",
       "date": "2014-12-16",
       "publication": "CAP Journal"
@@ -204,6 +254,8 @@
       "title": "ESOcast 66: A Groundbreaking Event for the E-ELT",
       "url": "https://www.eso.org/public/videos/esocast66a/",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192099_esocast66a.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "ESO",
+      "topics": ["astronomy", "e-elt", "video"],
       "excerpt": "Coverage of a milestone event in the development of the Extremely Large Telescope.",
       "date": "2014-07-02",
       "publication": "ESO"
@@ -212,6 +264,8 @@
       "title": "Contract Signed for Final Design and Construction of Largest Adaptive Mirror Unit in the World",
       "url": "https://www.eso.org/public/announcements/ann15045/",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192087_ann15045a.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "ESO",
+      "topics": ["astronomy", "optics", "engineering"],
       "excerpt": "Contract awarded for construction of a large adaptive mirror system for advanced telescopes.",
       "date": "2014-06-19",
       "publication": "ESO"
@@ -220,6 +274,8 @@
       "title": "ESOcast 65: The Chilean Sky in Ultra High Definition",
       "url": "https://www.eso.org/public/videos/esocast65a/",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192105_esocast65a.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "ESO",
+      "topics": ["astronomy", "chile", "video"],
       "excerpt": "An exploration of Chilean skies captured in ultra high definition for astronomy outreach.",
       "date": "2014-05-30",
       "publication": "ESO"
@@ -228,6 +284,8 @@
       "title": "ESOcast 64: First Ring System Around Asteroid",
       "url": "https://www.eso.org/public/videos/eso1410a/",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192108_eso1410a.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "ESO",
+      "topics": ["astronomy", "asteroids", "video"],
       "excerpt": "Discovery and observation of a rare ring system around an asteroid.",
       "date": "2014-03-26",
       "publication": "ESO"
@@ -236,6 +294,8 @@
       "title": "Review: Duh! Universe",
       "url": "http://www.unawe.org/updates/unawe-update-1381/",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192113_Space_Awareness_Reaching_Children.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "UNAWE",
+      "topics": ["education", "children", "space awareness"],
       "excerpt": "A review of an educational space outreach publication aimed at children.",
       "date": "2013-12-11",
       "publication": "UNAWE"
@@ -244,6 +304,8 @@
       "title": "Uncovering Mysterious Hidden Gems of our Galaxy",
       "url": "http://unawe.org/kids/unawe1377/",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192114_heic2017a.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "UNAWE",
+      "topics": ["education", "galaxy", "children"],
       "excerpt": "Educational content exploring hidden astronomical phenomena in our galaxy.",
       "date": "2013-11-20",
       "publication": "UNAWE"
@@ -252,6 +314,8 @@
       "title": "The ISU Experience",
       "url": "https://ukseds.org/2013/09/the-isu-experience/",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192115_logo_fb.png.220x220_q85_crop.png",
+      "imageCredit": "UKSEDS",
+      "topics": ["student experience", "conference", "space education"],
       "excerpt": "A personal account of participation in a UKSEDS space conference and experience sharing.",
       "date": "2013-03-04",
       "publication": "UKSEDS"
@@ -260,6 +324,8 @@
       "title": "A collision in 2009 as the origin of the debris trail of asteroid P/2010 A2",
       "url": "https://www.nature.com/articles/nature09453",
       "image": "https://media.muckrack.com/portfolio/images/79259/2192121_41586_2010_Article_BFnature09453_Fig1_HTML.jpg.220x220_q85_crop.jpg",
+      "imageCredit": "Nature",
+      "topics": ["astronomy", "asteroids", "research"],
       "excerpt": "Scientific paper exploring the origin of asteroid debris through collision analysis.",
       "date": "2010-10-14",
       "publication": "Nature"

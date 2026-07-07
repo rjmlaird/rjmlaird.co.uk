@@ -1,0 +1,239 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../sections/nav.section.astro";
+import Citation from "citation-js";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import Card from "../components/Publications/PublicationsCard.astro";
+
+const bibPath = path.join(process.cwd(), "src/data/publications.bib");
+const bibText = await readFile(bibPath, "utf8");
+
+const input = new Citation(bibText);
+const items = input.format("data", { format: "object" });
+
+const getYear = (item: any) => {
+  const y = item?.issued?.["date-parts"]?.[0]?.[0] || item?.year || "";
+  return y ? Number(y) : 0;
+};
+
+const getType = (item: any) => {
+  if (item.type === "article-journal") return "Journal article";
+  if (item.type === "paper-conference") return "Conference paper";
+  if (item.type === "report") return "Report";
+  if (item.type === "webpage") return "Web page";
+  if (item.type === "thesis") return "Thesis";
+  return item.type || "Publication";
+};
+
+const getPublisher = (item: any) => item.publisher || item["container-title"] || item.journal || item.booktitle || "";
+
+const publications = items
+  .map((item: any) => ({
+    item,
+    year: getYear(item),
+    type: getType(item),
+    publisher: getPublisher(item),
+  }))
+  .sort((a: any, b: any) => b.year - a.year || String(a.item.title ?? "").localeCompare(String(b.item.title ?? "")));
+
+const types = [...new Set(publications.map((p: any) => p.type).filter(Boolean))].sort();
+const years = [...new Set(publications.map((p: any) => p.year).filter(Boolean))].sort((a: any, b: any) => b - a);
+const publishers = [...new Set(publications.map((p: any) => p.publisher).filter(Boolean))].sort();
+
+const excerptWords = 70;
+---
+
+<Layout>
+  <Nav />
+
+  <section class="section research-page">
+    <div class="container rp-shell">
+      <header class="rp-head">
+        <p class="eyebrow">Research</p>
+        <h1>Publications</h1>
+
+        <div class="rp-intro">
+          <p class="rp-lead">
+            A selected bibliography of journal articles, conference papers, reports, and outreach publications.
+          </p>
+          <p class="rp-note">
+            Browse by publication type, publisher, or year.
+          </p>
+        </div>
+
+        <div class="rp-filters" aria-label="Research filters">
+          <label class="filter-field" for="typeSelect">
+            <span>Type</span>
+            <select id="typeSelect">
+              <option value="all">All types</option>
+              {types.map((type) => <option value={type}>{type}</option>)}
+            </select>
+          </label>
+
+          <label class="filter-field" for="publisherSelect">
+            <span>Publisher</span>
+            <select id="publisherSelect">
+              <option value="all">All publishers</option>
+              {publishers.map((publisher) => <option value={publisher}>{publisher}</option>)}
+            </select>
+          </label>
+
+          <label class="filter-field" for="yearSelect">
+            <span>Year</span>
+            <select id="yearSelect">
+              <option value="all">All years</option>
+              {years.map((year) => <option value={String(year)}>{year}</option>)}
+            </select>
+          </label>
+        </div>
+      </header>
+
+      <div class="rp-grid" id="researchGrid">
+        {publications.map((pub: any, index: number) => (
+          <div
+            class="research-item"
+            data-type={pub.type}
+            data-year={String(pub.year)}
+            data-publisher={pub.publisher}
+          >
+            <Card item={pub.item} index={index + 1} bibText={bibText} excerptWords={excerptWords} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const norm = (s) => (s || "").toLowerCase().trim();
+
+    const typeSelect = document.getElementById("typeSelect");
+    const yearSelect = document.getElementById("yearSelect");
+    const publisherSelect = document.getElementById("publisherSelect");
+    const items = document.querySelectorAll("#researchGrid .research-item");
+
+    const applyFilters = () => {
+      const activeType = norm(typeSelect?.value || "all");
+      const activeYear = norm(yearSelect?.value || "all");
+      const activePublisher = norm(publisherSelect?.value || "all");
+
+      items.forEach((el) => {
+        const type = norm(el.dataset.type);
+        const year = norm(el.dataset.year);
+        const publisher = norm(el.dataset.publisher);
+
+        const typeOk = activeType === "all" || type === activeType;
+        const yearOk = activeYear === "all" || year === activeYear;
+        const publisherOk = activePublisher === "all" || publisher === activePublisher;
+
+        el.hidden = !(typeOk && yearOk && publisherOk);
+      });
+    };
+
+    typeSelect?.addEventListener("change", applyFilters);
+    yearSelect?.addEventListener("change", applyFilters);
+    publisherSelect?.addEventListener("change", applyFilters);
+    applyFilters();
+  </script>
+
+  <style>
+    .research-page {
+      padding-top: 4rem;
+    }
+
+    .rp-shell {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .rp-head {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .rp-intro {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      max-width: 720px;
+    }
+
+    .rp-lead,
+    .rp-note {
+      margin: 0;
+      line-height: 1.8;
+      font-size: 0.95rem;
+      color: var(--m);
+    }
+
+    .rp-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .filter-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-width: 190px;
+    }
+
+    .filter-field span {
+      font-family: var(--D);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--m);
+    }
+
+    .filter-field select {
+      width: 100%;
+      padding: 0.8rem 0.9rem;
+      border-radius: 4px;
+      border: 1px solid var(--bd);
+      background: var(--card);
+      color: var(--w);
+      font: inherit;
+      outline: none;
+    }
+
+    .filter-field select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(0, 194, 168, 0.12);
+    }
+
+    #researchGrid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .research-item {
+      width: 100%;
+    }
+
+    .research-item + .research-item {
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
+
+    .research-item[hidden] {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      .rp-filters {
+        flex-direction: column;
+      }
+
+      .filter-field {
+        min-width: 0;
+        width: 100%;
+      }
+    }
+  </style>
+</Layout>

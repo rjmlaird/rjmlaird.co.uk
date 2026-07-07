@@ -1,16 +1,13 @@
 ---
-import profile from "../data/profile.json";
-import contact from "../data/contact.json";
-import credentialsData from "../data/credentials.json";
+import { getCollection } from '../lib/api';
 
-/** Core profile fields */
-const headline = profile?.headline ?? "";
-const biography = profile?.biography ?? "";
+const profile = await getCollection<any>('profile');
+const contact = await getCollection<any>('contact');
+const credentialsData = await getCollection<any[]>('credentials');
 
-/** Credentials (first-class graph nodes) */
+const headline = profile?.headline ?? '';
+const biography = profile?.biography ?? '';
 const credentials = credentialsData ?? [];
-
-/** Social / external links */
 const links = contact?.about_links ?? [];
 ---
 
@@ -18,11 +15,10 @@ const links = contact?.about_links ?? [];
   <p class="sl">About</p>
 
   <div class="about-grid">
-    <!-- LEFT COLUMN -->
     <div>
       <h3 class="ah fade">
         {headline}<br />
-        <em>{profile?.preferredName ?? ""}</em>
+        <em>{profile?.preferredName ?? ''}</em>
       </h3>
 
       <div class="ab fade">
@@ -33,11 +29,11 @@ const links = contact?.about_links ?? [];
         {credentials.map((c) => (
           <span
             class={`cred-badge ${
-              c.type === "professional-accreditation"
-                ? "cb-teal"
-                : c.type === "certification"
-                ? "cb-v"
-                : "cb-m"
+              c.type === 'professional-accreditation'
+                ? 'cb-teal'
+                : c.type === 'certification'
+                  ? 'cb-v'
+                  : 'cb-m'
             }`}
             title={`${c.name} — ${c.issuer}`}
           >
@@ -47,7 +43,6 @@ const links = contact?.about_links ?? [];
       </div>
     </div>
 
-    <!-- RIGHT COLUMN -->
     <div class="sp fade">
       <div class="sp-h">Find me elsewhere</div>
 

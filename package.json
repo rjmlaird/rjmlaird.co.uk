@@ -6,6 +6,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^7.0.4"
+    "astro": "^7.0.4",
+    "citation-js": "^0.8.1"
   }
 }

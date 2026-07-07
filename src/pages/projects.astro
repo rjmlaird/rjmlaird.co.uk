@@ -1,0 +1,79 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../sections/nav.section.astro";
+import ProjectCard from "../components/Projects/ProjectCard.astro";
+import { getProjects } from "../lib/api";
+
+const allProjects = await getProjects();
+
+// Keep dedicated systems/tools off the general projects index if they've
+// been explicitly categorised as such.
+const projects = allProjects.filter(
+  (p: any) => p.category !== "system" && p.category !== "tool"
+);
+
+const types = [...new Set(projects.map((p: any) => p.type).filter(Boolean))];
+---
+
+<Layout title="Projects — Ryan Laird">
+  <Nav />
+
+  <main class="page-main">
+    <section id="projects-index">
+      <p class="sl">Projects</p>
+
+      <h1 class="ch fade">
+        Work across <em>space, sustainability & digital strategy</em>
+      </h1>
+
+      <p class="page-lede fade">
+        Selected client, collaborative, and community projects — from ESA business applications
+        campaigns to independent space sector initiatives. For the software I build and maintain,
+        see <a href="/systems">Systems</a> and <a href="/tools">Tools</a>.
+      </p>
+
+      {types.length > 0 && (
+        <div class="filters fade" id="filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          {types.map((type) => (
+            <button class="filter-btn" data-filter={type}>{type}</button>
+          ))}
+        </div>
+      )}
+
+      <div id="grid">
+        {projects.length ? (
+          projects.map((project: any) => (
+            <div data-type={project.type}>
+              <ProjectCard project={project} />
+            </div>
+          ))
+        ) : (
+          <p class="empty-state">
+            Projects are being migrated onto the new API — check back shortly, or see the
+            <a href="/publications"> publications</a> and <a href="/systems">systems</a> pages
+            in the meantime.
+          </p>
+        )}
+      </div>
+    </section>
+  </main>
+
+  <script is:inline>
+    const buttons = document.querySelectorAll("#filters .filter-btn");
+    const wrappers = document.querySelectorAll("#grid [data-type]");
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const filter = btn.dataset.filter;
+        buttons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        wrappers.forEach((wrapper) => {
+          const type = wrapper.dataset.type;
+          wrapper.classList.toggle("is-hidden", !(filter === "all" || type === filter));
+        });
+      });
+    });
+  </script>
+</Layout>

@@ -1,8 +1,14 @@
 ---
-import { experience } from "../lib/data";
-import TimelineItem from "../components/Story/TimelineItem.astro";
+import { getExperience } from '@/lib/api';
+import TimelineItem from '../components/Story/TimelineItem.astro';
 
-const timeline = experience ?? [];
+let timeline = [];
+
+try {
+  timeline = await getExperience();
+} catch (error) {
+  timeline = [];
+}
 ---
 
 <section id="timeline">
@@ -10,9 +16,7 @@ const timeline = experience ?? [];
 
   <div class="thread">
     {timeline.length > 0 ? (
-      timeline.map((item) => (
-        <TimelineItem item={item} />
-      ))
+      timeline.map((item) => <TimelineItem item={item} />)
     ) : (
       <p>No experience data available.</p>
     )}

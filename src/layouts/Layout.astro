@@ -5,55 +5,41 @@ interface Props {
   title?: string;
 }
 
-const {
-  title = "Ryan Laird — CMktr MInstP"
-} = Astro.props;
+const { title = "Ryan Laird — CMktr MInstP" } = Astro.props as Props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
 
-  <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap"
-    rel="stylesheet"
-  />
-</head>
+    <script is:inline>
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.07 }
+      );
 
-<body>
-
-<slot />
-
-<script is:inline>
-const io = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("in");
-      io.unobserve(entry.target);
-    }
-  });
-},{
-  threshold:0.07
-});
-
-document
-  .querySelectorAll(".fade")
-  .forEach(el => io.observe(el));
-</script>
-
-</body>
+      document.querySelectorAll(".fade").forEach((el) => io.observe(el));
+    </script>
+  </body>
 </html>

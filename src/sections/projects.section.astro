@@ -1,24 +1,15 @@
 ---
-import data from "../data/projects.json";
-import ProjectCard from "../components/Projects/ProjectCard.astro";
+import { getCollection } from '../lib/api';
+import ProjectCard from '../components/Projects/ProjectCard.astro';
 
-const projects = [
-  ...(data?.featured_projects ?? []),
-  ...(data?.collaborative_projects ?? []),
-  ...(data?.other_projects ?? []),
-  ...(data?.community_projects ?? [])
-];
-
-const activeProjects = projects;
+const activeProjects = await getCollection<any[]>('projects');
 ---
 
 <section id="work">
   <p class="sl">Selected projects</p>
 
   {activeProjects.length ? (
-    activeProjects.map((project) => (
-      <ProjectCard project={project} />
-    ))
+    activeProjects.map((project) => <ProjectCard project={project} />)
   ) : (
     <p>No projects available.</p>
   )}

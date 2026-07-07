@@ -1,0 +1,70 @@
+---
+interface Blog {
+  id?: number;
+  title?: string;
+  excerpt?: string;
+  date?: string | Date;
+  topic?: string;
+  topics?: string[];
+  image?: string;
+  imageCredit?: string;
+  slug: string;
+}
+
+interface Props {
+  blog: Blog;
+}
+
+const { blog } = Astro.props as Props;
+
+const number = blog.id ? String(blog.id).padStart(2, "0") : "";
+const title = blog.title ?? "Untitled";
+const excerpt = blog.excerpt ?? "";
+const topics = Array.isArray(blog.topics) && blog.topics.length > 0
+  ? blog.topics
+  : blog.topic
+    ? [blog.topic]
+    : [];
+const image = blog.image ?? "";
+const imageCredit = blog.imageCredit ?? "";
+const date =
+  blog.date instanceof Date
+    ? blog.date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })
+    : blog.date ?? "";
+const link = `/blog/${blog.slug}`;
+---
+
+<article class="pr pub">
+  <p class="pn">{number}</p>
+
+  {image ? (
+    <div class="pub-media pub-image">
+      <img src={image} alt={title} loading="lazy" />
+      {imageCredit ? <span class="image-credit">{imageCredit}</span> : null}
+    </div>
+  ) : null}
+
+  <div class="pm">
+    <div class="pub-top">
+      <h3>{title}</h3>
+      {date ? <span class="date">{date}</span> : null}
+    </div>
+
+    {excerpt ? <p>{excerpt}</p> : null}
+
+    {topics.length > 0 ? (
+      <div class="pt">
+        {topics.map((t) => <span class="tag">{t}</span>)}
+      </div>
+    ) : null}
+  </div>
+
+  <a href={link} class="pa">
+    <span class="pa-i">↗</span>
+    <span>Read</span>
+  </a>
+</article>

@@ -1,0 +1,104 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../sections/nav.section.astro";
+import BlogCard from "../../components/Publications/BlogCard.astro";
+import { getCollection } from "astro:content";
+
+const toTime = (value) => {
+  const time = value ? new Date(value).getTime() : 0;
+  return Number.isFinite(time) ? time : 0;
+};
+
+const getTopics = (post) =>
+  Array.isArray(post.data.tags) && post.data.tags.length > 0
+    ? post.data.tags
+    : post.data.tag
+      ? [post.data.tag]
+      : [];
+
+const posts = await getCollection("blog");
+const sortedPosts = [...posts].sort((a, b) => toTime(b.data.date) - toTime(a.data.date));
+const topicList = [...new Set(sortedPosts.flatMap((post) => getTopics(post)))].sort();
+---
+
+<Layout>
+  <Nav />
+
+  <section class="section publications-gallery">
+    <div class="container pg-shell">
+      <header class="pg-head">
+        <p class="eyebrow">Blog</p>
+
+        <h1 class="ch fade">
+          Writing across <em>space, sustainability & science policy</em>
+        </h1>
+
+        <div class="pg-intro">
+          <p class="pg-lead">
+            Essays, notes, and longer-form writing from the blog archive.
+          </p>
+
+          <p class="pg-note">
+            Browse the latest posts below or filter them by topic.
+          </p>
+        </div>
+
+        <div class="pg-filters" aria-label="Blog filters">
+          <label class="filter-field" for="topicSelect">
+            <span>Topic</span>
+            <select id="topicSelect">
+              <option value="all">All topics</option>
+              {topicList.map((topic) => <option value={topic}>{topic}</option>)}
+            </select>
+          </label>
+        </div>
+      </header>
+
+      <div class="pg-grid" id="blogGrid">
+        {sortedPosts.map((post, index) => {
+          const topics = getTopics(post);
+
+          return (
+            <div class="publication-item" data-topics={topics.join(",")}>
+              <BlogCard
+                blog={{
+                  id: index + 1,
+                  title: post.data.title,
+                  excerpt: post.data.excerpt,
+                  date: post.data.date,
+                  topic: topics[0] ?? "",
+                  topics,
+                  image: post.data.image,
+                  imageCredit: post.data.imageCredit,
+                  slug: post.slug,
+                }}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const norm = (s) => (s || "").toLowerCase().trim();
+  const topicSelect = document.getElementById("topicSelect");
+  const items = document.querySelectorAll("#blogGrid .publication-item");
+
+  const applyFilters = () => {
+    const activeTopic = norm(topicSelect?.value || "all");
+
+    items.forEach((el) => {
+      const topics = (el.dataset.topics || "")
+        .split(",")
+        .map((t) => norm(t))
+        .filter(Boolean);
+
+      el.hidden = !(activeTopic === "all" || topics.includes(activeTopic));
+    });
+  };
+
+  topicSelect?.addEventListener("change", applyFilters);
+  applyFilters();
+</script>

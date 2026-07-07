@@ -1,5 +1,19 @@
 ---
-import initiatives from "../data/initiatives.json";
+import { getCollection } from '@/lib/api';
+
+const initiatives = await getCollection<
+  {
+    color?: string;
+    icon?: string;
+    meta?: string;
+    title?: string;
+    description?: string;
+    points?: string[];
+    status?: string;
+    link?: string;
+    cta?: string;
+  }[]
+>('initiatives');
 ---
 
 <section id="initiatives">
@@ -9,7 +23,7 @@ import initiatives from "../data/initiatives.json";
     {initiatives.map((init) => (
       <div class="ic">
         <div class="ic-h">
-          <div class="ic-mk" style={`color:${init.color ?? "var(--teal)"}`}>
+          <div class="ic-mk" style={`color:${init.color ?? 'var(--teal)'}`}>
             {init.icon}
           </div>
 

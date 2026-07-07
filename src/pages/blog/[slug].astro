@@ -1,0 +1,38 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../sections/nav.section.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const title = post.data.title ?? "Untitled";
+const excerpt = post.data.excerpt ?? "";
+const date = post.data.date instanceof Date ? post.data.date.toISOString() : String(post.data.date ?? "");
+---
+
+<Layout>
+  <Nav />
+
+  <article class="blog-post">
+    <header class="post-head container">
+      <p class="eyebrow">Blog</p>
+      <h1>{title}</h1>
+      {excerpt ? <p class="lede">{excerpt}</p> : null}
+      {date ? <time datetime={date}>{date}</time> : null}
+    </header>
+
+    <div class="container post-body">
+      <Content />
+    </div>
+  </article>
+</Layout>
