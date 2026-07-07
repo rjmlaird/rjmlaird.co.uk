@@ -1,187 +1,157 @@
-// project.schema.ts (enhanced portfolio + graph model)
+import { z } from 'astro/zod';
 
-export type ProjectType =
-  | "featured"
-  | "collaborative"
-  | "community"
-  | "other"
-  | "automation";
+export const projectTypeSchema = z.enum([
+  'featured',
+  'collaborative',
+  'community',
+  'other',
+  'automation',
+]);
 
-export type ProjectStatus =
-  | "completed"
-  | "in_progress"
-  | "archived"
-  | "concept";
+export const projectStatusSchema = z.enum([
+  'completed',
+  'in_progress',
+  'archived',
+  'concept',
+]);
 
-export type MediaType =
-  | "article"
-  | "case_study"
-  | "award"
-  | "talk"
-  | "press"
-  | "documentation";
+export const mediaTypeSchema = z.enum([
+  'article',
+  'case_study',
+  'award',
+  'talk',
+  'press',
+  'documentation',
+]);
 
-export interface ProjectLinks {
-  github?: string;
-  live?: string;
-  demo?: string;
-  docs?: string;
-  video?: string;
-  store?: string;
-  api?: string;
-  [key: string]: string | undefined;
-}
+export const projectLinksSchema = z
+  .record(z.string().url().optional())
+  .or(
+    z.object({
+      github: z.string().url().optional(),
+      live: z.string().url().optional(),
+      demo: z.string().url().optional(),
+      docs: z.string().url().optional(),
+      video: z.string().url().optional(),
+      store: z.string().url().optional(),
+      api: z.string().url().optional(),
+    }).passthrough()
+  );
 
-/**
- * -----------------------
- * CORE RELATED ENTITIES
- * -----------------------
- */
+export const clientSchema = z.object({
+  name: z.string(),
+  slug: z.string().optional(),
+  url: z.string().url().optional(),
+  sector: z.string().optional(),
+});
 
-export interface Client {
-  name: string;
-  slug?: string;
-  url?: string;
-  sector?: string;
-}
+export const experienceSchema = z.object({
+  organisation: z.string(),
+  role: z.string().optional(),
+  period: z.string().optional(),
+  context: z.string().optional(),
+});
 
-export interface Experience {
-  organisation: string;
-  role?: string;
-  period?: string; // e.g. "2024–2026"
-  context?: string;
-}
+export const caseStudySchema = z.object({
+  title: z.string(),
+  slug: z.string(),
+  url: z.string().url().optional(),
+  summary: z.string().optional(),
+});
 
-export interface CaseStudy {
-  title: string;
-  slug: string;
-  url?: string;
-  summary?: string;
-}
+export const articleSchema = z.object({
+  title: z.string(),
+  url: z.string().url(),
+  publisher: z.string().optional(),
+  date: z.string().optional(),
+});
 
-export interface Article {
-  title: string;
-  url: string;
-  publisher?: string;
-  date?: string;
-}
+export const awardSchema = z.object({
+  title: z.string(),
+  organisation: z.string().optional(),
+  year: z.string().optional(),
+  url: z.string().url().optional(),
+});
 
-export interface Award {
-  title: string;
-  organisation?: string;
-  year?: string;
-  url?: string;
-}
+export const baseProjectSchema = z.object({
+  id: z.number(),
+  slug: z.string(),
+  title: z.string(),
+  description: z.string(),
+  type: projectTypeSchema,
+  status: projectStatusSchema,
+  date: z.string(),
+  tools_tech: z.array(z.string()),
+  features: z.array(z.string()),
+  tags: z.array(z.string()),
+  links: projectLinksSchema,
+  client: z.union([clientSchema, z.array(clientSchema)]).optional(),
+  experience: z.union([experienceSchema, z.array(experienceSchema)]).optional(),
+  case_studies: z.array(caseStudySchema).optional(),
+  articles: z.array(articleSchema).optional(),
+  awards: z.array(awardSchema).optional(),
+  impact: z
+    .object({
+      users: z.number().optional(),
+      stars: z.number().optional(),
+      downloads: z.number().optional(),
+      engagement: z.number().optional(),
+      revenue: z.number().optional(),
+      notes: z.string().optional(),
+    })
+    .passthrough()
+    .optional(),
+  related_projects: z.array(z.string()).optional(),
+  related_people: z.array(z.string()).optional(),
+  related_orgs: z.array(z.string()).optional(),
+});
 
-/**
- * -----------------------
- * CORE PROJECT ENTITY
- * -----------------------
- */
+export const featuredProjectSchema = baseProjectSchema.extend({
+  type: z.literal('featured'),
+});
 
-export interface BaseProject {
-  id: number;
-  slug: string;
-  title: string;
-  description: string;
+export const collaborativeProjectSchema = baseProjectSchema.extend({
+  type: z.literal('collaborative'),
+  collaborators: z.array(z.string()).optional(),
+});
 
-  type: ProjectType;
-  status: ProjectStatus;
+export const communityProjectSchema = baseProjectSchema.extend({
+  type: z.literal('community'),
+  community_role: z.string().optional(),
+});
 
-  date: string; // ISO format recommended: YYYY-MM or YYYY-MM-DD
+export const otherProjectSchema = baseProjectSchema.extend({
+  type: z.union([z.literal('other'), z.literal('automation')]),
+  automation_level: z.enum(['low', 'medium', 'high']).optional(),
+});
 
-  /**
-   * Core stack + capabilities
-   */
-  tools_tech: string[];
-  features: string[];
-  tags: string[];
+export const projectSchema = z.discriminatedUnion('type', [
+  featuredProjectSchema,
+  collaborativeProjectSchema,
+  communityProjectSchema,
+  otherProjectSchema,
+]);
 
-  /**
-   * External + internal links
-   */
-  links: ProjectLinks;
+export const projectsSchema = z.object({
+  featured_projects: z.array(featuredProjectSchema),
+  collaborative_projects: z.array(collaborativeProjectSchema),
+  community_projects: z.array(communityProjectSchema),
+  other_projects: z.array(otherProjectSchema),
+});
 
-  /**
-   * -----------------------
-   * RICH CONTEXT LAYERS
-   * -----------------------
-   */
-
-  client?: Client | Client[];
-  experience?: Experience | Experience[];
-
-  case_studies?: CaseStudy[];
-  articles?: Article[];
-  awards?: Award[];
-
-  /**
-   * Optional analytics / impact layer
-   */
-  impact?: {
-    users?: number;
-    stars?: number;
-    downloads?: number;
-    engagement?: number;
-    revenue?: number;
-    notes?: string;
-    [key: string]: number | string | undefined;
-  };
-
-  /**
-   * Optional relational graph hints
-   */
-  related_projects?: string[]; // slugs
-  related_people?: string[]; // future expansion
-  related_orgs?: string[]; // organisation slugs
-}
-
-/**
- * -----------------------
- * PROJECT TYPES
- * -----------------------
- */
-
-export interface FeaturedProject extends BaseProject {
-  type: "featured";
-}
-
-export interface CollaborativeProject extends BaseProject {
-  type: "collaborative";
-  collaborators?: string[];
-}
-
-export interface CommunityProject extends BaseProject {
-  type: "community";
-  community_role?: string;
-}
-
-export interface OtherProject extends BaseProject {
-  type: "other" | "automation";
-  automation_level?: "low" | "medium" | "high";
-}
-
-/**
- * -----------------------
- * UNION TYPE
- * -----------------------
- */
-
-export type Project =
-  | FeaturedProject
-  | CollaborativeProject
-  | CommunityProject
-  | OtherProject;
-
-/**
- * -----------------------
- * COLLECTION SHAPE
- * -----------------------
- */
-
-export interface ProjectsSchema {
-  featured_projects: FeaturedProject[];
-  collaborative_projects: CollaborativeProject[];
-  community_projects: CommunityProject[];
-  other_projects: OtherProject[];
-}
+export type ProjectType = z.infer<typeof projectTypeSchema>;
+export type ProjectStatus = z.infer<typeof projectStatusSchema>;
+export type MediaType = z.infer<typeof mediaTypeSchema>;
+export type ProjectLinks = z.infer<typeof projectLinksSchema>;
+export type Client = z.infer<typeof clientSchema>;
+export type Experience = z.infer<typeof experienceSchema>;
+export type CaseStudy = z.infer<typeof caseStudySchema>;
+export type Article = z.infer<typeof articleSchema>;
+export type Award = z.infer<typeof awardSchema>;
+export type BaseProject = z.infer<typeof baseProjectSchema>;
+export type FeaturedProject = z.infer<typeof featuredProjectSchema>;
+export type CollaborativeProject = z.infer<typeof collaborativeProjectSchema>;
+export type CommunityProject = z.infer<typeof communityProjectSchema>;
+export type OtherProject = z.infer<typeof otherProjectSchema>;
+export type Project = z.infer<typeof projectSchema>;
+export type ProjectsSchema = z.infer<typeof projectsSchema>;
