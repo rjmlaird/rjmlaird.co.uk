@@ -1,20 +1,34 @@
-import { z } from "zod";
+// tool.schema.ts
 
-export const skillSchema = z.object({
-  name: z.string(),
+export interface ToolItem {
+  name: string;
+  url: string;
+  logo: string;
+  color: string;
+  logoColor?: string;
+}
 
-  category: z.string(),
+export interface ToolCategory {
+  name: string;
+  items: ToolItem[];
+}
 
-  proficiency: z.enum([
-    "Beginner",
-    "Intermediate",
-    "Advanced",
-    "Expert",
-  ]),
+export interface TechStack {
+  categories: ToolCategory[];
+}
 
-  years: z.number().optional(),
-
-  featured: z.boolean().default(false),
-});
-
-export type Skill = z.infer<typeof skillSchema>;
+export const techStackSchema = {
+  categories: [
+    {
+      name: "Languages",
+      items: [
+        {
+          name: "HTML",
+          url: "https://developer.mozilla.org/en-US/docs/Web/HTML",
+          logo: "html5",
+          color: "E34F26",
+        },
+      ],
+    },
+  ],
+} satisfies TechStack;
