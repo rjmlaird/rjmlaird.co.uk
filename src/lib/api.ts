@@ -1,7 +1,7 @@
 import { z } from 'astro/zod';
 
 import { experienceItemSchema, type ExperienceItem } from '@/lib/schemas/experience.schema';
-import { projectItemSchema, type ProjectItem } from '@/lib/schemas/project.schema';
+import { projectItemSchema, projectsSchema, type ProjectsSchema } from '@/lib/schemas/project.schema';
 import { skillItemSchema, type SkillItem } from '@/lib/schemas/skill.schema';
 import { toolItemSchema, type ToolItem } from '@/lib/schemas/tool.schema';
 
@@ -35,7 +35,6 @@ export function getCollectionSafe<T>(collection: ApiCollectionName) {
 }
 
 const experienceResponseSchema = z.array(experienceItemSchema);
-const projectsResponseSchema = z.array(projectItemSchema);
 const skillsResponseSchema = z.array(skillItemSchema);
 const toolsResponseSchema = z.array(toolItemSchema);
 
@@ -43,8 +42,8 @@ export function getExperience(): Promise<ExperienceItem[]> {
   return fetchAndParse('experience', experienceResponseSchema);
 }
 
-export function getProjects(): Promise<ProjectItem[]> {
-  return fetchAndParse('projects', projectsResponseSchema);
+export function getProjects(): Promise<ProjectsSchema> {
+  return fetchAndParse('projects', projectsSchema);
 }
 
 export function getSkills(): Promise<SkillItem[]> {
