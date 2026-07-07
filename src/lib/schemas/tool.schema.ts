@@ -1,34 +1,22 @@
-// tool.schema.ts
+import { z } from "zod";
 
-export interface ToolItem {
-  name: string;
-  url: string;
-  logo: string;
-  color: string;
-  logoColor?: string;
-}
+export const toolItemSchema = z.object({
+  name: z.string(),
+  url: z.string().url(),
+  logo: z.string(),
+  color: z.string(),
+  logoColor: z.string().optional(),
+});
 
-export interface ToolCategory {
-  name: string;
-  items: ToolItem[];
-}
+export const toolCategorySchema = z.object({
+  name: z.string(),
+  items: z.array(toolItemSchema),
+});
 
-export interface TechStack {
-  categories: ToolCategory[];
-}
+export const techStackSchema = z.object({
+  categories: z.array(toolCategorySchema),
+});
 
-export const techStackSchema = {
-  categories: [
-    {
-      name: "Languages",
-      items: [
-        {
-          name: "HTML",
-          url: "https://developer.mozilla.org/en-US/docs/Web/HTML",
-          logo: "html5",
-          color: "E34F26",
-        },
-      ],
-    },
-  ],
-} satisfies TechStack;
+export type ToolItem = z.infer<typeof toolItemSchema>;
+export type ToolCategory = z.infer<typeof toolCategorySchema>;
+export type TechStack = z.infer<typeof techStackSchema>;
