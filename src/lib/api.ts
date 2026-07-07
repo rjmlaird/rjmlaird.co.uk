@@ -49,6 +49,7 @@ const certificationsResponseSchema = z.array(certificationItemSchema);
 const membershipsResponseSchema = z.array(membershipItemSchema);
 const awardsResponseSchema = z.array(awardItemSchema);
 const languagesResponseSchema = z.array(languageItemSchema);
+const toolsResponseSchema = z.array(toolItemSchema);
 
 export function getExperience(): Promise<ExperienceItem[]> {
   return fetchAndParse('experience', experienceResponseSchema);
@@ -72,6 +73,10 @@ export function getMemberships(): Promise<MembershipItem[]> {
 
 export function getAwards(): Promise<AwardItem[]> {
   return fetchAndParse('awards', awardsResponseSchema);
+}
+
+export function getTools(): Promise<AwardItem[]> {
+  return fetchAndParse('awards', toolsResponseSchema);
 }
 
 export function getLanguages(): Promise<LanguageItem[]> {
