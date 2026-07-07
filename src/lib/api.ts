@@ -6,7 +6,7 @@ import { membershipItemSchema, type MembershipItem } from '@/lib/schemas/members
 import { certificationItemSchema, type CertificationItem } from '@/lib/schemas/certification.schema';
 import { experienceItemSchema, type ExperienceItem } from '@/lib/schemas/experience.schema';
 import { languageItemSchema, type LanguageItem } from '@/lib/schemas/languages.schema';
-import { toolItemSchema, type ToolItem } from '@/lib/schemas/tools.schema';
+import { toolItemSchema, type ToolItem } from '@/lib/schemas/tool.schema';
 import { skillItemSchema, type SkillItem } from '@/lib/schemas/skill.schema';
 
 const API_BASE = 'https://api.rjmlaird.co.uk/api';
