@@ -1,108 +1,141 @@
 ---
-import ProjectOutcome from "./ProjectOutcome.astro";
-
 interface Props {
   project: {
-    id?: string | number;
+    id: number;
+    slug: string;
     title: string;
-    description?: string;
-    summary?: string;
-    tools?: string[];
-    features?: string[];
-
-    github?: string;
-    repository?: string;
-    live?: string;
-    url?: string;
-
-    outcome?: string;
-    variant?: "teal" | "violet" | "coral";
-
-    metrics?: string[];
-    tags?: string[];
+    type: string;
+    status: string;
+    description: string;
+    date: string;
+    tools_tech: string[];
+    features: string[];
+    tags: string[];
+    links: {
+      github?: string;
+      live?: string;
+      demo?: string;
+      docs?: string;
+      video?: string;
+      store?: string;
+      api?: string;
+    };
   };
 }
 
 const { project } = Astro.props;
-
-/**
- * ----------------------------
- * NORMALISED VIEW MODEL
- * ----------------------------
- */
-const id =
-  project.id !== undefined ? String(project.id).padStart(2, "0") : "";
-
-const title = project.title ?? "Untitled Project";
-
-const description =
-  project.description ?? project.summary ?? "";
-
-const tags =
-  project.tools ??
-  project.tags ??
-  [];
-
-const features =
-  project.features ?? [];
-
-const link =
-  project.live ??
-  project.url ??
-  project.github ??
-  project.repository ??
-  "#";
-
-const outcome = project.outcome ?? "";
-
-const variant = project.variant ?? "teal";
-
-const metrics = project.metrics ?? [];
+const liveLink = project.links.live || project.links.demo || project.links.github || project.links.docs;
 ---
 
-<article class="pr">
-  <p class="pn">{id}</p>
+<article class="project-card">
+  <header class="project-card__header">
+    <p class="project-card__meta">
+      <span>{project.type}</span>
+      <span>·</span>
+      <span>{project.status}</span>
+      <span>·</span>
+      <span>{project.date}</span>
+    </p>
 
-  <div class="pm">
-    <h3>{title}</h3>
+    <h3 class="project-card__title">{project.title}</h3>
+    <p class="project-card__description">{project.description}</p>
+  </header>
 
-    <p>{description}</p>
+  {project.features?.length ? (
+    <ul class="project-card__features">
+      {project.features.slice(0, 3).map((feature) => <li>{feature}</li>)}
+    </ul>
+  ) : null}
 
-    {/* Tags / Tools */}
-    {(tags.length > 0 || features.length > 0) && (
-      <div class="pt">
-        {tags.map((tag) => (
-          <span class="tag">{tag}</span>
-        ))}
+  {project.tools_tech?.length ? (
+    <ul class="project-card__tags">
+      {project.tools_tech.slice(0, 4).map((tool) => <li>{tool}</li>)}
+    </ul>
+  ) : null}
 
-        {features.map((feature) => (
-          <span class="tag">{feature}</span>
-        ))}
-      </div>
-    )}
+  <footer class="project-card__footer">
+    <div class="project-card__links">
+      {project.links.github ? (
+        <a href={project.links.github} target="_blank" rel="noreferrer">GitHub</a>
+      ) : null}
 
-    {/* Optional metrics (future-proofing for impact-led storytelling) */}
-    {metrics.length > 0 && (
-      <div class="pt">
-        {metrics.map((m) => (
-          <span class="tag">{m}</span>
-        ))}
-      </div>
-    )}
-  </div>
+      {liveLink ? (
+        <a href={liveLink} target="_blank" rel="noreferrer">View project</a>
+      ) : null}
+    </div>
 
-  {/* Outcome block (impact layer) */}
-  {outcome && (
-    <ProjectOutcome variant={variant} text={outcome} />
-  )}
-
-  <a
-    href={link}
-    class="pa"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <span class="pa-i">↗</span>
-    <span>View</span>
-  </a>
+    <a class="project-card__more" href={`/projects/${project.slug}/`}>
+      Read more
+    </a>
+  </footer>
 </article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+  }
+
+  .project-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 0.5rem;
+    font-size: 0.85rem;
+    opacity: 0.75;
+  }
+
+  .project-card__title {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .project-card__description {
+    margin: 0.5rem 0 0;
+    line-height: 1.6;
+  }
+
+  .project-card__features,
+  .project-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .project-card__features li,
+  .project-card__tags li {
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 0.85rem;
+  }
+
+  .project-card__footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .project-card__links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .project-card__links a,
+  .project-card__more {
+    text-decoration: none;
+  }
+</style>

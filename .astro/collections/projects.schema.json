@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "featured",
+        "collaborative",
+        "community",
+        "other",
+        "automation"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "completed",
+        "in_progress",
+        "archived",
+        "concept"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    },
+    "tools_tech": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "links": {
+      "type": "object",
+      "properties": {
+        "github": {
+          "type": "string",
+          "format": "uri"
+        },
+        "live": {
+          "type": "string",
+          "format": "uri"
+        },
+        "demo": {
+          "type": "string",
+          "format": "uri"
+        },
+        "docs": {
+          "type": "string",
+          "format": "uri"
+        },
+        "video": {
+          "type": "string",
+          "format": "uri"
+        },
+        "store": {
+          "type": "string",
+          "format": "uri"
+        },
+        "api": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "impact": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": {}
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "slug",
+    "title",
+    "type",
+    "status",
+    "description",
+    "date",
+    "tools_tech",
+    "features",
+    "tags",
+    "links"
+  ]
+}

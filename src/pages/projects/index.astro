@@ -1,0 +1,107 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../sections/nav.section.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+
+const toTime = (value) => {
+  const time = value ? new Date(value).getTime() : 0;
+  return Number.isFinite(time) ? time : 0;
+};
+
+const entries = (await getCollection("projects"))
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => toTime(b.data.date) - toTime(a.data.date));
+
+const typeList = [
+  ...new Set(
+    entries.flatMap((entry) =>
+      entry.data.type ? [entry.data.type] : []
+    )
+  ),
+].sort();
+
+const statusList = [
+  ...new Set(
+    entries.flatMap((entry) =>
+      entry.data.status ? [entry.data.status] : []
+    )
+  ),
+].sort();
+---
+
+<Layout>
+  <Nav />
+
+  <section class="section publications-gallery">
+    <div class="container pg-shell">
+      <header class="pg-head">
+        <p class="eyebrow">Projects</p>
+        <h1 class="ch fade">
+          Building across <em>product, automation & research</em>
+        </h1>
+
+        <div class="pg-intro">
+          <p class="pg-lead">A selected archive of projects, experiments, collaborations, and automation work.</p>
+          <p class="pg-note">Use the filters to narrow the archive. Each card links to the project page.</p>
+        </div>
+
+        <div class="pg-filters" aria-label="Project filters">
+          <label class="filter-field" for="typeSelect">
+            <span>Type</span>
+            <select id="typeSelect">
+              <option value="all">All types</option>
+              {typeList.map((type) => <option value={type}>{type}</option>)}
+            </select>
+          </label>
+
+          <label class="filter-field" for="statusSelect">
+            <span>Status</span>
+            <select id="statusSelect">
+              <option value="all">All statuses</option>
+              {statusList.map((status) => <option value={status}>{status}</option>)}
+            </select>
+          </label>
+        </div>
+      </header>
+
+      <div class="pg-grid" id="projectsGrid">
+        {entries.map((entry) => (
+          <div
+            class="publication-item"
+            data-type={entry.data.type || ""}
+            data-status={entry.data.status || ""}
+          >
+            <ProjectCard project={entry.data} slug={entry.slug} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const norm = (s) => (s || "").toLowerCase().trim();
+    const typeSelect = document.getElementById("typeSelect");
+    const statusSelect = document.getElementById("statusSelect");
+    const items = document.querySelectorAll("#projectsGrid .publication-item");
+
+    const applyFilters = () => {
+      const activeType = norm(typeSelect?.value || "all");
+      const activeStatus = norm(statusSelect?.value || "all");
+
+      items.forEach((el) => {
+        const type = norm(el.dataset.type);
+        const status = norm(el.dataset.status);
+
+        const typeOk = activeType === "all" || type === activeType;
+        const statusOk = activeStatus === "all" || status === activeStatus;
+
+        el.hidden = !(typeOk && statusOk);
+      });
+    };
+
+    typeSelect?.addEventListener("change", applyFilters);
+    statusSelect?.addEventListener("change", applyFilters);
+    applyFilters();
+  </script>
+</Layout>
