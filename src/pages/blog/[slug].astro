@@ -6,10 +6,12 @@ import { getCollection, render } from "astro:content";
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
 
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+  return posts
+    .filter((post) => typeof post.slug === "string" && post.slug.length > 0)
+    .map((post) => ({
+      params: { slug: post.slug },
+      props: { post },
+    }));
 }
 
 const { post } = Astro.props;
@@ -24,7 +26,6 @@ const title = post.data.title ?? "Untitled";
 const excerpt = post.data.excerpt ?? "";
 const date = post.data.date instanceof Date ? post.data.date : new Date(post.data.date);
 ---
-
 <Layout>
   <Nav />
 
