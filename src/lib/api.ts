@@ -9,6 +9,11 @@ const API_BASE = 'https://api.rjmlaird.co.uk/api';
 
 type ApiCollectionName = 'experience' | 'projects' | 'skills' | 'tools';
 
+const emptyStringToUndefinedUrl = z.preprocess(
+  (value) => (value === '' ? undefined : value),
+  z.string().url().optional()
+);
+
 async function fetchJson<T>(path: string): Promise<T> {
   const res = await fetch(`${API_BASE}/${path}`, {
     headers: { accept: '*/*' },
