@@ -1,6 +1,5 @@
 import { z } from 'astro/zod';
 
-import { awardItemSchema, type AwardItem } from '@/lib/schemas/award.schema';
 import { certificationItemSchema, type CertificationItem } from '@/lib/schemas/certification.schema';
 import { educationItemSchema, type EducationItem } from '@/lib/schemas/education.schema';
 import { experienceItemSchema, type ExperienceItem } from '@/lib/schemas/experience.schema';
@@ -13,7 +12,6 @@ import { toolItemSchema, type ToolItem } from '@/lib/schemas/tool.schema';
 const API_BASE = 'https://api.rjmlaird.co.uk/api';
 
 type ApiCollectionName =
-  | 'awards'
   | 'certifications'
   | 'education'
   | 'experience'
@@ -48,7 +46,6 @@ export function getCollectionSafe<T>(collection: ApiCollectionName) {
   return fetchJson<T>(collection);
 }
 
-const awardsResponseSchema = z.array(awardItemSchema);
 const certificationsResponseSchema = z.array(certificationItemSchema);
 const educationResponseSchema = z.array(educationItemSchema);
 const experienceResponseSchema = z.array(experienceItemSchema);
