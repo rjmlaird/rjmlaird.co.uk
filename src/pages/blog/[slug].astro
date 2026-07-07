@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Nav from "../../sections/nav.section.astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -13,11 +13,16 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+
+if (!post) {
+  throw new Error("Post not found");
+}
+
+const { Content } = await render(post);
 
 const title = post.data.title ?? "Untitled";
 const excerpt = post.data.excerpt ?? "";
-const date = post.data.date instanceof Date ? post.data.date.toISOString() : String(post.data.date ?? "");
+const date = post.data.date instanceof Date ? post.data.date : new Date(post.data.date);
 ---
 
 <Layout>
@@ -28,7 +33,9 @@ const date = post.data.date instanceof Date ? post.data.date.toISOString() : Str
       <p class="eyebrow">Blog</p>
       <h1>{title}</h1>
       {excerpt ? <p class="lede">{excerpt}</p> : null}
-      {date ? <time datetime={date}>{date}</time> : null}
+      {!Number.isNaN(date.getTime()) ? (
+        <time datetime={date.toISOString()}>{date.toLocaleDateString()}</time>
+      ) : null}
     </header>
 
     <div class="container post-body">

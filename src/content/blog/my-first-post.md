@@ -13,8 +13,7 @@ image: "/images/blog/my-first-post.jpg"
 imageCredit: "Cover image for My First Post"
 ---
 
-
-Write your post content here.
+This is the opening paragraph of my first post.
 
 ## Heading
 

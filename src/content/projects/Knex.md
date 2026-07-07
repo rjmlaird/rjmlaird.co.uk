@@ -1,3 +1,0 @@
-# K’nex
-
-Organisations: Bloodhound SSC (https://app.notion.com/p/Bloodhound-SSC-37b3a96540ad807bbbe8cead8c8737d3?pvs=21)

@@ -9,16 +9,19 @@ const toTime = (value) => {
   return Number.isFinite(time) ? time : 0;
 };
 
-const getTopics = (post) =>
-  Array.isArray(post.data.tags) && post.data.tags.length > 0
-    ? post.data.tags
-    : post.data.tag
-      ? [post.data.tag]
-      : [];
+const entries = (await getCollection("blog"))
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => toTime(b.data.date) - toTime(a.data.date));
 
-const posts = await getCollection("blog");
-const sortedPosts = [...posts].sort((a, b) => toTime(b.data.date) - toTime(a.data.date));
-const topicList = [...new Set(sortedPosts.flatMap((post) => getTopics(post)))].sort();
+const topicList = [
+  ...new Set(
+    entries.flatMap((entry) => {
+      if (Array.isArray(entry.data.tags) && entry.data.tags.length > 0) return entry.data.tags;
+      if (entry.data.tag) return [entry.data.tag];
+      return [];
+    })
+  ),
+].sort();
 ---
 
 <Layout>
@@ -28,19 +31,13 @@ const topicList = [...new Set(sortedPosts.flatMap((post) => getTopics(post)))].s
     <div class="container pg-shell">
       <header class="pg-head">
         <p class="eyebrow">Blog</p>
-
         <h1 class="ch fade">
           Writing across <em>space, sustainability & science policy</em>
         </h1>
 
         <div class="pg-intro">
-          <p class="pg-lead">
-            Essays, notes, and longer-form writing from the blog archive.
-          </p>
-
-          <p class="pg-note">
-            Browse the latest posts below or filter them by topic.
-          </p>
+          <p class="pg-lead">Essays, notes, and longer-form writing from the blog archive.</p>
+          <p class="pg-note">Use the topic filter to narrow the archive. Each card links to the post.</p>
         </div>
 
         <div class="pg-filters" aria-label="Blog filters">
@@ -55,50 +52,42 @@ const topicList = [...new Set(sortedPosts.flatMap((post) => getTopics(post)))].s
       </header>
 
       <div class="pg-grid" id="blogGrid">
-        {sortedPosts.map((post, index) => {
-          const topics = getTopics(post);
+        {entries.map((entry) => {
+          const topics = Array.isArray(entry.data.tags) && entry.data.tags.length > 0
+            ? entry.data.tags
+            : entry.data.tag
+              ? [entry.data.tag]
+              : [];
 
           return (
             <div class="publication-item" data-topics={topics.join(",")}>
-              <BlogCard
-                blog={{
-                  id: index + 1,
-                  title: post.data.title,
-                  excerpt: post.data.excerpt,
-                  date: post.data.date,
-                  topic: topics[0] ?? "",
-                  topics,
-                  image: post.data.image,
-                  imageCredit: post.data.imageCredit,
-                  slug: post.slug,
-                }}
-              />
+              <BlogCard post={entry} />
             </div>
           );
         })}
       </div>
     </div>
   </section>
+
+  <script>
+    const norm = (s) => (s || "").toLowerCase().trim();
+    const topicSelect = document.getElementById("topicSelect");
+    const items = document.querySelectorAll("#blogGrid .publication-item");
+
+    const applyFilters = () => {
+      const activeTopic = norm(topicSelect?.value || "all");
+
+      items.forEach((el) => {
+        const topics = (el.dataset.topics || "")
+          .split(",")
+          .map((t) => norm(t))
+          .filter(Boolean);
+
+        el.hidden = !(activeTopic === "all" || topics.includes(activeTopic));
+      });
+    };
+
+    topicSelect?.addEventListener("change", applyFilters);
+    applyFilters();
+  </script>
 </Layout>
-
-<script>
-  const norm = (s) => (s || "").toLowerCase().trim();
-  const topicSelect = document.getElementById("topicSelect");
-  const items = document.querySelectorAll("#blogGrid .publication-item");
-
-  const applyFilters = () => {
-    const activeTopic = norm(topicSelect?.value || "all");
-
-    items.forEach((el) => {
-      const topics = (el.dataset.topics || "")
-        .split(",")
-        .map((t) => norm(t))
-        .filter(Boolean);
-
-      el.hidden = !(activeTopic === "all" || topics.includes(activeTopic));
-    });
-  };
-
-  topicSelect?.addEventListener("change", applyFilters);
-  applyFilters();
-</script>
