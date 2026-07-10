@@ -106,7 +106,7 @@ const excerptWords = 70;
             data-year={String(pub.year)}
             data-publisher={pub.publisher}
           >
-            <Card item={pub.item} index={index + 1} bibText={bibText} excerptWords={excerptWords} />
+            <Card item={pub.item} index={index + 1} bibText={bibText} />
           </div>
         ))}
       </div>
@@ -114,12 +114,20 @@ const excerptWords = 70;
   </section>
 
   <script is:inline>
-    const norm = (s: string | null | undefined) => (s ?? "").toLowerCase().trim();
+    /** @type {(s: string | null | undefined) => string} */
+    const norm = (s) => (s ?? "").toLowerCase().trim();
 
-    const typeSelect = document.getElementById("typeSelect") as HTMLSelectElement | null;
-    const yearSelect = document.getElementById("yearSelect") as HTMLSelectElement | null;
-    const publisherSelect = document.getElementById("publisherSelect") as HTMLSelectElement | null;
-    const items = document.querySelectorAll<HTMLElement>("#researchGrid .research-item");
+    /** @type {HTMLSelectElement | null} */
+    const typeSelect = document.getElementById("typeSelect");
+
+    /** @type {HTMLSelectElement | null} */
+    const yearSelect = document.getElementById("yearSelect");
+
+    /** @type {HTMLSelectElement | null} */
+    const publisherSelect = document.getElementById("publisherSelect");
+
+    /** @type {NodeListOf<HTMLElement>} */
+    const items = document.querySelectorAll("#researchGrid .research-item");
 
     const applyFilters = () => {
       const activeType = norm(typeSelect?.value || "all");

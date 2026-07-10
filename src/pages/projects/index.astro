@@ -1,184 +1,159 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import ProjectCard from "../../components/Projects/ProjectCard.astro";
-import { getCollection } from "astro:content";
-import slugify from "slugify";
+import Layout from "../layouts/Layout.astro";
+import Citation from "citation-js";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import Card from "../components/Publications/PublicationsCard.astro";
 
-type ProjectEntry = Awaited<ReturnType<typeof getCollection>>[number];
-
-const toTime = (value?: string) => {
-  const time = value ? new Date(value).getTime() : 0;
-  return Number.isFinite(time) ? time : 0;
+type CslItem = {
+  type?: string;
+  title?: string | string[];
+  issued?: { "date-parts"?: number[][] };
+  year?: string | number;
+  publisher?: string;
+  "container-title"?: string;
+  journal?: string;
+  booktitle?: string;
 };
 
-const makeSlug = (value?: string) =>
-  slugify(value ?? "", { lower: true, strict: true, trim: true });
+const bibPath = path.join(process.cwd(), "src/data/publications.bib");
+const bibText = await readFile(bibPath, "utf8");
 
-const entries = (await getCollection("projects"))
-  .filter((entry) => !entry.data.draft)
-  .sort((a, b) => toTime(b.data.date) - toTime(a.data.date));
+const input = new Citation(bibText);
+const items = input.format("data", { format: "object" }) as CslItem[];
 
-const yearList = [
-  ...new Set(
-    entries.flatMap((entry) => {
-      const date = entry.data.date ? new Date(entry.data.date) : null;
-      return date && !Number.isNaN(date.getTime()) ? [String(date.getFullYear())] : [];
-    }),
-  ),
-].sort((a, b) => Number(b) - Number(a));
+const getYear = (item: CslItem) => {
+  const y = item?.issued?.["date-parts"]?.[0]?.[0] || item?.year || "";
+  return y ? Number(y) : 0;
+};
 
-const typeList = [...new Set(entries.flatMap((entry) => (entry.data.type ? [entry.data.type] : [])))].sort();
-const statusList = [...new Set(entries.flatMap((entry) => (entry.data.status ? [entry.data.status] : [])))].sort();
-const toolList = [...new Set(entries.flatMap((entry) => (Array.isArray(entry.data.tools_tech) ? entry.data.tools_tech : [])))].sort();
-const tagList = [...new Set(entries.flatMap((entry) => (Array.isArray(entry.data.tags) ? entry.data.tags : [])))].sort();
-const featuredList = ["featured", "not featured"];
+const getType = (item: CslItem) => {
+  if (item.type === "article-journal") return "Journal article";
+  if (item.type === "paper-conference") return "Conference paper";
+  if (item.type === "report") return "Report";
+  if (item.type === "webpage") return "Web page";
+  if (item.type === "thesis") return "Thesis";
+  return item.type || "Publication";
+};
+
+const getPublisher = (item: CslItem) =>
+  item.publisher || item["container-title"] || item.journal || item.booktitle || "";
+
+const publications = items
+  .map((item) => ({
+    item,
+    year: getYear(item),
+    type: getType(item),
+    publisher: getPublisher(item),
+  }))
+  .sort((a, b) => b.year - a.year || String(a.item.title ?? "").localeCompare(String(b.item.title ?? "")));
+
+const types = [...new Set(publications.map((p) => p.type).filter(Boolean))].sort();
+const years = [...new Set(publications.map((p) => p.year).filter(Boolean))].sort((a, b) => b - a);
+const publishers = [...new Set(publications.map((p) => p.publisher).filter(Boolean))].sort();
+
+const excerptWords = 70;
 ---
 
 <Layout>
-  <section class="section publications-gallery">
-    <div class="container pg-shell">
-      <header class="pg-head">
-        <p class="eyebrow">Projects</p>
+  <section class="section research-page">
+    <div class="container rp-shell">
+      <header class="rp-head">
+        <p class="eyebrow">Research</p>
+        <h1>Publications</h1>
 
-        <h1 class="ch fade">
-          Building across <em>product, automation &amp; research</em>
-        </h1>
-
-        <div class="pg-intro">
-          <p class="pg-lead">
-            A selected archive of projects, experiments, collaborations, and automation work.
+        <div class="rp-intro">
+          <p class="rp-lead">
+            A selected bibliography of journal articles, conference papers, reports, and outreach publications.
           </p>
-
-          <p class="pg-note">
-            Use the filters to narrow the list. Each card links to the original piece.
+          <p class="rp-note">
+            Browse by publication type, publisher, or year.
           </p>
         </div>
 
-        <div class="pg-filters" aria-label="Project filters">
-          <label class="filter-field" for="dateSelect">
-            <span>Date</span>
-            <select id="dateSelect">
-              <option value="all">All dates</option>
-              {yearList.map((year) => <option value={year}>{year}</option>)}
-            </select>
-          </label>
-
+        <div class="rp-filters" aria-label="Research filters">
           <label class="filter-field" for="typeSelect">
             <span>Type</span>
             <select id="typeSelect">
               <option value="all">All types</option>
-              {typeList.map((type) => <option value={type}>{type}</option>)}
+              {types.map((type) => <option value={type}>{type}</option>)}
             </select>
           </label>
 
-          <label class="filter-field" for="statusSelect">
-            <span>Status</span>
-            <select id="statusSelect">
-              <option value="all">All statuses</option>
-              {statusList.map((status) => <option value={status}>{status}</option>)}
+          <label class="filter-field" for="publisherSelect">
+            <span>Publisher</span>
+            <select id="publisherSelect">
+              <option value="all">All publishers</option>
+              {publishers.map((publisher) => <option value={publisher}>{publisher}</option>)}
             </select>
           </label>
 
-          <label class="filter-field" for="toolSelect">
-            <span>Tools</span>
-            <select id="toolSelect">
-              <option value="all">All tools</option>
-              {toolList.map((tool) => <option value={tool}>{tool}</option>)}
-            </select>
-          </label>
-
-          <label class="filter-field" for="featuredSelect">
-            <span>Featured</span>
-            <select id="featuredSelect">
-              <option value="all">All featured</option>
-              {featuredList.map((item) => <option value={item}>{item}</option>)}
-            </select>
-          </label>
-
-          <label class="filter-field" for="tagSelect">
-            <span>Tags</span>
-            <select id="tagSelect">
-              <option value="all">All tags</option>
-              {tagList.map((tag) => <option value={tag}>{tag}</option>)}
+          <label class="filter-field" for="yearSelect">
+            <span>Year</span>
+            <select id="yearSelect">
+              <option value="all">All years</option>
+              {years.map((year) => <option value={String(year)}>{year}</option>)}
             </select>
           </label>
         </div>
       </header>
 
-      <div class="pg-grid" id="projectsGrid">
-        {entries.map((entry) => {
-          const slug = makeSlug(entry.data.slug || entry.data.title || entry.id);
-          const date = entry.data.date ? new Date(entry.data.date) : null;
-          const year = date && !Number.isNaN(date.getTime()) ? String(date.getFullYear()) : "";
-          const tools = Array.isArray(entry.data.tools_tech) ? entry.data.tools_tech : [];
-          const tags = Array.isArray(entry.data.tags) ? entry.data.tags : [];
-          const featured = entry.data.featured ? "featured" : "not featured";
-
-          return (
-            <div
-              class="publication-item"
-              data-date={year}
-              data-type={entry.data.type || ""}
-              data-status={entry.data.status || ""}
-              data-tools={tools.join(",")}
-              data-tags={tags.join(",")}
-              data-featured={featured}
-            >
-              <ProjectCard project={entry.data} slug={slug} />
-            </div>
-          );
-        })}
+      <div class="rp-grid" id="researchGrid">
+        {publications.map((pub, index) => (
+          <div
+            class="research-item"
+            data-type={pub.type}
+            data-year={String(pub.year)}
+            data-publisher={pub.publisher}
+          >
+            <Card item={pub.item} index={index + 1} bibText={bibText} />
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
   <script is:inline>
-    const norm = (s: string | null | undefined) => (s ?? "").toLowerCase().trim();
-    const splitList = (value: string | null | undefined) =>
-      (value ?? "").split(",").map((v) => norm(v)).filter(Boolean);
+    /** @type {(s: string | null | undefined) => string} */
+    const norm = (s) => (s ?? "").toLowerCase().trim();
 
-    const dateSelect = document.getElementById("dateSelect") as HTMLSelectElement | null;
-    const typeSelect = document.getElementById("typeSelect") as HTMLSelectElement | null;
-    const statusSelect = document.getElementById("statusSelect") as HTMLSelectElement | null;
-    const toolSelect = document.getElementById("toolSelect") as HTMLSelectElement | null;
-    const featuredSelect = document.getElementById("featuredSelect") as HTMLSelectElement | null;
-    const tagSelect = document.getElementById("tagSelect") as HTMLSelectElement | null;
-    const items = document.querySelectorAll<HTMLElement>("#projectsGrid .publication-item");
+    /** @type {HTMLSelectElement | null} */
+    const typeSelect = document.getElementById("typeSelect");
+
+    /** @type {HTMLSelectElement | null} */
+    const yearSelect = document.getElementById("yearSelect");
+
+    /** @type {HTMLSelectElement | null} */
+    const publisherSelect = document.getElementById("publisherSelect");
+
+    /** @type {NodeListOf<HTMLElement>} */
+    const items = document.querySelectorAll("#researchGrid .research-item");
 
     const applyFilters = () => {
-      const activeDate = norm(dateSelect?.value || "all");
       const activeType = norm(typeSelect?.value || "all");
-      const activeStatus = norm(statusSelect?.value || "all");
-      const activeTool = norm(toolSelect?.value || "all");
-      const activeFeatured = norm(featuredSelect?.value || "all");
-      const activeTag = norm(tagSelect?.value || "all");
+      const activeYear = norm(yearSelect?.value || "all");
+      const activePublisher = norm(publisherSelect?.value || "all");
 
-      items.forEach((item) => {
-        const itemDate = norm(item.dataset.date);
-        const itemType = norm(item.dataset.type);
-        const itemStatus = norm(item.dataset.status);
-        const itemTools = splitList(item.dataset.tools);
-        const itemTags = splitList(item.dataset.tags);
-        const itemFeatured = norm(item.dataset.featured);
+      items.forEach((el) => {
+        const type = norm(el.dataset.type);
+        const year = norm(el.dataset.year);
+        const publisher = norm(el.dataset.publisher);
 
-        item.hidden = !(
-          (activeDate === "all" || itemDate === activeDate) &&
-          (activeType === "all" || itemType === activeType) &&
-          (activeStatus === "all" || itemStatus === activeStatus) &&
-          (activeTool === "all" || itemTools.includes(activeTool)) &&
-          (activeFeatured === "all" || itemFeatured === activeFeatured) &&
-          (activeTag === "all" || itemTags.includes(activeTag))
-        );
+        const typeOk = activeType === "all" || type === activeType;
+        const yearOk = activeYear === "all" || year === activeYear;
+        const publisherOk = activePublisher === "all" || publisher === activePublisher;
+
+        el.hidden = !(typeOk && yearOk && publisherOk);
       });
     };
 
-    [dateSelect, typeSelect, statusSelect, toolSelect, featuredSelect, tagSelect].forEach((select) => {
-      select?.addEventListener("change", applyFilters);
-    });
-
+    typeSelect?.addEventListener("change", applyFilters);
+    yearSelect?.addEventListener("change", applyFilters);
+    publisherSelect?.addEventListener("change", applyFilters);
     applyFilters();
   </script>
 </Layout>
+
 
 
 <style>

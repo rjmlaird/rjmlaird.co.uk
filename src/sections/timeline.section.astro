@@ -1,23 +1,23 @@
 ---
-import { getExperience } from "@/lib/api";
-import TimelineItem from "../components/Story/TimelineItem.astro";
+// Timeline.astro
+import TimelineItem from "./TimelineItem.astro";
 
-type TimelineEntry = Awaited<ReturnType<typeof getExperience>>[number];
+type TimelineItemData = {
+  era: string;
+  title: string;
+  description: string;
+  colour?: "teal" | "violet" | "amber";
+};
 
-const timeline: TimelineEntry[] = await getExperience().catch(() => []);
+interface Props {
+  items: TimelineItemData[];
+}
+
+const { items } = Astro.props;
 ---
 
-<section id="timeline">
-  <p class="sl">Career timeline</p>
-  <h2 class="story-lede">
-    From telescope data to strategic communications.
-  </h2>
-
-  <div class="thread">
-    {timeline.length > 0 ? (
-      timeline.map((item) => <TimelineItem item={item} />)
-    ) : (
-      <p>No experience data available.</p>
-    )}
-  </div>
-</section>
+<div>
+  {items.map((item) => (
+    <TimelineItem {...item} />
+  ))}
+</div>

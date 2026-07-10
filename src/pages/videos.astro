@@ -98,11 +98,17 @@ const topics = [...new Set(sortedVideos.flatMap((v) => v.topics ?? []).map(norma
 </Layout>
 
 <script is:inline>
-  const norm = (s: string | null | undefined) => (s ?? "").toLowerCase().trim();
+  /** @type {(s: string | null | undefined) => string} */
+  const norm = (s) => (s ?? "").toLowerCase().trim();
 
-  const clientSelect = document.getElementById("clientSelect") as HTMLSelectElement | null;
-  const topicSelect = document.getElementById("topicSelect") as HTMLSelectElement | null;
-  const items = document.querySelectorAll<HTMLElement>("#videoGrid .video-item");
+  /** @type {HTMLSelectElement | null} */
+  const clientSelect = document.getElementById("clientSelect");
+
+  /** @type {HTMLSelectElement | null} */
+  const topicSelect = document.getElementById("topicSelect");
+
+  /** @type {NodeListOf<HTMLElement>} */
+  const items = document.querySelectorAll("#videoGrid .video-item");
 
   const applyFilters = () => {
     const activeClient = norm(clientSelect?.value || "all");
@@ -127,6 +133,7 @@ const topics = [...new Set(sortedVideos.flatMap((v) => v.topics ?? []).map(norma
   topicSelect?.addEventListener("change", applyFilters);
   applyFilters();
 </script>
+
 
 <style>
   .video-gallery {
