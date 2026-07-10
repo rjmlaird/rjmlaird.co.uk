@@ -18,8 +18,16 @@ type CollectionMap = {
   tools: ToolItem[];
 };
 
-async function fetchCollection<T>(collection: CollectionName, base: URL): Promise<T> {
-  const res = await fetch(new URL(`/api/${collection}`, base), {
+function resolveBase(base?: string | URL): URL {
+  if (base instanceof URL) return base;
+  if (typeof base === "string" && base) return new URL(base);
+  throw new Error("Missing base URL for fetchCollection(). Pass Astro.url or an absolute base URL.");
+}
+
+async function fetchCollection<T>(collection: CollectionName, base?: string | URL): Promise<T> {
+  const url = new URL(`/api/${collection}`, resolveBase(base));
+
+  const res = await fetch(url, {
     headers: { accept: "application/json" },
   });
 
@@ -32,28 +40,28 @@ async function fetchCollection<T>(collection: CollectionName, base: URL): Promis
 
 async function fetchAndParse<K extends CollectionName>(
   collection: K,
-  base: URL,
+  base?: string | URL,
 ): Promise<CollectionMap[K]> {
   const data = await fetchCollection<unknown>(collection, base);
   return collectionSchemas[collection].parse(data) as CollectionMap[K];
 }
 
-export function getCollection<K extends CollectionName>(collection: K, base: URL) {
+export function getCollection<K extends CollectionName>(collection: K, base: string | URL) {
   return fetchCollection<CollectionMap[K]>(collection, base);
 }
 
-export function getCollectionSafe<K extends CollectionName>(collection: K, base: URL) {
+export function getCollectionSafe<K extends CollectionName>(collection: K, base: string | URL) {
   return fetchAndParse(collection, base);
 }
 
-export function getExperience(base: URL): Promise<ExperienceItem[]> {
+export function getExperience(base: string | URL): Promise<ExperienceItem[]> {
   return fetchAndParse("experience", base);
 }
 
-export function getSkills(base: URL): Promise<SkillItem[]> {
+export function getSkills(base: string | URL): Promise<SkillItem[]> {
   return fetchAndParse("skills", base);
 }
 
-export function getTools(base: URL): Promise<ToolItem[]> {
+export function getTools(base: string | URL): Promise<ToolItem[]> {
   return fetchAndParse("tools", base);
 }
