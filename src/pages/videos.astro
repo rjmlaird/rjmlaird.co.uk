@@ -3,17 +3,31 @@ import videos from "../data/videos.json";
 import Layout from "../layouts/Layout.astro";
 import VideosCard from "../components/VideosCard.astro";
 
-const toTime = (value) => {
-  const time = new Date(value || 0).getTime();
+type VideoItem = {
+  title?: string;
+  summary?: string;
+  description?: string;
+  client?: string;
+  published?: string;
+  topics?: string[];
+  thumbnail_image?: string;
+  url?: string;
+};
+
+const toTime = (value: string | number | Date | null | undefined) => {
+  const time = new Date(value ?? 0).getTime();
   return Number.isFinite(time) ? time : 0;
 };
 
-const normalize = (value) => (value || "").toString().trim();
+const normalize = (value: string | number | null | undefined) =>
+  (value ?? "").toString().trim();
 
-const sortedVideos = [...videos].sort((a, b) => toTime(b.published) - toTime(a.published));
+const sortedVideos = [...(videos as VideoItem[])].sort(
+  (a, b) => toTime(b.published) - toTime(a.published),
+);
 
 const clients = [...new Set(sortedVideos.map((v) => normalize(v.client)).filter(Boolean))].sort();
-const topics = [...new Set(sortedVideos.flatMap((v) => v.topics || []).map(normalize).filter(Boolean))].sort();
+const topics = [...new Set(sortedVideos.flatMap((v) => v.topics ?? []).map(normalize).filter(Boolean))].sort();
 ---
 
 <Layout>
@@ -41,9 +55,7 @@ const topics = [...new Set(sortedVideos.flatMap((v) => v.topics || []).map(norma
             <span>Client</span>
             <select id="clientSelect">
               <option value="all">All clients</option>
-              {clients.map((client) => (
-                <option value={client}>{client}</option>
-              ))}
+              {clients.map((client) => <option value={client}>{client}</option>)}
             </select>
           </label>
 
@@ -51,9 +63,7 @@ const topics = [...new Set(sortedVideos.flatMap((v) => v.topics || []).map(norma
             <span>Topic</span>
             <select id="topicSelect">
               <option value="all">All topics</option>
-              {topics.map((topic) => (
-                <option value={topic}>{topic}</option>
-              ))}
+              {topics.map((topic) => <option value={topic}>{topic}</option>)}
             </select>
           </label>
         </div>
@@ -64,7 +74,7 @@ const topics = [...new Set(sortedVideos.flatMap((v) => v.topics || []).map(norma
           <div
             class="video-item"
             data-client={normalize(video.client)}
-            data-topics={(video.topics || []).map(normalize).join(",")}
+            data-topics={(video.topics ?? []).map(normalize).join(",")}
           >
             <VideosCard
               article={{
@@ -77,7 +87,7 @@ const topics = [...new Set(sortedVideos.flatMap((v) => v.topics || []).map(norma
                 image: video.thumbnail_image || "",
                 url: video.url || "",
                 video: video.url || "",
-                variant: "teal"
+                variant: "teal",
               }}
             />
           </div>
@@ -88,11 +98,11 @@ const topics = [...new Set(sortedVideos.flatMap((v) => v.topics || []).map(norma
 </Layout>
 
 <script is:inline>
-  const norm = (s) => (s || "").toLowerCase().trim();
+  const norm = (s: string | null | undefined) => (s ?? "").toLowerCase().trim();
 
-  const clientSelect = document.getElementById("clientSelect");
-  const topicSelect = document.getElementById("topicSelect");
-  const items = document.querySelectorAll("#videoGrid .video-item");
+  const clientSelect = document.getElementById("clientSelect") as HTMLSelectElement | null;
+  const topicSelect = document.getElementById("topicSelect") as HTMLSelectElement | null;
+  const items = document.querySelectorAll<HTMLElement>("#videoGrid .video-item");
 
   const applyFilters = () => {
     const activeClient = norm(clientSelect?.value || "all");

@@ -18,17 +18,19 @@ const entries = (await getCollection("projects"))
   .filter((entry) => !entry.data.draft)
   .sort((a, b) => toTime(b.data.date) - toTime(a.data.date));
 
-const yearList = [...new Set(
-  entries.flatMap((entry) => {
-    const date = entry.data.date ? new Date(entry.data.date) : null;
-    return date && !Number.isNaN(date.getTime()) ? [String(date.getFullYear())] : [];
-  })
-)].sort((a, b) => Number(b) - Number(a));
+const yearList = [
+  ...new Set(
+    entries.flatMap((entry) => {
+      const date = entry.data.date ? new Date(entry.data.date) : null;
+      return date && !Number.isNaN(date.getTime()) ? [String(date.getFullYear())] : [];
+    }),
+  ),
+].sort((a, b) => Number(b) - Number(a));
 
-const typeList = [...new Set(entries.flatMap((entry) => entry.data.type ? [entry.data.type] : []))].sort();
-const statusList = [...new Set(entries.flatMap((entry) => entry.data.status ? [entry.data.status] : []))].sort();
-const toolList = [...new Set(entries.flatMap((entry) => Array.isArray(entry.data.tools_tech) ? entry.data.tools_tech : []))].sort();
-const tagList = [...new Set(entries.flatMap((entry) => Array.isArray(entry.data.tags) ? entry.data.tags : []))].sort();
+const typeList = [...new Set(entries.flatMap((entry) => (entry.data.type ? [entry.data.type] : [])))].sort();
+const statusList = [...new Set(entries.flatMap((entry) => (entry.data.status ? [entry.data.status] : [])))].sort();
+const toolList = [...new Set(entries.flatMap((entry) => (Array.isArray(entry.data.tools_tech) ? entry.data.tools_tech : [])))].sort();
+const tagList = [...new Set(entries.flatMap((entry) => (Array.isArray(entry.data.tags) ? entry.data.tags : [])))].sort();
 const featuredList = ["featured", "not featured"];
 ---
 
@@ -131,27 +133,27 @@ const featuredList = ["featured", "not featured"];
   </section>
 
   <script is:inline>
-    const norm = (s) => (s || "").toLowerCase().trim();
-    const splitList = (value) => (value || "").split(",").map((v) => norm(v)).filter(Boolean);
+    const norm = (s: string | null | undefined) => (s ?? "").toLowerCase().trim();
+    const splitList = (value: string | null | undefined) =>
+      (value ?? "").split(",").map((v) => norm(v)).filter(Boolean);
 
-    const dateSelect = document.getElementById("dateSelect");
-    const typeSelect = document.getElementById("typeSelect");
-    const statusSelect = document.getElementById("statusSelect");
-    const toolSelect = document.getElementById("toolSelect");
-    const featuredSelect = document.getElementById("featuredSelect");
-    const tagSelect = document.getElementById("tagSelect");
-    const items = document.querySelectorAll("#projectsGrid .publication-item");
+    const dateSelect = document.getElementById("dateSelect") as HTMLSelectElement | null;
+    const typeSelect = document.getElementById("typeSelect") as HTMLSelectElement | null;
+    const statusSelect = document.getElementById("statusSelect") as HTMLSelectElement | null;
+    const toolSelect = document.getElementById("toolSelect") as HTMLSelectElement | null;
+    const featuredSelect = document.getElementById("featuredSelect") as HTMLSelectElement | null;
+    const tagSelect = document.getElementById("tagSelect") as HTMLSelectElement | null;
+    const items = document.querySelectorAll<HTMLElement>("#projectsGrid .publication-item");
 
     const applyFilters = () => {
-      const activeDate = norm(/** @type {HTMLSelectElement | null} */ (dateSelect)?.value || "all");
-      const activeType = norm(/** @type {HTMLSelectElement | null} */ (typeSelect)?.value || "all");
-      const activeStatus = norm(/** @type {HTMLSelectElement | null} */ (statusSelect)?.value || "all");
-      const activeTool = norm(/** @type {HTMLSelectElement | null} */ (toolSelect)?.value || "all");
-      const activeFeatured = norm(/** @type {HTMLSelectElement | null} */ (featuredSelect)?.value || "all");
-      const activeTag = norm(/** @type {HTMLSelectElement | null} */ (tagSelect)?.value || "all");
+      const activeDate = norm(dateSelect?.value || "all");
+      const activeType = norm(typeSelect?.value || "all");
+      const activeStatus = norm(statusSelect?.value || "all");
+      const activeTool = norm(toolSelect?.value || "all");
+      const activeFeatured = norm(featuredSelect?.value || "all");
+      const activeTag = norm(tagSelect?.value || "all");
 
-      items.forEach((el) => {
-        const item = /** @type {HTMLElement} */ (el);
+      items.forEach((item) => {
         const itemDate = norm(item.dataset.date);
         const itemType = norm(item.dataset.type);
         const itemStatus = norm(item.dataset.status);

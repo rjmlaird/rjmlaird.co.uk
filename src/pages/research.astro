@@ -5,18 +5,29 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import Card from "../components/Publications/PublicationsCard.astro";
 
+type CslItem = {
+  type?: string;
+  title?: string | string[];
+  issued?: { "date-parts"?: number[][] };
+  year?: string | number;
+  publisher?: string;
+  "container-title"?: string;
+  journal?: string;
+  booktitle?: string;
+};
+
 const bibPath = path.join(process.cwd(), "src/data/publications.bib");
 const bibText = await readFile(bibPath, "utf8");
 
 const input = new Citation(bibText);
-const items = input.format("data", { format: "object" });
+const items = input.format("data", { format: "object" }) as CslItem[];
 
-const getYear = (item: any) => {
+const getYear = (item: CslItem) => {
   const y = item?.issued?.["date-parts"]?.[0]?.[0] || item?.year || "";
   return y ? Number(y) : 0;
 };
 
-const getType = (item: any) => {
+const getType = (item: CslItem) => {
   if (item.type === "article-journal") return "Journal article";
   if (item.type === "paper-conference") return "Conference paper";
   if (item.type === "report") return "Report";
@@ -25,26 +36,26 @@ const getType = (item: any) => {
   return item.type || "Publication";
 };
 
-const getPublisher = (item: any) => item.publisher || item["container-title"] || item.journal || item.booktitle || "";
+const getPublisher = (item: CslItem) =>
+  item.publisher || item["container-title"] || item.journal || item.booktitle || "";
 
 const publications = items
-  .map((item: any) => ({
+  .map((item) => ({
     item,
     year: getYear(item),
     type: getType(item),
     publisher: getPublisher(item),
   }))
-  .sort((a: any, b: any) => b.year - a.year || String(a.item.title ?? "").localeCompare(String(b.item.title ?? "")));
+  .sort((a, b) => b.year - a.year || String(a.item.title ?? "").localeCompare(String(b.item.title ?? "")));
 
-const types = [...new Set(publications.map((p: any) => p.type).filter(Boolean))].sort();
-const years = [...new Set(publications.map((p: any) => p.year).filter(Boolean))].sort((a: any, b: any) => b - a);
-const publishers = [...new Set(publications.map((p: any) => p.publisher).filter(Boolean))].sort();
+const types = [...new Set(publications.map((p) => p.type).filter(Boolean))].sort();
+const years = [...new Set(publications.map((p) => p.year).filter(Boolean))].sort((a, b) => b - a);
+const publishers = [...new Set(publications.map((p) => p.publisher).filter(Boolean))].sort();
 
 const excerptWords = 70;
 ---
 
 <Layout>
-
   <section class="section research-page">
     <div class="container rp-shell">
       <header class="rp-head">
@@ -88,7 +99,7 @@ const excerptWords = 70;
       </header>
 
       <div class="rp-grid" id="researchGrid">
-        {publications.map((pub: any, index: number) => (
+        {publications.map((pub, index) => (
           <div
             class="research-item"
             data-type={pub.type}
@@ -102,13 +113,13 @@ const excerptWords = 70;
     </div>
   </section>
 
-  <script>
-    const norm = (s) => (s || "").toLowerCase().trim();
+  <script is:inline>
+    const norm = (s: string | null | undefined) => (s ?? "").toLowerCase().trim();
 
-    const typeSelect = document.getElementById("typeSelect");
-    const yearSelect = document.getElementById("yearSelect");
-    const publisherSelect = document.getElementById("publisherSelect");
-    const items = document.querySelectorAll("#researchGrid .research-item");
+    const typeSelect = document.getElementById("typeSelect") as HTMLSelectElement | null;
+    const yearSelect = document.getElementById("yearSelect") as HTMLSelectElement | null;
+    const publisherSelect = document.getElementById("publisherSelect") as HTMLSelectElement | null;
+    const items = document.querySelectorAll<HTMLElement>("#researchGrid .research-item");
 
     const applyFilters = () => {
       const activeType = norm(typeSelect?.value || "all");
@@ -133,105 +144,4 @@ const excerptWords = 70;
     publisherSelect?.addEventListener("change", applyFilters);
     applyFilters();
   </script>
-
-  <style>
-    .research-page {
-      padding-top: 4rem;
-    }
-
-    .rp-shell {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .rp-head {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .rp-intro {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      max-width: 720px;
-    }
-
-    .rp-lead,
-    .rp-note {
-      margin: 0;
-      line-height: 1.8;
-      font-size: 0.95rem;
-      color: var(--m);
-    }
-
-    .rp-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 0.5rem;
-    }
-
-    .filter-field {
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-      min-width: 190px;
-    }
-
-    .filter-field span {
-      font-family: var(--D);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--m);
-    }
-
-    .filter-field select {
-      width: 100%;
-      padding: 0.8rem 0.9rem;
-      border-radius: 4px;
-      border: 1px solid var(--bd);
-      background: var(--card);
-      color: var(--w);
-      font: inherit;
-      outline: none;
-    }
-
-    .filter-field select:focus {
-      border-color: var(--teal);
-      box-shadow: 0 0 0 3px rgba(0, 194, 168, 0.12);
-    }
-
-    #researchGrid {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .research-item {
-      width: 100%;
-    }
-
-    .research-item + .research-item {
-      margin-top: 1rem;
-      padding-top: 1rem;
-    }
-
-    .research-item[hidden] {
-      display: none;
-    }
-
-    @media (max-width: 640px) {
-      .rp-filters {
-        flex-direction: column;
-      }
-
-      .filter-field {
-        min-width: 0;
-        width: 100%;
-      }
-    }
-  </style>
 </Layout>

@@ -27,7 +27,7 @@ type Profile = {
   contact?: ProfileContact[];
 };
 
-const [profileEntry] = await getCollection<Profile>("profile");
+const profileEntry = (await getCollection<Profile>("profile"))[0];
 const profile = profileEntry?.data ?? {};
 
 const headline = profile.headline?.trim() ?? "";

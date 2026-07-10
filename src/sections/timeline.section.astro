@@ -1,21 +1,17 @@
 ---
-import { getExperience } from '@/lib/api';
-import TimelineItem from '../components/Story/TimelineItem.astro';
+import { getExperience } from "@/lib/api";
+import TimelineItem from "../components/Story/TimelineItem.astro";
 
-let timeline = [];
+type TimelineEntry = Awaited<ReturnType<typeof getExperience>>[number];
 
-try {
-  timeline = await getExperience();
-} catch (error) {
-  timeline = [];
-}
+const timeline: TimelineEntry[] = await getExperience().catch(() => []);
 ---
 
 <section id="timeline">
   <p class="sl">Career timeline</p>
-      <h2 class="story-lede">
-        From telescope data to strategic communications.
-      </h2>
+  <h2 class="story-lede">
+    From telescope data to strategic communications.
+  </h2>
 
   <div class="thread">
     {timeline.length > 0 ? (

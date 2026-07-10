@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import ProjectCard from "../components/Projects/ProjectCard.astro";
 
-const toTime = (value) => {
+const toTime = (value?: string) => {
   const time = value ? new Date(value).getTime() : 0;
   return Number.isFinite(time) ? time : 0;
 };
