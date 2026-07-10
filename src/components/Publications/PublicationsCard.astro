@@ -1,58 +1,77 @@
 ---
 interface Props {
-  item?: Record<string, any>;
+  item?: Record<string, unknown>;
   index?: number;
   bibText?: string;
 }
 
-const props = Astro.props as Props;
-const item = props.item ?? {};
-const bibText = props.bibText ?? "";
-const number = props.index ? String(props.index).padStart(2, "0") : "";
+const { item = {}, index, bibText = "" } = Astro.props;
 
-const clean = (v: unknown) => (v === null || v === undefined ? "" : String(v).trim());
+const number = index ? String(index).padStart(2, "0") : "";
+
+const clean = (value: unknown) => (value == null ? "" : String(value).trim());
 
 const normalizeAuthors = (authors: unknown) => {
   if (!Array.isArray(authors)) return "";
   return authors
-    .map((a: any) => [a.given || "", a.family || ""].filter(Boolean).join(" "))
+    .map((author) => {
+      if (!author || typeof author !== "object") return "";
+      const data = author as Record<string, unknown>;
+      return [clean(data.given), clean(data.family)].filter(Boolean).join(" ");
+    })
     .filter(Boolean)
     .join(", ");
 };
 
-const normalizeYear = (item: any) => item?.issued?.["date-parts"]?.[0]?.[0] || item?.year || "";
-const normalizeTitle = (item: any) => (Array.isArray(item.title) ? item.title.join(" ") : item.title || "Untitled");
-const normalizeContainer = (item: any) => item["container-title"] || item.journal || item.booktitle || item.publisher || "";
+const normalizeYear = (entry: Record<string, unknown>) =>
+  (entry.issued as { ["date-parts"]?: unknown[][] } | undefined)?.["date-parts"]?.[0]?.[0] ||
+  entry.year ||
+  "";
 
-const normalizeType = (item: any) => {
-  if (item.type === "article-journal") return "Journal article";
-  if (item.type === "paper-conference") return "Conference paper";
-  if (item.type === "report") return "Report";
-  if (item.type === "webpage") return "Web page";
-  if (item.type === "thesis") return "Thesis";
-  return item.type || "Publication";
+const normalizeTitle = (entry: Record<string, unknown>) =>
+  Array.isArray(entry.title) ? entry.title.map(String).join(" ") : clean(entry.title) || "Untitled";
+
+const normalizeContainer = (entry: Record<string, unknown>) =>
+  clean(entry["container-title"]) || clean(entry.journal) || clean(entry.booktitle) || clean(entry.publisher);
+
+const normalizeType = (entry: Record<string, unknown>) => {
+  switch (entry.type) {
+    case "article-journal":
+      return "Journal article";
+    case "paper-conference":
+      return "Conference paper";
+    case "report":
+      return "Report";
+    case "webpage":
+      return "Web page";
+    case "thesis":
+      return "Thesis";
+    default:
+      return clean(entry.type) || "Publication";
+  }
 };
 
-const normalizeUrl = (item: any) => item.URL || item.url || "";
-const normalizeDoi = (item: any) => item.DOI || item.doi || "";
-const normalizeAbstract = (item: any) => item.abstract || "";
-const normalizeKeywords = (item: any) => {
-  const raw = item.keyword || item.keywords || "";
-  if (Array.isArray(raw)) return raw.map(String).filter(Boolean);
-  if (typeof raw === "string") return raw.split(/[;,]/).map((s) => s.trim()).filter(Boolean);
+const normalizeUrl = (entry: Record<string, unknown>) => clean(entry.URL) || clean(entry.url);
+const normalizeDoi = (entry: Record<string, unknown>) => clean(entry.DOI) || clean(entry.doi);
+const normalizeAbstract = (entry: Record<string, unknown>) => clean(entry.abstract);
+
+const normalizeKeywords = (entry: Record<string, unknown>) => {
+  const raw = entry.keyword ?? entry.keywords ?? "";
+  if (Array.isArray(raw)) return raw.map(String).map(clean).filter(Boolean);
+  if (typeof raw === "string") return raw.split(/[;,]/).map(clean).filter(Boolean);
   return [];
 };
 
 const excerptWords = (text: string, count = 40) => {
-  const words = (text || "").trim().split(/\s+/).filter(Boolean);
-  if (words.length <= count) return { text: text || "", more: false };
-  return { text: words.slice(0, count).join(" ") + "...", more: true };
+  const words = text.trim().split(/\s+/).filter(Boolean);
+  if (words.length <= count) return { text, more: false };
+  return { text: `${words.slice(0, count).join(" ")}...`, more: true };
 };
 
-const pdfUrlFromItem = (item: any) => {
-  const file = item.file;
+const pdfUrlFromItem = (entry: Record<string, unknown>) => {
+  const file = entry.file;
   if (!file) return "";
-  const raw = Array.isArray(file) ? String(file[0] || "") : String(file);
+  const raw = Array.isArray(file) ? String(file[0] ?? "") : String(file);
   const match = raw.match(/^[^:]+:([^:]+):application\/pdf$/i);
   return match ? `/${match[1]}` : "";
 };
@@ -78,7 +97,13 @@ const bibtexHref = `data:text/x-bibtex;charset=utf-8,${encodeURIComponent(bibTex
 
   <div class="pm">
     <div class="pub-top">
-      <h3>{titleUrl ? <a href={titleUrl} target="_blank" rel="noopener noreferrer">{title}</a> : title}</h3>
+      <h3>
+        {titleUrl ? (
+          <a href={titleUrl} target="_blank" rel="noopener noreferrer">{title}</a>
+        ) : (
+          title
+        )}
+      </h3>
       {year && <span class="date">{year}</span>}
     </div>
 
@@ -90,7 +115,7 @@ const bibtexHref = `data:text/x-bibtex;charset=utf-8,${encodeURIComponent(bibTex
 
     {keywords.length > 0 && (
       <div class="pt">
-        {keywords.map((t) => <span class="tag">{t}</span>)}
+        {keywords.map((keyword) => <span class="tag">{keyword}</span>)}
       </div>
     )}
 

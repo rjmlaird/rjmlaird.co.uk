@@ -1,5 +1,3 @@
-import type { Slug } from "./base.schema";
-
 export type OrganisationType =
   | "partner"
   | "client"

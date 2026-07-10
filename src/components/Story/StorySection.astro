@@ -13,28 +13,21 @@ interface Props {
 }
 
 const { title, body, timeline } = Astro.props;
+const bodyHtml = body ? body : await Astro.slots.render("default");
 ---
 
 <section id="story">
   <p class="sl">Brand story</p>
 
   <div class="story-grid">
-    <!-- LEFT: Narrative -->
     <div>
-      <h2 class="story-lede fade">
-        {title}
-      </h2>
+      <h2 class="story-lede fade">{title}</h2>
 
       <div class="story-body fade">
-        {body ? (
-          <Fragment set:html={body} />
-        ) : (
-          <slot />
-        )}
+        {bodyHtml ? <Fragment set:html={bodyHtml} /> : null}
       </div>
     </div>
 
-    <!-- RIGHT: Timeline -->
     <Timeline items={timeline} />
   </div>
 </section>

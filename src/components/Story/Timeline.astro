@@ -15,7 +15,7 @@ interface Props {
 const { items = [] } = Astro.props;
 ---
 
-{Array.isArray(items) && items.length > 0 ? (
+{items.length > 0 ? (
   <div class="thread">
     {items.map((item) => (
       <TimelineItem {...item} />
