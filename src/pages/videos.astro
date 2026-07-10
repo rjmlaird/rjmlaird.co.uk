@@ -8,14 +8,15 @@ const toTime = (value) => {
   return Number.isFinite(time) ? time : 0;
 };
 
+const normalize = (value) => (value || "").toString().trim();
+
 const sortedVideos = [...videos].sort((a, b) => toTime(b.published) - toTime(a.published));
 
-const clients = [...new Set(sortedVideos.map((v) => v.client).filter(Boolean))].sort();
-const topics = [...new Set(sortedVideos.flatMap((v) => v.topics || []).filter(Boolean))].sort();
+const clients = [...new Set(sortedVideos.map((v) => normalize(v.client)).filter(Boolean))].sort();
+const topics = [...new Set(sortedVideos.flatMap((v) => v.topics || []).map(normalize).filter(Boolean))].sort();
 ---
 
 <Layout>
-
   <section class="section video-gallery">
     <div class="container vg-shell">
       <header class="vg-head">
@@ -60,15 +61,19 @@ const topics = [...new Set(sortedVideos.flatMap((v) => v.topics || []).filter(Bo
 
       <div class="vg-grid" id="videoGrid">
         {sortedVideos.map((video, index) => (
-          <div class="video-item" data-client={video.client || ""} data-topics={(video.topics || []).join(",")}>
+          <div
+            class="video-item"
+            data-client={normalize(video.client)}
+            data-topics={(video.topics || []).map(normalize).join(",")}
+          >
             <VideosCard
               article={{
                 id: index + 1,
                 title: video.title || "Untitled",
                 excerpt: video.summary || video.description || "",
-                publication: video.client || "",
+                publication: normalize(video.client),
                 date: video.published || "",
-                topic: video.topics?.[0] || "",
+                topic: normalize(video.topics?.[0]),
                 image: video.thumbnail_image || "",
                 url: video.url || "",
                 video: video.url || "",
@@ -82,7 +87,7 @@ const topics = [...new Set(sortedVideos.flatMap((v) => v.topics || []).filter(Bo
   </section>
 </Layout>
 
-<script>
+<script is:inline>
   const norm = (s) => (s || "").toLowerCase().trim();
 
   const clientSelect = document.getElementById("clientSelect");
@@ -95,8 +100,11 @@ const topics = [...new Set(sortedVideos.flatMap((v) => v.topics || []).filter(Bo
 
     items.forEach((el) => {
       const client = norm(el.dataset.client);
-      const topics = norm(el.dataset.topics);
-      const topicList = topics ? topics.split(",").map((t) => t.trim()) : [];
+      const topicList = (el.dataset.topics || "")
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean)
+        .map(norm);
 
       const clientOk = activeClient === "all" || client === activeClient;
       const topicOk = activeTopic === "all" || topicList.includes(activeTopic);

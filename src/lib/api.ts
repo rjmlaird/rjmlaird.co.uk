@@ -10,7 +10,7 @@ const collectionSchemas = {
   experience: z.array(experienceItemSchema),
   skills: z.array(skillItemSchema),
   tools: z.array(toolItemSchema),
-} as const;
+} as const satisfies Record<CollectionName, z.ZodTypeAny>;
 
 type CollectionMap = {
   experience: ExperienceItem[];
@@ -20,11 +20,11 @@ type CollectionMap = {
 
 function resolveBase(base?: string | URL): URL {
   if (base instanceof URL) return base;
-  if (typeof base === "string" && base) return new URL(base);
-  throw new Error("Missing base URL for fetchCollection(). Pass Astro.url or an absolute base URL.");
+  if (typeof base === "string" && base.length > 0) return new URL(base);
+  throw new Error("Missing base URL. Pass Astro.url or an absolute URL.");
 }
 
-async function fetchCollection<T>(collection: CollectionName, base?: string | URL): Promise<T> {
+async function fetchCollection<T>(collection: CollectionName, base: string | URL): Promise<T> {
   const url = new URL(`/api/${collection}`, resolveBase(base));
 
   const res = await fetch(url, {
@@ -40,17 +40,23 @@ async function fetchCollection<T>(collection: CollectionName, base?: string | UR
 
 async function fetchAndParse<K extends CollectionName>(
   collection: K,
-  base?: string | URL,
+  base: string | URL,
 ): Promise<CollectionMap[K]> {
   const data = await fetchCollection<unknown>(collection, base);
   return collectionSchemas[collection].parse(data) as CollectionMap[K];
 }
 
-export function getCollection<K extends CollectionName>(collection: K, base: string | URL) {
+export function getCollection<K extends CollectionName>(
+  collection: K,
+  base: string | URL,
+): Promise<CollectionMap[K]> {
   return fetchCollection<CollectionMap[K]>(collection, base);
 }
 
-export function getCollectionSafe<K extends CollectionName>(collection: K, base: string | URL) {
+export function getCollectionSafe<K extends CollectionName>(
+  collection: K,
+  base: string | URL,
+): Promise<CollectionMap[K]> {
   return fetchAndParse(collection, base);
 }
 

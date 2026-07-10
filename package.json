@@ -13,5 +13,9 @@
     "astro-icon": "^1.1.5",
     "citation-js": "^0.8.1",
     "slugify": "^1.6.9"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^7.0.2"
   }
 }
