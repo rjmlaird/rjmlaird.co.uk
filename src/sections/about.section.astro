@@ -21,20 +21,26 @@ type ProfileData = {
   avatar?: string;
   role?: string;
   website?: string;
+  credentials?: string;
   biography?: string[];
-  credentials?: string[];
   interests?: string[];
   socials?: ProfileLink[];
+  portfolioLinks?: ProfileLink[];
+  contact?: ProfileContact[];
 };
 
 const profile = profileData as ProfileData;
 
 const headline = profile.headline?.trim() ?? "";
 const biography = Array.isArray(profile.biography) ? profile.biography : [];
-const credentials = Array.isArray(profile.credentials) ? profile.credentials : [];
+const credentials = profile.credentials?.trim() ? [profile.credentials.trim()] : [];
 const tags = Array.isArray(profile.interests) ? profile.interests : [];
-const links = Array.isArray(profile.socials) ? profile.socials : [];
-const contact = profile.email ? [{ label: "Email", href: `mailto:${profile.email}` }] : [];
+const links = Array.isArray(profile.portfolioLinks)
+  ? profile.portfolioLinks
+  : Array.isArray(profile.socials)
+    ? profile.socials
+    : [];
+const contact = Array.isArray(profile.contact) ? profile.contact : [];
 ---
 
 <section id="about" aria-labelledby="about-title">
