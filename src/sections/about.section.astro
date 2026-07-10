@@ -1,37 +1,57 @@
 ---
 import { getCollection } from "../lib/api";
 
-const profile = await getCollection<any>("profile");
+type ProfileLink = {
+  label: string;
+  href: string;
+};
 
-const headline = profile?.headline ?? "";
-const biography = profile?.biography ?? "";
-const credentials = Array.isArray(profile?.summary) ? profile.summary : [];
-const links = Array.isArray(profile?.portfolioLinks) ? profile.portfolioLinks : [];
-const contact = Array.isArray(profile?.contact) ? profile.contact : [];
+type ProfileContact = {
+  label: string;
+  href: string;
+};
+
+type Profile = {
+  name?: string;
+  headline?: string;
+  biography?: string;
+  summary?: string[];
+  portfolioLinks?: ProfileLink[];
+  contact?: ProfileContact[];
+};
+
+const profile = (await getCollection<Profile>("profile")) ?? {};
+
+const headline = profile.headline?.trim() ?? "";
+const biography = profile.biography?.trim() ?? "";
+const credentials = Array.isArray(profile.summary) ? profile.summary : [];
+const links = Array.isArray(profile.portfolioLinks) ? profile.portfolioLinks : [];
+const contact = Array.isArray(profile.contact) ? profile.contact : [];
 ---
 
-<section id="about">
+<section id="about" aria-labelledby="about-title">
   <p class="sl">About</p>
 
   <div class="about-grid">
     <div>
-      <h3 class="ah fade">
-        {profile?.name ?? ""}<br />
+      <h2 id="about-title" class="ah fade">
+        {profile.name ?? ""}
+        <br />
         <em>{headline}</em>
-      </h3>
+      </h2>
 
       <div class="ab fade">
-        {biography}
+        <p>{biography}</p>
       </div>
 
-      <div class="cred-row fade">
-        {credentials.map((c) => (
-          <span class="cred-badge cb-m">{c}</span>
+      <div class="cred-row fade" aria-label="Key credentials">
+        {credentials.map((item) => (
+          <span class="cred-badge cb-m">{item}</span>
         ))}
       </div>
     </div>
 
-    <div class="sp fade">
+    <aside class="sp fade" aria-label="Find me elsewhere">
       <div class="sp-h">Find me elsewhere</div>
 
       {links.map((link) => (
@@ -39,7 +59,7 @@ const contact = Array.isArray(profile?.contact) ? profile.contact : [];
           <div class="sl2">
             <span class="su">{link.label}</span>
           </div>
-          <span class="sa">→</span>
+          <span class="sa" aria-hidden="true">→</span>
         </a>
       ))}
 
@@ -48,9 +68,9 @@ const contact = Array.isArray(profile?.contact) ? profile.contact : [];
           <div class="sl2">
             <span class="su">{item.label}</span>
           </div>
-          <span class="sa">→</span>
+          <span class="sa" aria-hidden="true">→</span>
         </a>
       ))}
-    </div>
+    </aside>
   </div>
 </section>
