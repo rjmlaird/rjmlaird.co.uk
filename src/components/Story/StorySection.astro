@@ -5,10 +5,12 @@ interface Props {
   title: string;
   body?: string;
   timeline: Array<{
-    era: string;
+    id?: number;
+    date: string;
     title: string;
-    description: string;
-    colour?: "teal" | "amber" | "violet";
+    company?: string;
+    summary?: string;
+    location?: string;
   }>;
 }
 

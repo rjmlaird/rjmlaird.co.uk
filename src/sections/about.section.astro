@@ -1,6 +1,5 @@
 ---
 import profileData from "../data/profile.json";
-import { type Profile } from "../lib/schemas/profile.schema";
 
 type ProfileLink = {
   label: string;
@@ -12,19 +11,30 @@ type ProfileContact = {
   href: string;
 };
 
-type LocalProfile = Profile & {
-  portfolioLinks?: ProfileLink[];
-  contact?: ProfileContact[];
+type ProfileData = {
+  name?: string;
+  preferredName?: string;
+  pronouns?: string;
+  headline?: string;
+  location?: string;
+  email?: string;
+  avatar?: string;
+  role?: string;
+  website?: string;
+  biography?: string[];
+  credentials?: string[];
+  interests?: string[];
+  socials?: ProfileLink[];
 };
 
-const profile = profileData as LocalProfile;
+const profile = profileData as ProfileData;
 
 const headline = profile.headline?.trim() ?? "";
 const biography = Array.isArray(profile.biography) ? profile.biography : [];
-const credentials = profile.credentials?.trim() ? [profile.credentials.trim()] : [];
-const tags = Array.isArray(profile.tags) ? profile.tags : [];
-const links = Array.isArray(profile.portfolioLinks) ? profile.portfolioLinks : [];
-const contact = Array.isArray(profile.contact) ? profile.contact : [];
+const credentials = Array.isArray(profile.credentials) ? profile.credentials : [];
+const tags = Array.isArray(profile.interests) ? profile.interests : [];
+const links = Array.isArray(profile.socials) ? profile.socials : [];
+const contact = profile.email ? [{ label: "Email", href: `mailto:${profile.email}` }] : [];
 ---
 
 <section id="about" aria-labelledby="about-title">

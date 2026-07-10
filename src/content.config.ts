@@ -1,5 +1,4 @@
-import { defineCollection } from "astro:content";
-import { z } from "astro/zod";
+import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
 const projectLinksSchema = z.object({
@@ -20,11 +19,12 @@ const projectSchema = z.object({
   status: z.string().optional(),
   description: z.string().optional(),
   date: z.string().optional(),
+  draft: z.boolean().optional(),
   tools_tech: z.array(z.string()).optional(),
   features: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   links: projectLinksSchema.optional(),
-  impact: z.record(z.string(), z.unknown()).optional(),
+  impact: z.record(z.unknown()).optional(),
 });
 
 const blog = defineCollection({
