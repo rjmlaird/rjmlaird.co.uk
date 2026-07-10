@@ -18,8 +18,8 @@ type CollectionMap = {
   tools: ToolItem[];
 };
 
-async function fetchCollection<T>(collection: CollectionName): Promise<T> {
-  const res = await fetch(`/api/${collection}`, {
+async function fetchCollection<T>(collection: CollectionName, base: URL): Promise<T> {
+  const res = await fetch(new URL(`/api/${collection}`, base), {
     headers: { accept: "application/json" },
   });
 
@@ -32,27 +32,28 @@ async function fetchCollection<T>(collection: CollectionName): Promise<T> {
 
 async function fetchAndParse<K extends CollectionName>(
   collection: K,
+  base: URL,
 ): Promise<CollectionMap[K]> {
-  const data = await fetchCollection<unknown>(collection);
+  const data = await fetchCollection<unknown>(collection, base);
   return collectionSchemas[collection].parse(data) as CollectionMap[K];
 }
 
-export function getCollection<K extends CollectionName>(collection: K) {
-  return fetchCollection<CollectionMap[K]>(collection);
+export function getCollection<K extends CollectionName>(collection: K, base: URL) {
+  return fetchCollection<CollectionMap[K]>(collection, base);
 }
 
-export function getCollectionSafe<K extends CollectionName>(collection: K) {
-  return fetchAndParse(collection);
+export function getCollectionSafe<K extends CollectionName>(collection: K, base: URL) {
+  return fetchAndParse(collection, base);
 }
 
-export function getExperience(): Promise<ExperienceItem[]> {
-  return fetchAndParse("experience");
+export function getExperience(base: URL): Promise<ExperienceItem[]> {
+  return fetchAndParse("experience", base);
 }
 
-export function getSkills(): Promise<SkillItem[]> {
-  return fetchAndParse("skills");
+export function getSkills(base: URL): Promise<SkillItem[]> {
+  return fetchAndParse("skills", base);
 }
 
-export function getTools(): Promise<ToolItem[]> {
-  return fetchAndParse("tools");
+export function getTools(base: URL): Promise<ToolItem[]> {
+  return fetchAndParse("tools", base);
 }
