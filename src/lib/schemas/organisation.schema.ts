@@ -18,7 +18,7 @@ export type OrganisationIndustry =
 
 export type Organisation = {
   organisation: string;
-  slug: Slug;
+  slug: string;
   description?: string;
   url?: string;
   hubspotId?: string;

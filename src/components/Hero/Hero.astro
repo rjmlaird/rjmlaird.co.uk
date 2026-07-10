@@ -7,9 +7,10 @@ interface Props {
   surname: string;
   tagline: string;
   description: string;
+  credentials: string[];
 }
 
-const { title, surname, tagline, description } = Astro.props;
+const { title, surname, tagline, description, credentials } = Astro.props;
 ---
 
 <section id="hero">
@@ -25,7 +26,7 @@ const { title, surname, tagline, description } = Astro.props;
   </h1>
 
   <p class="creds">
-    <Credentials />
+    <Credentials credentials={credentials} />
   </p>
 
   <p class="hp">{description}</p>
