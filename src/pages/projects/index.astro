@@ -11,19 +11,22 @@ const toTime = (value?: string) => {
   return Number.isFinite(time) ? time : 0;
 };
 
-const makeSlug = (value?: string) => slugify(value || "", { lower: true, strict: true, trim: true });
+const makeSlug = (value?: string) =>
+  slugify(value ?? "", { lower: true, strict: true, trim: true });
 
 const entries = (await getCollection("projects"))
   .filter((entry) => !entry.data.draft)
   .sort((a, b) => toTime(b.data.date) - toTime(a.data.date));
 
-const yearList = [...new Set(entries.flatMap((entry) => {
-  const d = entry.data.date ? new Date(entry.data.date) : null;
-  return d && !Number.isNaN(d.getTime()) ? [String(d.getFullYear())] : [];
-}))].sort((a, b) => Number(b) - Number(a));
+const yearList = [...new Set(
+  entries.flatMap((entry) => {
+    const date = entry.data.date ? new Date(entry.data.date) : null;
+    return date && !Number.isNaN(date.getTime()) ? [String(date.getFullYear())] : [];
+  })
+)].sort((a, b) => Number(b) - Number(a));
 
-const typeList = [...new Set(entries.flatMap((entry) => (entry.data.type ? [entry.data.type] : [])))].sort();
-const statusList = [...new Set(entries.flatMap((entry) => (entry.data.status ? [entry.data.status] : [])))].sort();
+const typeList = [...new Set(entries.flatMap((entry) => entry.data.type ? [entry.data.type] : []))].sort();
+const statusList = [...new Set(entries.flatMap((entry) => entry.data.status ? [entry.data.status] : []))].sort();
 const toolList = [...new Set(entries.flatMap((entry) => Array.isArray(entry.data.tools_tech) ? entry.data.tools_tech : []))].sort();
 const tagList = [...new Set(entries.flatMap((entry) => Array.isArray(entry.data.tags) ? entry.data.tags : []))].sort();
 const featuredList = ["featured", "not featured"];
@@ -129,6 +132,8 @@ const featuredList = ["featured", "not featured"];
 
   <script is:inline>
     const norm = (s) => (s || "").toLowerCase().trim();
+    const splitList = (value) => (value || "").split(",").map((v) => norm(v)).filter(Boolean);
+
     const dateSelect = document.getElementById("dateSelect");
     const typeSelect = document.getElementById("typeSelect");
     const statusSelect = document.getElementById("statusSelect");
@@ -136,8 +141,6 @@ const featuredList = ["featured", "not featured"];
     const featuredSelect = document.getElementById("featuredSelect");
     const tagSelect = document.getElementById("tagSelect");
     const items = document.querySelectorAll("#projectsGrid .publication-item");
-
-    const splitList = (value) => (value || "").split(",").map((v) => norm(v)).filter(Boolean);
 
     const applyFilters = () => {
       const activeDate = norm(/** @type {HTMLSelectElement | null} */ (dateSelect)?.value || "all");
@@ -156,14 +159,14 @@ const featuredList = ["featured", "not featured"];
         const itemTags = splitList(item.dataset.tags);
         const itemFeatured = norm(item.dataset.featured);
 
-        const dateOk = activeDate === "all" || itemDate === activeDate;
-        const typeOk = activeType === "all" || itemType === activeType;
-        const statusOk = activeStatus === "all" || itemStatus === activeStatus;
-        const toolOk = activeTool === "all" || itemTools.includes(activeTool);
-        const featuredOk = activeFeatured === "all" || itemFeatured === activeFeatured;
-        const tagOk = activeTag === "all" || itemTags.includes(activeTag);
-
-        item.hidden = !(dateOk && typeOk && statusOk && toolOk && featuredOk && tagOk);
+        item.hidden = !(
+          (activeDate === "all" || itemDate === activeDate) &&
+          (activeType === "all" || itemType === activeType) &&
+          (activeStatus === "all" || itemStatus === activeStatus) &&
+          (activeTool === "all" || itemTools.includes(activeTool)) &&
+          (activeFeatured === "all" || itemFeatured === activeFeatured) &&
+          (activeTag === "all" || itemTags.includes(activeTag))
+        );
       });
     };
 

@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import BlogCard from "../../components/Publications/BlogCard.astro";
 import { getCollection } from "astro:content";
 
-const toTime = (value) => {
+const toTime = (value?: string) => {
   const time = value ? new Date(value).getTime() : 0;
   return Number.isFinite(time) ? time : 0;
 };
@@ -24,16 +24,15 @@ const topicList = [
 ---
 
 <Layout>
-
-
   <section class="section blog-gallery">
     <div class="container pg-shell">
       <header class="pg-head">
         <p class="eyebrow">Articles</p>
 
-      <h1 class="ch fade">
-        Writing across <em>space, sustainability & science policy</em>
-      </h1>
+        <h1 class="ch fade">
+          Writing across <em>space, sustainability &amp; science policy</em>
+        </h1>
+
         <div class="pg-intro">
           <p class="pg-lead">
             Selected articles, reports, and commentary across space systems, climate intelligence, and innovation ecosystems.
@@ -45,7 +44,6 @@ const topicList = [
         </div>
 
         <div class="pg-filters" aria-label="Blog filters">
-
           <label class="filter-field" for="topicSelect">
             <span>Topic</span>
             <select id="topicSelect">
@@ -60,11 +58,12 @@ const topicList = [
 
       <div class="pg-grid" id="blogGrid">
         {entries.map((entry) => {
-          const topics = Array.isArray(entry.data.tags) && entry.data.tags.length > 0
-            ? entry.data.tags
-            : entry.data.tag
-              ? [entry.data.tag]
-              : [];
+          const topics =
+            Array.isArray(entry.data.tags) && entry.data.tags.length > 0
+              ? entry.data.tags
+              : entry.data.tag
+                ? [entry.data.tag]
+                : [];
 
           return (
             <div class="publication-item" data-topics={topics.join(",")}>
@@ -76,21 +75,22 @@ const topicList = [
     </div>
   </section>
 
-  <script>
+  <script is:inline>
     const norm = (s) => (s || "").toLowerCase().trim();
     const topicSelect = document.getElementById("topicSelect");
     const items = document.querySelectorAll("#blogGrid .publication-item");
 
     const applyFilters = () => {
-      const activeTopic = norm(topicSelect?.value || "all");
+      const activeTopic = norm(/** @type {HTMLSelectElement | null} */ (topicSelect)?.value || "all");
 
       items.forEach((el) => {
-        const topics = (el.dataset.topics || "")
+        const item = /** @type {HTMLElement} */ (el);
+        const topics = (item.dataset.topics || "")
           .split(",")
           .map((t) => norm(t))
           .filter(Boolean);
 
-        el.hidden = !(activeTopic === "all" || topics.includes(activeTopic));
+        item.hidden = !(activeTopic === "all" || topics.includes(activeTopic));
       });
     };
 
@@ -98,6 +98,7 @@ const topicList = [
     applyFilters();
   </script>
 </Layout>
+
 
 <style>
   .publications-gallery {

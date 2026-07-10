@@ -24,8 +24,6 @@ export type MembershipType =
   | "nonprofit_network"
   | "ethics_network"
   | "business_climate_network"
-  | "education_network"
-  | "space_network"
   | "urban_innovation_network";
 
 export type MembershipRole =
@@ -37,50 +35,28 @@ export type MembershipRole =
   | "Supporter"
   | string;
 
-export interface MembershipItem {
-  /** Human-readable organisation name */
+export type MembershipItem = {
   organisation: string;
-
-  /** URL-safe slug for routing / CMS */
   slug: string;
-
-  /** Stable internal identifier used across datasets */
   organisationSlug: string;
-
-  /** User’s role within the organisation */
   role: MembershipRole;
-
-  /** Classification of organisation */
   type: MembershipType;
-
-  /** Optional descriptive context for search, tagging, clustering */
   description?: string;
-
-  /** Optional SEO / graph enrichment tags */
   keywords?: string[];
-
-  /** Optional external links */
   links?: {
     website?: string;
     profile?: string;
   };
-
-  /** Optional temporal metadata for lifecycle tracking */
-  activeFrom?: string; // ISO date
-  activeTo?: string;   // ISO date
-
-  /** Optional confidence / verification layer for data integrity */
+  activeFrom?: string;
+  activeTo?: string;
   verified?: boolean;
-}
+};
 
-export interface MembershipGroup {
-  /** Section title for UI grouping */
+export type MembershipGroup = {
   title: string;
-
-  /** Membership entries in this group */
   items: MembershipItem[];
-}
+};
 
-export interface MembershipSchema {
+export type MembershipSchema = {
   memberships: MembershipGroup[];
-}
+};

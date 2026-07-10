@@ -1,4 +1,3 @@
-// lib/schemas/organisation.schema.ts
 import type { Slug } from "./base.schema";
 
 export type OrganisationType =
