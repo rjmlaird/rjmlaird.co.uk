@@ -33,48 +33,50 @@ export const employmentTypeSchema = z.enum([
 
 export const workModeSchema = z.enum(["remote", "hybrid", "onsite"]);
 
+const urlField = () => z.string().trim().pipe(z.url());
+
 export const experienceLinkSchema = z.object({
-  label: z.string(),
-  url: z.string().url(),
+  label: z.string().trim(),
+  url: urlField(),
 });
 
 export const organisationSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  slug: z.string(),
+  id: z.string().trim(),
+  name: z.string().trim(),
+  slug: z.string().trim(),
   type: experienceModeSchema.optional(),
-  website: z.string().url().optional(),
+  website: urlField().optional(),
 });
 
 export const experienceImpactSchema = z.object({
-  metric: z.string(),
+  metric: z.string().trim(),
   value: z.union([z.string(), z.number()]),
-  context: z.string().optional(),
+  context: z.string().trim().optional(),
 });
 
 export const experienceMediaSchema = z.object({
   type: z.enum(["image", "video", "article"]),
-  url: z.string().url(),
-  caption: z.string().optional(),
+  url: urlField(),
+  caption: z.string().trim().optional(),
 });
 
 export const experienceItemSchema = z.object({
-  id: z.string(),
-  organisation: z.union([organisationSchema, z.string()]),
-  role: z.string(),
+  id: z.string().trim(),
+  organisation: z.union([organisationSchema, z.string().trim()]),
+  role: z.string().trim(),
   employmentType: employmentTypeSchema,
   organisationType: experienceModeSchema.optional(),
-  location: z.string(),
+  location: z.string().trim(),
   workMode: workModeSchema,
-  summary: z.string(),
-  responsibilities: z.array(z.string()),
-  skills: z.array(z.string()),
+  summary: z.string().trim(),
+  responsibilities: z.array(z.string().trim()).default([]),
+  skills: z.array(z.string().trim()).default([]),
   links: z.array(experienceLinkSchema).optional(),
-  organisationSlug: z.string().optional(),
-  hubspotId: z.string().optional(),
-  keywords: z.array(z.string()).optional(),
-  startDate: z.string(),
-  endDate: z.string().nullable().optional(),
+  organisationSlug: z.string().trim().optional(),
+  hubspotId: z.string().trim().optional(),
+  keywords: z.array(z.string().trim()).optional(),
+  startDate: z.string().trim(),
+  endDate: z.string().trim().nullable().optional(),
   isCurrent: z.boolean().optional(),
   impact: z.array(experienceImpactSchema).optional(),
   media: z.array(experienceMediaSchema).optional(),
@@ -86,8 +88,8 @@ export const experienceResponseSchema = z.object({
   meta: z
     .object({
       total: z.number().int(),
-      generatedAt: z.string(),
-      version: z.string(),
+      generatedAt: z.string().trim(),
+      version: z.string().trim(),
     })
     .optional(),
 });

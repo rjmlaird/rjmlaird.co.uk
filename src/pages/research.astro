@@ -51,8 +51,6 @@ const publications = items
 const types = [...new Set(publications.map((p) => p.type).filter(Boolean))].sort();
 const years = [...new Set(publications.map((p) => p.year).filter(Boolean))].sort((a, b) => b - a);
 const publishers = [...new Set(publications.map((p) => p.publisher).filter(Boolean))].sort();
-
-const excerptWords = 70;
 ---
 
 <Layout>

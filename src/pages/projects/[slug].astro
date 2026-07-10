@@ -1,28 +1,26 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getCollection, render } from "astro:content";
+import { getCollection, render, type CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
-  const entries = await getCollection("projects");
+  const entries = await getCollection("projects", ({ data }) => data.draft !== true);
 
-  return entries
-    .filter((entry) => !entry.data.draft)
-    .map((entry) => {
-      const slug = entry.data.slug || entry.id;
+  return entries.map((entry) => {
+    const slug = entry.data.slug || entry.id;
 
-      if (!slug) {
-        throw new Error(`Missing slug for project entry: ${entry.id}`);
-      }
+    if (!slug) {
+      throw new Error(`Missing slug for project entry: ${entry.id}`);
+    }
 
-      return {
-        params: { slug: String(slug) },
-        props: { entry, slug: String(slug) },
-      };
-    });
+    return {
+      params: { slug: String(slug) },
+      props: { entry, slug: String(slug) },
+    };
+  });
 }
 
 const { entry, slug } = Astro.props as {
-  entry: Awaited<ReturnType<typeof getCollection>>[number];
+  entry: CollectionEntry<"projects">;
   slug: string;
 };
 
@@ -81,7 +79,7 @@ const links = project.links || {};
             <section class="sidebar-block">
               <h2>Tools</h2>
               <ul class="chip-list">
-                {tools.map((tool) => <li>{tool}</li>)}
+                {tools.map((tool: string) => <li>{tool}</li>)}
               </ul>
             </section>
           )}
@@ -90,7 +88,7 @@ const links = project.links || {};
             <section class="sidebar-block">
               <h2>Features</h2>
               <ul class="bullet-list">
-                {features.map((feature) => <li>{feature}</li>)}
+                {features.map((feature: string) => <li>{feature}</li>)}
               </ul>
             </section>
           )}
@@ -99,7 +97,7 @@ const links = project.links || {};
             <section class="sidebar-block">
               <h2>Tags</h2>
               <ul class="chip-list">
-                {tags.map((tag) => <li>{tag}</li>)}
+                {tags.map((tag: string) => <li>{tag}</li>)}
               </ul>
             </section>
           )}

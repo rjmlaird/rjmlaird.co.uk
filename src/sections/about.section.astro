@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "../lib/api";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 type ProfileLink = {
   label: string;
@@ -27,8 +27,8 @@ type Profile = {
   contact?: ProfileContact[];
 };
 
-const profileEntry = (await getCollection<Profile>("profile"))[0];
-const profile = profileEntry?.data ?? {};
+const profileEntry = (await getCollection("profile"))[0] as CollectionEntry<"profile"> | undefined;
+const profile = (profileEntry?.data ?? {}) as Profile;
 
 const headline = profile.headline?.trim() ?? "";
 const biography = Array.isArray(profile.biography) ? profile.biography : [];
@@ -51,13 +51,13 @@ const contact = Array.isArray(profile.contact) ? profile.contact : [];
 
       {biography.length > 0 && (
         <div class="ab fade">
-          {biography.map((paragraph) => <p>{paragraph}</p>)}
+          {biography.map((paragraph: string) => <p>{paragraph}</p>)}
         </div>
       )}
 
       {credentials.length > 0 && (
         <div class="cred-row fade" aria-label="Credentials">
-          {credentials.map((c) => (
+          {credentials.map((c: string) => (
             <span class="cred-badge cb-m">{c}</span>
           ))}
         </div>
@@ -65,7 +65,7 @@ const contact = Array.isArray(profile.contact) ? profile.contact : [];
 
       {tags.length > 0 && (
         <div class="cred-row fade" aria-label="Topics">
-          {tags.map((tag) => (
+          {tags.map((tag: string) => (
             <span class="cred-badge cb-m">{tag}</span>
           ))}
         </div>
@@ -75,7 +75,7 @@ const contact = Array.isArray(profile.contact) ? profile.contact : [];
     <aside class="sp fade" aria-label="Find me elsewhere">
       <div class="sp-h">Find me elsewhere</div>
 
-      {links.map((link) => (
+      {links.map((link: ProfileLink) => (
         <a class="si" href={link.href} target="_blank" rel="noopener noreferrer">
           <div class="sl2">
             <span class="su">{link.label}</span>
@@ -84,7 +84,7 @@ const contact = Array.isArray(profile.contact) ? profile.contact : [];
         </a>
       ))}
 
-      {contact.map((item) => (
+      {contact.map((item: ProfileContact) => (
         <a class="si" href={item.href} target="_blank" rel="noopener noreferrer">
           <div class="sl2">
             <span class="su">{item.label}</span>

@@ -2,17 +2,17 @@ import { z } from "zod";
 import { socialSchema } from "./base.schema";
 
 export const profileSchema = z.object({
-  name: z.string(),
-  preferredName: z.string().optional(),
-  pronouns: z.string().optional(),
-  headline: z.string(),
-  biography: z.string(),
-  location: z.string(),
-  email: z.string().email(),
-  website: z.string().url(),
-  avatar: z.string(),
-  credentials: z.array(z.string()).default([]),
-  interests: z.array(z.string()).default([]),
+  name: z.string().trim(),
+  preferredName: z.string().trim().optional(),
+  pronouns: z.string().trim().optional(),
+  headline: z.string().trim(),
+  biography: z.string().trim(),
+  location: z.string().trim(),
+  email: z.string().trim().pipe(z.email()),
+  website: z.string().trim().pipe(z.url()),
+  avatar: z.string().trim(),
+  credentials: z.array(z.string().trim()).default([]),
+  interests: z.array(z.string().trim()).default([]),
   socials: z.array(socialSchema).default([]),
 });
 

@@ -14,16 +14,27 @@ type Article = {
 };
 
 const toTime = (value?: string) => {
-  const time = new Date(value || 0).getTime();
+  const time = value ? new Date(value).getTime() : 0;
   return Number.isFinite(time) ? time : 0;
 };
 
 const articles = Array.isArray(articlesData?.articles) ? (articlesData.articles as Article[]) : [];
+
 const sortedArticles = [...articles].sort((a, b) => toTime(b.date) - toTime(a.date));
 
-const publications = [...new Set(sortedArticles.map((a) => a.publication).filter(Boolean))].sort();
+const publications = [...new Set(sortedArticles.map((a) => a.publication).filter((v): v is string => Boolean(v)))].sort();
 
-const topicList = [...new Set(sortedArticles.flatMap((article) => article.topics?.length ? article.topics : article.topic ? [article.topic] : []))].sort();
+const topicList = [
+  ...new Set(
+    sortedArticles.flatMap((article) =>
+      Array.isArray(article.topics) && article.topics.length
+        ? article.topics
+        : article.topic
+          ? [article.topic]
+          : [],
+    ),
+  ),
+].sort();
 ---
 
 <Layout>
@@ -51,7 +62,7 @@ const topicList = [...new Set(sortedArticles.flatMap((article) => article.topics
             <span>Publication</span>
             <select id="publicationSelect">
               <option value="all">All publications</option>
-              {publications.map((publication) => (
+              {publications.map((publication: string) => (
                 <option value={publication}>{publication}</option>
               ))}
             </select>
@@ -61,7 +72,7 @@ const topicList = [...new Set(sortedArticles.flatMap((article) => article.topics
             <span>Topic</span>
             <select id="topicSelect">
               <option value="all">All topics</option>
-              {topicList.map((topic) => (
+              {topicList.map((topic: string) => (
                 <option value={topic}>{topic}</option>
               ))}
             </select>
@@ -71,7 +82,12 @@ const topicList = [...new Set(sortedArticles.flatMap((article) => article.topics
 
       <div class="pg-grid" id="publicationGrid">
         {sortedArticles.map((article, index) => {
-          const topics = article.topics?.length ? article.topics : article.topic ? [article.topic] : [];
+          const topics = Array.isArray(article.topics) && article.topics.length
+            ? article.topics
+            : article.topic
+              ? [article.topic]
+              : [];
+
           const cardArticle = {
             ...article,
             id: article.id ?? index + 1,
@@ -80,7 +96,11 @@ const topicList = [...new Set(sortedArticles.flatMap((article) => article.topics
           };
 
           return (
-            <div class="publication-item" data-publication={article.publication || ""} data-topics={topics.join(",")}>
+            <div
+              class="publication-item"
+              data-publication={article.publication || ""}
+              data-topics={topics.join(",")}
+            >
               <PublicationsCard article={cardArticle} />
             </div>
           );
@@ -98,11 +118,11 @@ const topicList = [...new Set(sortedArticles.flatMap((article) => article.topics
   const items = document.querySelectorAll("#publicationGrid .publication-item");
 
   const applyFilters = () => {
-    const activePublication = norm(/** @type {HTMLSelectElement | null} */ (publicationSelect)?.value || "all");
-    const activeTopic = norm(/** @type {HTMLSelectElement | null} */ (topicSelect)?.value || "all");
+    const activePublication = norm(publicationSelect?.value || "all");
+    const activeTopic = norm(topicSelect?.value || "all");
 
     items.forEach((el) => {
-      const item = /** @type {HTMLElement} */ (el);
+      const item = el;
       const publication = norm(item.dataset.publication);
       const topicList = (item.dataset.topics || "")
         .split(",")

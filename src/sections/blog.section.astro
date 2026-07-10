@@ -2,8 +2,6 @@
 import { getCollection } from "astro:content";
 import BlogCard from "../components/Publications/BlogCard.astro";
 
-type BlogEntry = Awaited<ReturnType<typeof getCollection>>[number];
-
 const toTime = (value?: string) => {
   const time = value ? new Date(value).getTime() : 0;
   return Number.isFinite(time) ? time : 0;

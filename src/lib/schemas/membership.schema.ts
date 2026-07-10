@@ -1,62 +1,76 @@
-export type MembershipType =
-  | "chartered_body"
-  | "professional_body"
-  | "scientific_body"
-  | "security_body"
-  | "industry_association"
-  | "climate_network"
-  | "research_network"
-  | "media_network"
-  | "creative_network"
-  | "space_network"
-  | "urban_network"
-  | "sustainability_network"
-  | "business_association"
-  | "startup_network"
-  | "community_network"
-  | "ethics_framework"
-  | "education_network"
-  | "framework_network"
-  | "economic_network"
-  | "advocacy_network"
-  | "climate_lab"
-  | "industry_initiative"
-  | "nonprofit_network"
-  | "ethics_network"
-  | "business_climate_network"
-  | "urban_innovation_network";
+import { z } from "zod";
 
-export type MembershipRole =
-  | "Member"
-  | "Associate Member"
-  | "Certified Member"
-  | "Fellow"
-  | "Chartered Marketer (CMktr)"
-  | "Supporter"
-  | string;
+export const membershipTypeSchema = z.enum([
+  "chartered_body",
+  "professional_body",
+  "scientific_body",
+  "security_body",
+  "industry_association",
+  "climate_network",
+  "research_network",
+  "media_network",
+  "creative_network",
+  "space_network",
+  "urban_network",
+  "sustainability_network",
+  "business_association",
+  "startup_network",
+  "community_network",
+  "ethics_framework",
+  "education_network",
+  "framework_network",
+  "economic_network",
+  "advocacy_network",
+  "climate_lab",
+  "industry_initiative",
+  "nonprofit_network",
+  "ethics_network",
+  "business_climate_network",
+  "urban_innovation_network",
+]);
 
-export type MembershipItem = {
-  organisation: string;
-  slug: string;
-  organisationSlug: string;
-  role: MembershipRole;
-  type: MembershipType;
-  description?: string;
-  keywords?: string[];
-  links?: {
-    website?: string;
-    profile?: string;
-  };
-  activeFrom?: string;
-  activeTo?: string;
-  verified?: boolean;
-};
+export const membershipRoleSchema = z.union([
+  z.enum([
+    "Member",
+    "Associate Member",
+    "Certified Member",
+    "Fellow",
+    "Chartered Marketer (CMktr)",
+    "Supporter",
+  ]),
+  z.string().trim(),
+]);
 
-export type MembershipGroup = {
-  title: string;
-  items: MembershipItem[];
-};
+export const membershipLinkSchema = z.object({
+  website: z.string().trim().pipe(z.url()).optional(),
+  profile: z.string().trim().pipe(z.url()).optional(),
+});
 
-export type MembershipSchema = {
-  memberships: MembershipGroup[];
-};
+export const membershipItemSchema = z.object({
+  organisation: z.string().trim(),
+  slug: z.string().trim(),
+  organisationSlug: z.string().trim(),
+  role: membershipRoleSchema,
+  type: membershipTypeSchema,
+  description: z.string().trim().optional(),
+  keywords: z.array(z.string().trim()).default([]),
+  links: membershipLinkSchema.optional(),
+  activeFrom: z.string().trim().optional(),
+  activeTo: z.string().trim().optional(),
+  verified: z.boolean().optional(),
+});
+
+export const membershipGroupSchema = z.object({
+  title: z.string().trim(),
+  items: z.array(membershipItemSchema),
+});
+
+export const membershipSchema = z.object({
+  memberships: z.array(membershipGroupSchema),
+});
+
+export type MembershipType = z.infer<typeof membershipTypeSchema>;
+export type MembershipRole = z.infer<typeof membershipRoleSchema>;
+export type MembershipItem = z.infer<typeof membershipItemSchema>;
+export type MembershipGroup = z.infer<typeof membershipGroupSchema>;
+export type MembershipSchema = z.infer<typeof membershipSchema>;

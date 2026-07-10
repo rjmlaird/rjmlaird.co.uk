@@ -1,13 +1,13 @@
 import { z } from "zod";
 
 export const certificationSchema = z.object({
-  name: z.string(),
-  issuer: z.string(),
-  issuedDate: z.string(),
-  expiryDate: z.string().optional(),
-  credentialId: z.string().optional(),
-  url: z.string().url().optional(),
-  skills: z.array(z.string()).default([]),
+  name: z.string().trim(),
+  issuer: z.string().trim(),
+  issuedDate: z.string().trim(),
+  expiryDate: z.string().trim().optional(),
+  credentialId: z.string().trim().optional(),
+  url: z.string().trim().pipe(z.url()).optional(),
+  skills: z.array(z.string().trim()).default([]),
 });
 
 export type Certification = z.infer<typeof certificationSchema>;

@@ -1,12 +1,12 @@
 import { z } from "zod";
 
 export const contactSchema = z.object({
-  email: z.string().email(),
-  phone: z.string().optional(),
-  location: z.string().optional(),
-  timezone: z.string().optional(),
+  email: z.string().trim().pipe(z.email()),
+  phone: z.string().trim().optional(),
+  location: z.string().trim().optional(),
+  timezone: z.string().trim().optional(),
   preferredContactMethod: z.enum(["email", "phone", "linkedin"]).optional(),
-  availability: z.string().optional(),
+  availability: z.string().trim().optional(),
 });
 
 export type Contact = z.infer<typeof contactSchema>;

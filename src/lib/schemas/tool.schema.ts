@@ -1,15 +1,15 @@
 import { z } from "zod";
 
 export const toolItemSchema = z.object({
-  name: z.string(),
-  url: z.string().url(),
-  logo: z.string(),
-  color: z.string(),
-  logoColor: z.string().optional(),
+  name: z.string().trim(),
+  url: z.string().trim().pipe(z.url()),
+  logo: z.string().trim(),
+  color: z.string().trim(),
+  logoColor: z.string().trim().optional(),
 });
 
 export const toolCategorySchema = z.object({
-  name: z.string(),
+  name: z.string().trim(),
   items: z.array(toolItemSchema),
 });
 

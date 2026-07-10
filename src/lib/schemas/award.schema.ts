@@ -1,12 +1,12 @@
 import { z } from "zod";
 
 export const awardSchema = z.object({
-  title: z.string(),
-  issuer: z.string(),
-  date: z.string(),
-  description: z.string().default(""),
-  category: z.string().optional(),
-  url: z.string().url().optional(),
+  title: z.string().trim(),
+  issuer: z.string().trim(),
+  date: z.string().trim(),
+  description: z.string().trim().default(""),
+  category: z.string().trim().optional(),
+  url: z.string().trim().pipe(z.url()).optional(),
   featured: z.boolean().default(false),
 });
 

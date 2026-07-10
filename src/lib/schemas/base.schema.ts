@@ -3,44 +3,44 @@ import { z } from "zod";
 export const DEFAULT_FEATURED_IMAGE = "/images/default-featured.jpg";
 
 export const seoSchema = z.object({
-  title: z.string().default(""),
-  description: z.string().default(""),
-  image: z.string().default(DEFAULT_FEATURED_IMAGE),
+  title: z.string().trim().default(""),
+  description: z.string().trim().default(""),
+  image: z.string().trim().default(DEFAULT_FEATURED_IMAGE),
 });
 
 export const linkSchema = z.object({
-  label: z.string(),
-  url: z.string().url(),
+  label: z.string().trim(),
+  url: z.string().trim().pipe(z.url()),
 });
 
 export const socialSchema = z.object({
-  platform: z.string(),
-  username: z.string().optional(),
-  url: z.string().url(),
-  icon: z.string().optional(),
+  platform: z.string().trim(),
+  username: z.string().trim().optional(),
+  url: z.string().trim().pipe(z.url()),
+  icon: z.string().trim().optional(),
 });
 
 export const imageSchema = z.object({
-  src: z.string(),
-  alt: z.string().default(""),
+  src: z.string().trim(),
+  alt: z.string().trim().default(""),
 });
 
 export const baseSchema = z.object({
-  id: z.string(),
-  slug: z.string(),
-  title: z.string(),
-  summary: z.string().default(""),
-  description: z.string().default(""),
+  id: z.string().trim(),
+  slug: z.string().trim(),
+  title: z.string().trim(),
+  summary: z.string().trim().default(""),
+  description: z.string().trim().default(""),
   featured: z.boolean().default(false),
-  featuredImage: z.string().default(DEFAULT_FEATURED_IMAGE),
-  tags: z.array(z.string()).default([]),
+  featuredImage: z.string().trim().default(DEFAULT_FEATURED_IMAGE),
+  tags: z.array(z.string().trim()).default([]),
   seo: seoSchema.default({
     title: "",
     description: "",
     image: DEFAULT_FEATURED_IMAGE,
   }),
-  created: z.string().optional(),
-  updated: z.string().optional(),
+  created: z.string().trim().optional(),
+  updated: z.string().trim().optional(),
 });
 
 export type Base = z.infer<typeof baseSchema>;
