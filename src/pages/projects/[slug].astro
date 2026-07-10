@@ -21,7 +21,11 @@ export async function getStaticPaths() {
     });
 }
 
-const { entry, slug } = Astro.props;
+const { entry, slug } = Astro.props as {
+  entry: Awaited<ReturnType<typeof getCollection>>[number];
+  slug: string;
+};
+
 const project = entry.data;
 const { Content } = await render(entry);
 
@@ -66,14 +70,13 @@ const links = project.links || {};
 
       <div class="project-layout">
         <aside class="project-sidebar" aria-label="Project details">
-                <div class="pg-intro">
-          {project.description && (
-            <p class="pg-lead">{project.description}</p>
-          )}
-          <p class="pg-note">
-            A full project case study with metadata, links, and supporting detail.
-          </p>
-        </div>
+          <div class="pg-intro">
+            {project.description && <p class="pg-lead">{project.description}</p>}
+            <p class="pg-note">
+              A full project case study with metadata, links, and supporting detail.
+            </p>
+          </div>
+
           {tools.length > 0 && (
             <section class="sidebar-block">
               <h2>Tools</h2>
@@ -142,6 +145,7 @@ const links = project.links || {};
     </div>
   </section>
 </Layout>
+
 
 
 <style>

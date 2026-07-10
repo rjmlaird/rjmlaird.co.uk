@@ -6,34 +6,32 @@ export async function getStaticPaths() {
   const posts = await getCollection("blog");
 
   return posts
-    .filter((post) => typeof post.slug === "string" && post.slug.length > 0)
+    .filter((post) => !post.data.draft)
     .map((post) => ({
-      params: { slug: post.slug },
+      params: { slug: post.id },
       props: { post },
     }));
 }
 
-const { post } = Astro.props;
-
-if (!post) {
-  throw new Error("Post not found");
-}
+const { post } = Astro.props as {
+  post: Awaited<ReturnType<typeof getCollection>>[number];
+};
 
 const { Content } = await render(post);
 
 const title = post.data.title ?? "Untitled";
 const excerpt = post.data.excerpt ?? "";
-const date = post.data.date instanceof Date ? post.data.date : new Date(post.data.date);
+const date = post.data.date ? new Date(post.data.date) : null;
 ---
-<Layout>
 
+<Layout>
   <article class="blog-post">
     <header class="post-head container">
       <p class="eyebrow">Blog</p>
       <h1>{title}</h1>
       {excerpt ? <p class="lede">{excerpt}</p> : null}
-      {!Number.isNaN(date.getTime()) ? (
-        <time datetime={date.toISOString()}>{date.toLocaleDateString()}</time>
+      {date && !Number.isNaN(date.getTime()) ? (
+        <time datetime={date.toISOString()}>{date.toLocaleDateString("en-GB")}</time>
       ) : null}
     </header>
 

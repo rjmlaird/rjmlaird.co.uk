@@ -4,51 +4,28 @@ import ProjectCard from "../../components/Projects/ProjectCard.astro";
 import { getCollection } from "astro:content";
 import slugify from "slugify";
 
-const toTime = (value) => {
+type ProjectEntry = Awaited<ReturnType<typeof getCollection>>[number];
+
+const toTime = (value?: string) => {
   const time = value ? new Date(value).getTime() : 0;
   return Number.isFinite(time) ? time : 0;
 };
 
-const makeSlug = (value) =>
-  slugify(value || "", { lower: true, strict: true, trim: true });
+const makeSlug = (value?: string) => slugify(value || "", { lower: true, strict: true, trim: true });
 
 const entries = (await getCollection("projects"))
   .filter((entry) => !entry.data.draft)
   .sort((a, b) => toTime(b.data.date) - toTime(a.data.date));
 
-const yearList = [
-  ...new Set(
-    entries.flatMap((entry) => {
-      const d = entry.data.date ? new Date(entry.data.date) : null;
-      return d && !Number.isNaN(d.getTime()) ? [String(d.getFullYear())] : [];
-    })
-  ),
-].sort((a, b) => Number(b) - Number(a));
+const yearList = [...new Set(entries.flatMap((entry) => {
+  const d = entry.data.date ? new Date(entry.data.date) : null;
+  return d && !Number.isNaN(d.getTime()) ? [String(d.getFullYear())] : [];
+}))].sort((a, b) => Number(b) - Number(a));
 
-const typeList = [
-  ...new Set(entries.flatMap((entry) => (entry.data.type ? [entry.data.type] : []))),
-].sort();
-
-const statusList = [
-  ...new Set(entries.flatMap((entry) => (entry.data.status ? [entry.data.status] : []))),
-].sort();
-
-const toolList = [
-  ...new Set(
-    entries.flatMap((entry) =>
-      Array.isArray(entry.data.tools_tech) ? entry.data.tools_tech : []
-    )
-  ),
-].sort();
-
-const tagList = [
-  ...new Set(
-    entries.flatMap((entry) =>
-      Array.isArray(entry.data.tags) ? entry.data.tags : []
-    )
-  ),
-].sort();
-
+const typeList = [...new Set(entries.flatMap((entry) => (entry.data.type ? [entry.data.type] : [])))].sort();
+const statusList = [...new Set(entries.flatMap((entry) => (entry.data.status ? [entry.data.status] : [])))].sort();
+const toolList = [...new Set(entries.flatMap((entry) => Array.isArray(entry.data.tools_tech) ? entry.data.tools_tech : []))].sort();
+const tagList = [...new Set(entries.flatMap((entry) => Array.isArray(entry.data.tags) ? entry.data.tags : []))].sort();
 const featuredList = ["featured", "not featured"];
 ---
 
@@ -125,7 +102,7 @@ const featuredList = ["featured", "not featured"];
 
       <div class="pg-grid" id="projectsGrid">
         {entries.map((entry) => {
-          const slug = makeSlug(entry.data.slug || entry.data.title || entry.slug);
+          const slug = makeSlug(entry.data.slug || entry.data.title || entry.id);
           const date = entry.data.date ? new Date(entry.data.date) : null;
           const year = date && !Number.isNaN(date.getTime()) ? String(date.getFullYear()) : "";
           const tools = Array.isArray(entry.data.tools_tech) ? entry.data.tools_tech : [];
@@ -160,27 +137,24 @@ const featuredList = ["featured", "not featured"];
     const tagSelect = document.getElementById("tagSelect");
     const items = document.querySelectorAll("#projectsGrid .publication-item");
 
-    const splitList = (value) =>
-      (value || "")
-        .split(",")
-        .map((v) => norm(v))
-        .filter(Boolean);
+    const splitList = (value) => (value || "").split(",").map((v) => norm(v)).filter(Boolean);
 
     const applyFilters = () => {
-      const activeDate = norm(dateSelect?.value || "all");
-      const activeType = norm(typeSelect?.value || "all");
-      const activeStatus = norm(statusSelect?.value || "all");
-      const activeTool = norm(toolSelect?.value || "all");
-      const activeFeatured = norm(featuredSelect?.value || "all");
-      const activeTag = norm(tagSelect?.value || "all");
+      const activeDate = norm(/** @type {HTMLSelectElement | null} */ (dateSelect)?.value || "all");
+      const activeType = norm(/** @type {HTMLSelectElement | null} */ (typeSelect)?.value || "all");
+      const activeStatus = norm(/** @type {HTMLSelectElement | null} */ (statusSelect)?.value || "all");
+      const activeTool = norm(/** @type {HTMLSelectElement | null} */ (toolSelect)?.value || "all");
+      const activeFeatured = norm(/** @type {HTMLSelectElement | null} */ (featuredSelect)?.value || "all");
+      const activeTag = norm(/** @type {HTMLSelectElement | null} */ (tagSelect)?.value || "all");
 
       items.forEach((el) => {
-        const itemDate = norm(el.dataset.date);
-        const itemType = norm(el.dataset.type);
-        const itemStatus = norm(el.dataset.status);
-        const itemTools = splitList(el.dataset.tools);
-        const itemTags = splitList(el.dataset.tags);
-        const itemFeatured = norm(el.dataset.featured);
+        const item = /** @type {HTMLElement} */ (el);
+        const itemDate = norm(item.dataset.date);
+        const itemType = norm(item.dataset.type);
+        const itemStatus = norm(item.dataset.status);
+        const itemTools = splitList(item.dataset.tools);
+        const itemTags = splitList(item.dataset.tags);
+        const itemFeatured = norm(item.dataset.featured);
 
         const dateOk = activeDate === "all" || itemDate === activeDate;
         const typeOk = activeType === "all" || itemType === activeType;
@@ -189,19 +163,18 @@ const featuredList = ["featured", "not featured"];
         const featuredOk = activeFeatured === "all" || itemFeatured === activeFeatured;
         const tagOk = activeTag === "all" || itemTags.includes(activeTag);
 
-        el.hidden = !(dateOk && typeOk && statusOk && toolOk && featuredOk && tagOk);
+        item.hidden = !(dateOk && typeOk && statusOk && toolOk && featuredOk && tagOk);
       });
     };
 
-    [dateSelect, typeSelect, statusSelect, toolSelect, featuredSelect, tagSelect].forEach(
-      (select) => {
-        select?.addEventListener("change", applyFilters);
-      }
-    );
+    [dateSelect, typeSelect, statusSelect, toolSelect, featuredSelect, tagSelect].forEach((select) => {
+      select?.addEventListener("change", applyFilters);
+    });
 
     applyFilters();
   </script>
 </Layout>
+
 
 <style>
   .publications-gallery {

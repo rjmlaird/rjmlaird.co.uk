@@ -1,4 +1,4 @@
-import { z } from "astro:content";
+import { z } from "astro/zod";
 
 import { experienceItemSchema, type ExperienceItem } from "@/lib/schemas/experience.schema";
 import { skillItemSchema, type SkillItem } from "@/lib/schemas/skill.schema";
@@ -10,7 +10,7 @@ const collectionSchemas = {
   experience: z.array(experienceItemSchema),
   skills: z.array(skillItemSchema),
   tools: z.array(toolItemSchema),
-} as const satisfies Record<CollectionName, z.ZodTypeAny>;
+} as const;
 
 type CollectionMap = {
   experience: ExperienceItem[];
@@ -18,9 +18,9 @@ type CollectionMap = {
   tools: ToolItem[];
 };
 
-function resolveBase(base?: string | URL): URL {
+function resolveBase(base: string | URL): URL {
   if (base instanceof URL) return base;
-  if (typeof base === "string" && base.length > 0) return new URL(base);
+  if (base.length > 0) return new URL(base);
   throw new Error("Missing base URL. Pass Astro.url or an absolute URL.");
 }
 
