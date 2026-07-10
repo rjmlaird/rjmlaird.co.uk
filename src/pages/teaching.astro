@@ -1,234 +1,293 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import BlogCard from "../components/Publications/BlogCard.astro";
-import { getCollection } from "astro:content";
 
-const toTime = (value) => {
-  const time = value ? new Date(value).getTime() : 0;
-  return Number.isFinite(time) ? time : 0;
+const profile = {
+  name: "Ryan Laird",
+  title: "Digital Developer / Web Developer / Science Communicator",
+  tagline: "Clear, accessible, and media-ready digital communication.",
+  location: "London, UK",
+  email: "hello@rjmlaird.co.uk",
+  website: "https://rjmlaird.co.uk",
 };
 
-const entries = (await getCollection("blog"))
-  .filter((entry) => !entry.data.draft)
-  .sort((a, b) => toTime(b.data.date) - toTime(a.data.date));
+const facts = [
+  { label: "Focus", value: "Astro, React, content systems, and accessibility" },
+  { label: "Audience", value: "Organisations, teams, and communities" },
+  { label: "Format", value: "Speaking, writing, consulting, and web development" },
+  { label: "Availability", value: "Select projects" },
+];
 
-const topicList = [
-  ...new Set(
-    entries.flatMap((entry) => {
-      if (Array.isArray(entry.data.tags) && entry.data.tags.length > 0) return entry.data.tags;
-      if (entry.data.tag) return [entry.data.tag];
-      return [];
-    })
-  ),
-].sort();
+const downloads = [
+  { title: "Headshots", note: "Approved press images", href: "#" },
+  { title: "Logo pack", note: "SVG, PNG, light and dark", href: "#" },
+  { title: "Brand sheet", note: "Fonts, colours, and usage", href: "#" },
+];
+
+const expertise = [
+  "Astro development",
+  "React components",
+  "Content systems",
+  "Editorial design",
+  "Accessibility",
+  "Science communication",
+];
+
+const timeline = [
+  { year: "2024", event: "Launched the current brand and site direction." },
+  { year: "2025", event: "Expanded services, content, and portfolio structure." },
+  { year: "2026", event: "Improved press readiness and partnership materials." },
+];
+
+const testimonials = [
+  {
+    quote: "Clear, strategic, and easy to work with.",
+    author: "Client Name, Role",
+  },
+  {
+    quote: "The kind of site that makes collaboration simple.",
+    author: "Partner Name, Organization",
+  },
+];
 ---
 
-<Layout>
+<Layout title={`${profile.name} | Press Kit`} description={profile.tagline}>
+  <main class="press-kit">
+    <section class="hero">
+      <p class="eyebrow">Press Kit</p>
+      <h1>{profile.name}</h1>
+      <p class="lead">
+        {profile.title} focused on clear communication, accessible design, and reliable digital systems.
+      </p>
+    </section>
 
+    <section class="grid">
+      <article class="panel col-8">
+        <h2>Bio</h2>
+        <p class="meta">A concise summary for press, podcasts, speaking, and collaborations.</p>
+        <p>
+          Ryan Laird is a digital developer and science communicator working across Astro, React,
+          content systems, and accessibility. He builds structured websites and communication tools
+          that are clear, maintainable, and easy to reuse.
+        </p>
+      </article>
 
-  <section class="section blog-gallery">
-    <div class="container pg-shell">
-      <header class="pg-head">
-        <p class="eyebrow">Teaching</p>
+      <article class="panel col-4">
+        <h2>Contact</h2>
+        <ul>
+          <li>Email: <a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+          <li>Website: <a href={profile.website}>{profile.website}</a></li>
+          <li>Location: {profile.location}</li>
+        </ul>
+      </article>
 
-      <h1 class="ch fade">
-        Writing across <em>space, sustainability & science policy</em>
-      </h1>
-        <div class="pg-intro">
-          <p class="pg-lead">
-            Selected articles, reports, and commentary across space systems, climate intelligence, and innovation ecosystems.
-          </p>
-
-          <p class="pg-note">
-            Use the filters to narrow by publication and topic. Each card links to the original piece.
-          </p>
+      <article class="panel col-12">
+        <h2>Key facts</h2>
+        <div class="chips">
+          {facts.map((fact) => (
+            <span class="chip">{fact.label}: {fact.value}</span>
+          ))}
         </div>
+      </article>
 
-        <div class="pg-filters" aria-label="Blog filters">
-
-          <label class="filter-field" for="topicSelect">
-            <span>Topic</span>
-            <select id="topicSelect">
-              <option value="all">All topics</option>
-              {topicList.map((topic) => (
-                <option value={topic}>{topic}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-      </header>
-
-      <div class="pg-grid" id="blogGrid">
-        {entries.map((entry) => {
-          const topics = Array.isArray(entry.data.tags) && entry.data.tags.length > 0
-            ? entry.data.tags
-            : entry.data.tag
-              ? [entry.data.tag]
-              : [];
-
-          return (
-            <div class="publication-item" data-topics={topics.join(",")}>
-              <BlogCard post={entry} />
+      <article class="panel col-12">
+        <h2>Downloads</h2>
+        <p class="meta">Make it easy for media and partners to use the right materials.</p>
+        <div class="asset-grid">
+          {downloads.map((item) => (
+            <div class="asset">
+              <strong>{item.title}</strong>
+              <p class="meta">{item.note}</p>
+              <a class="btn" href={item.href}>Download</a>
             </div>
-          );
-        })}
-      </div>
-    </div>
-  </section>
+          ))}
+        </div>
+      </article>
 
-  <script>
-    const norm = (s) => (s || "").toLowerCase().trim();
-    const topicSelect = document.getElementById("topicSelect");
-    const items = document.querySelectorAll("#blogGrid .publication-item");
+      <article class="panel col-6">
+        <h2>Expertise</h2>
+        <div class="chips">
+          {expertise.map((item) => (
+            <span class="chip">{item}</span>
+          ))}
+        </div>
+      </article>
 
-    const applyFilters = () => {
-      const activeTopic = norm(topicSelect?.value || "all");
+      <article class="panel col-6">
+        <h2>Timeline</h2>
+        <ul>
+          {timeline.map((item) => (
+            <li><strong>{item.year}</strong> — {item.event}</li>
+          ))}
+        </ul>
+      </article>
 
-      items.forEach((el) => {
-        const topics = (el.dataset.topics || "")
-          .split(",")
-          .map((t) => norm(t))
-          .filter(Boolean);
+      <article class="panel col-12">
+        <h2>Testimonials</h2>
+        {testimonials.map((item) => (
+          <blockquote class="quote">
+            <p>{item.quote}</p>
+            <footer class="meta">— {item.author}</footer>
+          </blockquote>
+        ))}
+      </article>
 
-        el.hidden = !(activeTopic === "all" || topics.includes(activeTopic));
-      });
-    };
+      <article class="panel col-12">
+        <h2>Brand guidelines</h2>
+        <ul>
+          <li>Use the approved logo files only.</li>
+          <li>Keep the logo clear and unaltered.</li>
+          <li>Use a consistent font system across the site.</li>
+          <li>Keep tone confident, warm, and direct.</li>
+          <li>Prefer short, scannable copy over long paragraphs.</li>
+        </ul>
+      </article>
+    </section>
 
-    topicSelect?.addEventListener("change", applyFilters);
-    applyFilters();
-  </script>
+    <p class="footer">
+      This page can be split into separate Press Kit and Brand Guidelines pages if you want a more modular experience.
+    </p>
+  </main>
 </Layout>
 
 <style>
-  .publications-gallery {
-    padding-block: clamp(4rem, 7vw, 7rem);
+  .press-kit {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 40px 64px;
   }
 
-  .pg-shell {
-    display: grid;
-    gap: clamp(1.5rem, 3vw, 2.5rem);
+  .hero,
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
   }
 
-  .pg-head {
-    max-width: 78rem;
-    display: grid;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
+  .hero {
+    padding: 40px;
+    margin-bottom: 24px;
   }
 
   .eyebrow {
-    margin: 0;
+    margin: 0 0 10px;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-size: 0.78rem;
-    opacity: 0.72;
+    letter-spacing: 0.12em;
+    font-size: 12px;
+    color: var(--muted);
   }
 
-  .pg-head h2 {
+  h1 {
     margin: 0;
     font-size: clamp(2rem, 4vw, 3.5rem);
     line-height: 1.05;
   }
 
-  .pg-intro {
+  .lead {
     max-width: 72ch;
-    padding: 1rem 1.25rem;
-    border-left: 3px solid color-mix(in srgb, currentColor 28%, transparent);
-    background: color-mix(in srgb, currentColor 4%, transparent);
-    border-radius: 0.9rem;
+    margin: 16px 0 0;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+
+  .grid {
     display: grid;
-    gap: 0.85rem;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
   }
 
-  .pg-lead,
-  .pg-note {
-    margin: 0;
-    line-height: 1.65;
+  .panel {
+    padding: 24px;
   }
 
-  .pg-lead {
-    font-size: 1.08rem;
-    font-weight: 500;
-    opacity: 0.96;
+  .col-12 { grid-column: span 12; }
+  .col-8 { grid-column: span 8; }
+  .col-6 { grid-column: span 6; }
+  .col-4 { grid-column: span 4; }
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 1.15rem;
   }
 
-  .pg-note {
-    font-size: 0.98rem;
-    opacity: 0.84;
+  .meta {
+    color: var(--muted);
+    margin: 0 0 12px;
   }
 
-  .pg-filters {
+  ul {
+    margin: 12px 0 0;
+    padding-left: 18px;
+  }
+
+  li {
+    margin: 8px 0;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .chip {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .asset-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    margin-top: 0.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 14px;
   }
 
-  .filter-field {
-    display: grid;
-    gap: 0.45rem;
-  }
-
-  .filter-field span {
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    opacity: 0.7;
-  }
-
-  .filter-field select {
-    width: 100%;
-    padding: 0.75rem 0.9rem;
-    border-radius: 0.9rem;
-    border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
-    background: transparent;
-    color: currentColor;
-    font: inherit;
-  }
-
-  .filter-field select option {
-    color: #111;
+  .asset {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
     background: #fff;
   }
 
-  .pg-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    align-items: stretch;
+  .btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
   }
 
-  .publication-item[hidden] {
-    display: none;
+  .quote {
+    border-left: 3px solid var(--accent);
+    padding-left: 14px;
+    margin: 0 0 16px;
   }
 
-  :global(.pub-media) {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border-radius: 1rem;
-    background: #111;
-    margin-bottom: 1rem;
+  .footer {
+    padding-top: 16px;
+    color: var(--muted);
+    font-size: 14px;
   }
 
-  :global(.pub-media img),
-  :global(.pub-media iframe) {
-    width: 100%;
-    height: 100%;
-    display: block;
-    border: 0;
-  }
+  @media (max-width: 860px) {
+    .col-8,
+    .col-6,
+    .col-4 {
+      grid-column: span 12;
+    }
 
-  :global(.pub-media img) {
-    object-fit: cover;
-    object-position: center;
-  }
+    .asset-grid {
+      grid-template-columns: 1fr;
+    }
 
-  @media (max-width: 640px) {
-    :global(.pub-media) {
-      aspect-ratio: 4 / 3;
-      margin-bottom: 0.85rem;
+    .hero {
+      padding: 28px;
     }
   }
 </style>
