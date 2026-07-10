@@ -17,8 +17,8 @@ export * from "./award.schema";
 export * from "./achievement.schema";
 export * from "./languages.schema";
 
-export { Organisation as ExperienceOrganisation } from "./experience.schema";
-export { Organisation as OrgOrganisation } from "./organisation.schema";
+export type { Organisation as ExperienceOrganisation } from "./experience.schema";
+export type { Organisation as OrgOrganisation } from "./organisation.schema";
 
 export * from "./membership.schema";
 export * from "./review.schema";

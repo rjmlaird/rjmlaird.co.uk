@@ -1,5 +1,6 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+import profileData from "../data/profile.json";
+import { type Profile } from "../lib/schemas/profile.schema";
 
 type ProfileLink = {
   label: string;
@@ -11,24 +12,12 @@ type ProfileContact = {
   href: string;
 };
 
-type Profile = {
-  name?: string;
-  preferredName?: string;
-  pronouns?: string;
-  headline?: string;
-  location?: string;
-  email?: string;
-  avatar?: string;
-  role?: string;
-  credentials?: string;
-  biography?: string[];
-  tags?: string[];
+type LocalProfile = Profile & {
   portfolioLinks?: ProfileLink[];
   contact?: ProfileContact[];
 };
 
-const profileEntry = (await getCollection("profile"))[0] as CollectionEntry<"profile"> | undefined;
-const profile = (profileEntry?.data ?? {}) as Profile;
+const profile = profileData as LocalProfile;
 
 const headline = profile.headline?.trim() ?? "";
 const biography = Array.isArray(profile.biography) ? profile.biography : [];
