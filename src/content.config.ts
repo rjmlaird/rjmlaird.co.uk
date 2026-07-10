@@ -14,28 +14,33 @@ const projects = defineCollection({
     base: "./src/content/projects",
     pattern: "**/*.md",
   }),
-  schema: z.object({
-    id: z.number(),
-    slug: z.string(),
-    title: z.string(),
-    type: z.enum(["featured", "collaborative", "community", "other", "automation"]),
-    status: z.enum(["completed", "in_progress", "archived", "concept"]),
-    description: z.string(),
-    date: z.string(),
-    tools_tech: z.array(z.string()),
-    features: z.array(z.string()),
-    tags: z.array(z.string()),
-    links: z.object({
-      github: z.string().url().optional(),
-      live: z.string().url().optional(),
-      demo: z.string().url().optional(),
-      docs: z.string().url().optional(),
-      video: z.string().url().optional(),
-      store: z.string().url().optional(),
-      api: z.string().url().optional(),
-    }).passthrough(),
-    impact: z.object({}).passthrough().optional(),
-  }),
+  schema: z
+    .object({
+      id: z.number().optional(),
+      slug: z.string().optional(),
+      title: z.string().optional(),
+      type: z.string().optional(),
+      status: z.string().optional(),
+      description: z.string().optional(),
+      date: z.string().optional(),
+      tools_tech: z.array(z.string()).optional(),
+      features: z.array(z.string()).optional(),
+      tags: z.array(z.string()).optional(),
+      links: z
+        .object({
+          github: z.string().optional(),
+          live: z.string().optional(),
+          demo: z.string().optional(),
+          docs: z.string().optional(),
+          video: z.string().optional(),
+          store: z.string().optional(),
+          api: z.string().optional(),
+        })
+        .passthrough()
+        .optional(),
+      impact: z.record(z.any()).optional(),
+    })
+    .passthrough(),
 });
 
 export const collections = { blog, projects };

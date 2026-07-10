@@ -1,16 +1,30 @@
 ---
-import { getCollection } from '../lib/api';
-import ProjectCard from '../components/Projects/ProjectCard.astro';
+import { getCollection } from "astro:content";
+import ProjectCard from "../components/Projects/ProjectCard.astro";
 
-const activeProjects = await getCollection<any[]>('projects');
+const toTime = (value) => {
+  const time = value ? new Date(value).getTime() : 0;
+  return Number.isFinite(time) ? time : 0;
+};
+
+const entries = (await getCollection("projects")).sort(
+  (a, b) => toTime(b.data.date) - toTime(a.data.date),
+);
 ---
 
-<section id="work">
-  <p class="sl">Selected projects</p>
+<section id="projects">
+  <div class="container pg-shell">
+    <p class="sl">Projects</p>
+    <h2 class="story-lede">
+      From telescope data to strategic communications.
+    </h2>
 
-  {activeProjects.length ? (
-    activeProjects.map((project) => <ProjectCard project={project} />)
-  ) : (
-    <p>No projects available.</p>
-  )}
+    <div class="pg-grid" id="projectsGrid">
+      {entries.slice(0, 3).map((entry) => (
+        <div class="publication-item">
+          <ProjectCard project={entry.data} slug={entry.slug} />
+        </div>
+      ))}
+    </div>
+  </div>
 </section>

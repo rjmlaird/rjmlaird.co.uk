@@ -1,7 +1,6 @@
 ---
 import articlesData from "../data/articles.json";
 import Layout from "../layouts/Layout.astro";
-import Nav from "../sections/nav.section.astro";
 import PublicationsCard from "../components/Publications/ArticlesCard.astro";
 
 const toTime = (value) => {
@@ -26,12 +25,11 @@ const topicList = [
 ---
 
 <Layout>
-  <Nav />
 
   <section class="section publications-gallery">
     <div class="container pg-shell">
       <header class="pg-head">
-        <p class="eyebrow">Publications</p>
+        <p class="eyebrow">Articles</p>
 
       <h1 class="ch fade">
         Writing across <em>space, sustainability & science policy</em>

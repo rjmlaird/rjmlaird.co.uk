@@ -1,18 +1,47 @@
 ---
 import nav from "../data/nav.json";
+
+type NavChild = {
+  id: string;
+  label: string;
+};
+
+type NavItem = {
+  id: string;
+  label: string;
+  children?: NavChild[];
+};
+
+const items = nav as NavItem[];
 ---
 
-<nav>
+<nav class="site-nav" data-nav>
   <a href="#hero" class="logo">RJM<span>L</span></a>
 
   <ul class="nl">
-    {nav.map(item => (
-      <li><a href={`#${item.id}`}>{item.label}</a></li>
-    ))}
+    {items.map((item) => {
+      const hasChildren = Boolean(item.children?.length);
+
+      return (
+        <li class:list={["nitem", hasChildren && "has-dropdown"]}>
+          <a href={`/${item.id}`}>{item.label}</a>
+
+          {hasChildren ? (
+            <ul class="dropdown">
+              {item.children!.map((child) => (
+                <li>
+                  <a href={`/${child.id}`}>{child.label}</a>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </li>
+      );
+    })}
   </ul>
 
   <div class="nr">
     <a href="https://cv.rjmlaird.co.uk" class="nsub">Full CV ↗</a>
-    <a href="mailto:mail@rjmlaird.co.uk" class="ncta">Get in touch</a>
+    <a href="/contact" class="ncta">Get in touch</a>
   </div>
 </nav>

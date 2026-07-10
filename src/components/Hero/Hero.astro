@@ -9,16 +9,13 @@ interface Props {
   description: string;
 }
 
-const {
-  title,
-  surname,
-  tagline,
-  description
-} = Astro.props;
+const { title, surname, tagline, description } = Astro.props as Props;
 ---
 
 <section id="hero">
-  <OrbitGraphic />
+  <div class="orb" aria-hidden="true">
+    <OrbitGraphic />
+  </div>
 
   <p class="kk">{tagline}</p>
 
@@ -27,15 +24,15 @@ const {
     <span class="d">{surname}</span>
   </h1>
 
-  <Credentials />
-
-  <p class="hp">
-    {description}
+  <p class="creds">
+    <Credentials />
   </p>
 
+  <p class="hp">{description}</p>
+
   <div class="hb">
-    <a href="#story" class="bp">Read my story</a>
+    <a href="#story" class="bp">Read story</a>
     <a href="#work" class="bo">Projects</a>
-    <a href="#journalism" class="bo">Journalism</a>
+    <a href="#journalism" class="bo">Writing</a>
   </div>
 </section>

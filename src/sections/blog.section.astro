@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+import BlogCard from "../components/Publications/BlogCard.astro";
+const toTime = (value) => {
+  const time = value ? new Date(value).getTime() : 0;
+  return Number.isFinite(time) ? time : 0;
+};
+
+const entries = (await getCollection("blog"))
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => toTime(b.data.date) - toTime(a.data.date));
+---
+
+<section id="blog">
+  <div class="container pg-shell">
+      <p class="sl">Blog</p>
+      <h2 class="story-lede">
+        From telescope data to strategic communications.
+      </h2>
+
+    <div class="pg-grid" id="blogGrid">
+      {entries.slice(0, 3).map((entry) => (
+        <div class="publication-item">
+          <BlogCard post={entry} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

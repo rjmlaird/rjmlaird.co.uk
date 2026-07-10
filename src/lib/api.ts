@@ -1,50 +1,58 @@
-import { z } from 'astro/zod';
+import { z } from "astro:content";
 
-import { experienceItemSchema, type ExperienceItem } from '@/lib/schemas/experience.schema';
-import { skillItemSchema, type SkillItem } from '@/lib/schemas/skill.schema';
-import { toolItemSchema, type ToolItem } from '@/lib/schemas/tool.schema';
+import { experienceItemSchema, type ExperienceItem } from "@/lib/schemas/experience.schema";
+import { skillItemSchema, type SkillItem } from "@/lib/schemas/skill.schema";
+import { toolItemSchema, type ToolItem } from "@/lib/schemas/tool.schema";
 
-const API_BASE = 'https://api.rjmlaird.co.uk/api';
+type CollectionName = "experience" | "skills" | "tools";
 
-type ApiCollectionName = 'experience' | 'skills' | 'tools';
+const collectionSchemas = {
+  experience: z.array(experienceItemSchema),
+  skills: z.array(skillItemSchema),
+  tools: z.array(toolItemSchema),
+} as const;
 
-async function fetchJson<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_BASE}/${path}`, {
-    headers: { accept: '*/*' },
+type CollectionMap = {
+  experience: ExperienceItem[];
+  skills: SkillItem[];
+  tools: ToolItem[];
+};
+
+async function fetchCollection<T>(collection: CollectionName): Promise<T> {
+  const res = await fetch(`/api/${collection}`, {
+    headers: { accept: "application/json" },
   });
 
   if (!res.ok) {
-    throw new Error(`Failed to fetch ${path}: ${res.status} ${res.statusText}`);
+    throw new Error(`Failed to fetch ${collection}: ${res.status} ${res.statusText}`);
   }
 
-  return res.json() as Promise<T>;
+  return (await res.json()) as T;
 }
 
-async function fetchAndParse<T>(path: string, schema: z.ZodType<T>): Promise<T> {
-  const data = await fetchJson<unknown>(path);
-  return schema.parse(data);
+async function fetchAndParse<K extends CollectionName>(
+  collection: K,
+): Promise<CollectionMap[K]> {
+  const data = await fetchCollection<unknown>(collection);
+  return collectionSchemas[collection].parse(data) as CollectionMap[K];
 }
 
-export function getCollection<T>(collection: ApiCollectionName) {
-  return fetchJson<T>(collection);
+export function getCollection<K extends CollectionName>(collection: K) {
+  return fetchCollection<CollectionMap[K]>(collection);
 }
 
-export function getCollectionSafe<T>(collection: ApiCollectionName) {
-  return fetchJson<T>(collection);
+export function getCollectionSafe<K extends CollectionName>(collection: K) {
+  return fetchAndParse(collection);
 }
-
-const experienceResponseSchema = z.array(experienceItemSchema);
-const skillsResponseSchema = z.array(skillItemSchema);
-const toolsResponseSchema = z.array(toolItemSchema);
 
 export function getExperience(): Promise<ExperienceItem[]> {
-  return fetchAndParse('experience', experienceResponseSchema);
+  return fetchAndParse("experience");
 }
 
 export function getSkills(): Promise<SkillItem[]> {
-  return fetchAndParse('skills', skillsResponseSchema);
+  return fetchAndParse("skills");
 }
 
 export function getTools(): Promise<ToolItem[]> {
-  return fetchAndParse('tools', toolsResponseSchema);
+  return fetchAndParse("tools");
 }

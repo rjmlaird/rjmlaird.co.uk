@@ -1,12 +1,8 @@
 import { defineConfig } from "astro/config";
-import path from "node:path";
+import icon from "astro-icon";
 
 export default defineConfig({
-  vite: {
-    resolve: {
-      alias: {
-        "@": path.resolve("./src"),
-      },
-    },
-  },
+  site: "https://rjmlaird.co.uk",
+  integrations: [icon()],
+  scopedStyleStrategy: "class",
 });

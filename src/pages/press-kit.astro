@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Nav from "../sections/nav.section.astro";
 
 const profile = {
   name: "Your Name",
@@ -49,18 +48,37 @@ const testimonials = [
   },
 ];
 ---
+<Layout>
 
-<Layout title={`${profile.name} | Press Kit`} description={profile.tagline}>
-  <Nav />
+      <header class="pg-head">
+        <p class="eyebrow">About</p>
 
-  <main class="press-kit">
-    <section class="hero">
-      <p class="eyebrow">Press Kit</p>
-      <h1>{profile.name}</h1>
-      <p class="lead">
-        {profile.title} with a clear focus on credibility, communication, and brand consistency.
-      </p>
-    </section>
+      <h1 class="ch fade">
+        Writing across <em>space, sustainability & science policy</em>
+      </h1>
+        <div class="pg-intro">
+          <p class="pg-lead">
+            Selected articles, reports, and commentary across space systems, climate intelligence, and innovation ecosystems.
+          </p>
+
+          <p class="pg-note">
+            Use the filters to narrow by publication and topic. Each card links to the original piece.
+          </p>
+        </div>
+
+        <div class="pg-filters" aria-label="Blog filters">
+
+          <label class="filter-field" for="topicSelect">
+            <span>Topic</span>
+            <select id="topicSelect">
+              <option value="all">All topics</option>
+              {topicList.map((topic) => (
+                <option value={topic}>{topic}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+      </header>
 
     <section class="grid">
       <article class="panel col-8">
@@ -146,7 +164,7 @@ const testimonials = [
     <p class="footer">
       This page can be split into separate Press Kit and Brand Guidelines pages if you want a more modular experience.
     </p>
-  </main>
+
 </Layout>
 
 <style>

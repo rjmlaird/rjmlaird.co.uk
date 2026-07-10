@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Nav from "../sections/nav.section.astro";
 import Citation from "citation-js";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -45,7 +44,6 @@ const excerptWords = 70;
 ---
 
 <Layout>
-  <Nav />
 
   <section class="section research-page">
     <div class="container rp-shell">

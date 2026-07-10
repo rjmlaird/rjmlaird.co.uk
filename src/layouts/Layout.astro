@@ -1,11 +1,32 @@
 ---
 import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
 
 interface Props {
   title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  canonical?: string;
 }
 
-const { title = "Ryan Laird — CMktr MInstP" } = Astro.props as Props;
+const {
+  title = "Ryan Laird — CMktr MInstP",
+  description = "Ryan Laird is a communications strategist, writer, and editor focused on ESG, sustainability, and impact.",
+  image = "/images/og-default.jpg",
+  noindex = false,
+  canonical,
+} = Astro.props as Props;
+
+const siteTitle = "Ryan Laird — CMktr MInstP";
+const fullTitle = title === siteTitle ? title : `${title} · ${siteTitle}`;
+
+const baseUrl = Astro.site?.href;
+const canonicalUrl =
+  canonical ?? (baseUrl ? new URL(Astro.url.pathname, baseUrl).href : Astro.url.href);
+
+const ogImage = baseUrl ? new URL(image, baseUrl).href : image;
 ---
 
 <!doctype html>
@@ -13,18 +34,39 @@ const { title = "Ryan Laird — CMktr MInstP" } = Astro.props as Props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex, nofollow" /> : null}
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
+
+    <slot name="head" />
   </head>
+
   <body>
-    <slot />
+    <Nav />
+    <main id="content">
+      <slot />
+    </main>
+    <Footer />
 
     <script is:inline>
       const io = new IntersectionObserver(

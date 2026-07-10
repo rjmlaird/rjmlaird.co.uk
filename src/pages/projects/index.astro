@@ -1,52 +1,86 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Nav from "../../sections/nav.section.astro";
 import ProjectCard from "../../components/Projects/ProjectCard.astro";
 import { getCollection } from "astro:content";
+import slugify from "slugify";
 
 const toTime = (value) => {
   const time = value ? new Date(value).getTime() : 0;
   return Number.isFinite(time) ? time : 0;
 };
 
+const makeSlug = (value) =>
+  slugify(value || "", { lower: true, strict: true, trim: true });
+
 const entries = (await getCollection("projects"))
   .filter((entry) => !entry.data.draft)
   .sort((a, b) => toTime(b.data.date) - toTime(a.data.date));
 
-const typeList = [
+const yearList = [
   ...new Set(
-    entries.flatMap((entry) =>
-      entry.data.type ? [entry.data.type] : []
-    )
+    entries.flatMap((entry) => {
+      const d = entry.data.date ? new Date(entry.data.date) : null;
+      return d && !Number.isNaN(d.getTime()) ? [String(d.getFullYear())] : [];
+    })
   ),
+].sort((a, b) => Number(b) - Number(a));
+
+const typeList = [
+  ...new Set(entries.flatMap((entry) => (entry.data.type ? [entry.data.type] : []))),
 ].sort();
 
 const statusList = [
+  ...new Set(entries.flatMap((entry) => (entry.data.status ? [entry.data.status] : []))),
+].sort();
+
+const toolList = [
   ...new Set(
     entries.flatMap((entry) =>
-      entry.data.status ? [entry.data.status] : []
+      Array.isArray(entry.data.tools_tech) ? entry.data.tools_tech : []
     )
   ),
 ].sort();
+
+const tagList = [
+  ...new Set(
+    entries.flatMap((entry) =>
+      Array.isArray(entry.data.tags) ? entry.data.tags : []
+    )
+  ),
+].sort();
+
+const featuredList = ["featured", "not featured"];
 ---
 
 <Layout>
-  <Nav />
-
   <section class="section publications-gallery">
     <div class="container pg-shell">
       <header class="pg-head">
         <p class="eyebrow">Projects</p>
+
         <h1 class="ch fade">
-          Building across <em>product, automation & research</em>
+          Building across <em>product, automation &amp; research</em>
         </h1>
 
         <div class="pg-intro">
-          <p class="pg-lead">A selected archive of projects, experiments, collaborations, and automation work.</p>
-          <p class="pg-note">Use the filters to narrow the archive. Each card links to the project page.</p>
+          <p class="pg-lead">
+            A selected archive of projects, experiments, collaborations, and automation work.
+          </p>
+
+          <p class="pg-note">
+            Use the filters to narrow the list. Each card links to the original piece.
+          </p>
         </div>
 
         <div class="pg-filters" aria-label="Project filters">
+          <label class="filter-field" for="dateSelect">
+            <span>Date</span>
+            <select id="dateSelect">
+              <option value="all">All dates</option>
+              {yearList.map((year) => <option value={year}>{year}</option>)}
+            </select>
+          </label>
+
           <label class="filter-field" for="typeSelect">
             <span>Type</span>
             <select id="typeSelect">
@@ -62,46 +96,243 @@ const statusList = [
               {statusList.map((status) => <option value={status}>{status}</option>)}
             </select>
           </label>
+
+          <label class="filter-field" for="toolSelect">
+            <span>Tools</span>
+            <select id="toolSelect">
+              <option value="all">All tools</option>
+              {toolList.map((tool) => <option value={tool}>{tool}</option>)}
+            </select>
+          </label>
+
+          <label class="filter-field" for="featuredSelect">
+            <span>Featured</span>
+            <select id="featuredSelect">
+              <option value="all">All featured</option>
+              {featuredList.map((item) => <option value={item}>{item}</option>)}
+            </select>
+          </label>
+
+          <label class="filter-field" for="tagSelect">
+            <span>Tags</span>
+            <select id="tagSelect">
+              <option value="all">All tags</option>
+              {tagList.map((tag) => <option value={tag}>{tag}</option>)}
+            </select>
+          </label>
         </div>
       </header>
 
       <div class="pg-grid" id="projectsGrid">
-        {entries.map((entry) => (
-          <div
-            class="publication-item"
-            data-type={entry.data.type || ""}
-            data-status={entry.data.status || ""}
-          >
-            <ProjectCard project={entry.data} slug={entry.slug} />
-          </div>
-        ))}
+        {entries.map((entry) => {
+          const slug = makeSlug(entry.data.slug || entry.data.title || entry.slug);
+          const date = entry.data.date ? new Date(entry.data.date) : null;
+          const year = date && !Number.isNaN(date.getTime()) ? String(date.getFullYear()) : "";
+          const tools = Array.isArray(entry.data.tools_tech) ? entry.data.tools_tech : [];
+          const tags = Array.isArray(entry.data.tags) ? entry.data.tags : [];
+          const featured = entry.data.featured ? "featured" : "not featured";
+
+          return (
+            <div
+              class="publication-item"
+              data-date={year}
+              data-type={entry.data.type || ""}
+              data-status={entry.data.status || ""}
+              data-tools={tools.join(",")}
+              data-tags={tags.join(",")}
+              data-featured={featured}
+            >
+              <ProjectCard project={entry.data} slug={slug} />
+            </div>
+          );
+        })}
       </div>
     </div>
   </section>
 
-  <script>
+  <script is:inline>
     const norm = (s) => (s || "").toLowerCase().trim();
+    const dateSelect = document.getElementById("dateSelect");
     const typeSelect = document.getElementById("typeSelect");
     const statusSelect = document.getElementById("statusSelect");
+    const toolSelect = document.getElementById("toolSelect");
+    const featuredSelect = document.getElementById("featuredSelect");
+    const tagSelect = document.getElementById("tagSelect");
     const items = document.querySelectorAll("#projectsGrid .publication-item");
 
+    const splitList = (value) =>
+      (value || "")
+        .split(",")
+        .map((v) => norm(v))
+        .filter(Boolean);
+
     const applyFilters = () => {
+      const activeDate = norm(dateSelect?.value || "all");
       const activeType = norm(typeSelect?.value || "all");
       const activeStatus = norm(statusSelect?.value || "all");
+      const activeTool = norm(toolSelect?.value || "all");
+      const activeFeatured = norm(featuredSelect?.value || "all");
+      const activeTag = norm(tagSelect?.value || "all");
 
       items.forEach((el) => {
-        const type = norm(el.dataset.type);
-        const status = norm(el.dataset.status);
+        const itemDate = norm(el.dataset.date);
+        const itemType = norm(el.dataset.type);
+        const itemStatus = norm(el.dataset.status);
+        const itemTools = splitList(el.dataset.tools);
+        const itemTags = splitList(el.dataset.tags);
+        const itemFeatured = norm(el.dataset.featured);
 
-        const typeOk = activeType === "all" || type === activeType;
-        const statusOk = activeStatus === "all" || status === activeStatus;
+        const dateOk = activeDate === "all" || itemDate === activeDate;
+        const typeOk = activeType === "all" || itemType === activeType;
+        const statusOk = activeStatus === "all" || itemStatus === activeStatus;
+        const toolOk = activeTool === "all" || itemTools.includes(activeTool);
+        const featuredOk = activeFeatured === "all" || itemFeatured === activeFeatured;
+        const tagOk = activeTag === "all" || itemTags.includes(activeTag);
 
-        el.hidden = !(typeOk && statusOk);
+        el.hidden = !(dateOk && typeOk && statusOk && toolOk && featuredOk && tagOk);
       });
     };
 
-    typeSelect?.addEventListener("change", applyFilters);
-    statusSelect?.addEventListener("change", applyFilters);
+    [dateSelect, typeSelect, statusSelect, toolSelect, featuredSelect, tagSelect].forEach(
+      (select) => {
+        select?.addEventListener("change", applyFilters);
+      }
+    );
+
     applyFilters();
   </script>
 </Layout>
+
+<style>
+  .publications-gallery {
+    padding-block: clamp(4rem, 7vw, 7rem);
+  }
+
+  .pg-shell {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .pg-head {
+    max-width: 78rem;
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.78rem;
+    opacity: 0.72;
+  }
+
+  .pg-head h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.05;
+  }
+
+  .pg-intro {
+    max-width: 72ch;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid color-mix(in srgb, currentColor 28%, transparent);
+    background: color-mix(in srgb, currentColor 4%, transparent);
+    border-radius: 0.9rem;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .pg-lead,
+  .pg-note {
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  .pg-lead {
+    font-size: 1.08rem;
+    font-weight: 500;
+    opacity: 0.96;
+  }
+
+  .pg-note {
+    font-size: 0.98rem;
+    opacity: 0.84;
+  }
+
+  .pg-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .filter-field {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .filter-field span {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
+  }
+
+  .filter-field select {
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.9rem;
+    border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+    background: transparent;
+    color: currentColor;
+    font: inherit;
+  }
+
+  .filter-field select option {
+    color: #111;
+    background: #fff;
+  }
+
+  .pg-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .publication-item[hidden] {
+    display: none;
+  }
+
+  :global(.pub-media) {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: #111;
+    margin-bottom: 1rem;
+  }
+
+  :global(.pub-media img),
+  :global(.pub-media iframe) {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+  }
+
+  :global(.pub-media img) {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @media (max-width: 640px) {
+    :global(.pub-media) {
+      aspect-ratio: 4 / 3;
+      margin-bottom: 0.85rem;
+    }
+  }
+</style>

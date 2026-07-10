@@ -12,23 +12,10 @@
       "type": "string"
     },
     "type": {
-      "type": "string",
-      "enum": [
-        "featured",
-        "collaborative",
-        "community",
-        "other",
-        "automation"
-      ]
+      "type": "string"
     },
     "status": {
-      "type": "string",
-      "enum": [
-        "completed",
-        "in_progress",
-        "archived",
-        "concept"
-      ]
+      "type": "string"
     },
     "description": {
       "type": "string"
@@ -58,56 +45,39 @@
       "type": "object",
       "properties": {
         "github": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         },
         "live": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         },
         "demo": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         },
         "docs": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         },
         "video": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         },
         "store": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         },
         "api": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         }
       },
       "additionalProperties": {}
     },
     "impact": {
       "type": "object",
-      "properties": {},
+      "propertyNames": {
+        "type": "string"
+      },
       "additionalProperties": {}
     },
     "$schema": {
       "type": "string"
     }
   },
-  "required": [
-    "id",
-    "slug",
-    "title",
-    "type",
-    "status",
-    "description",
-    "date",
-    "tools_tech",
-    "features",
-    "tags",
-    "links"
-  ]
+  "additionalProperties": {}
 }

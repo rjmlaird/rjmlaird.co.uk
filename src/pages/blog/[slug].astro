@@ -1,6 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Nav from "../../sections/nav.section.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -27,7 +26,6 @@ const excerpt = post.data.excerpt ?? "";
 const date = post.data.date instanceof Date ? post.data.date : new Date(post.data.date);
 ---
 <Layout>
-  <Nav />
 
   <article class="blog-post">
     <header class="post-head container">

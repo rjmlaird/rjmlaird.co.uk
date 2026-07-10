@@ -1,7 +1,6 @@
 ---
 import videos from "../data/videos.json";
 import Layout from "../layouts/Layout.astro";
-import Nav from "../sections/nav.section.astro";
 import VideosCard from "../components/VideosCard.astro";
 
 const toTime = (value) => {
@@ -16,7 +15,6 @@ const topics = [...new Set(sortedVideos.flatMap((v) => v.topics || []).filter(Bo
 ---
 
 <Layout>
-  <Nav />
 
   <section class="section video-gallery">
     <div class="container vg-shell">

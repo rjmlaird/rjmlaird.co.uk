@@ -1,14 +1,13 @@
 ---
-import { getCollection } from '../lib/api';
+import { getCollection } from "../lib/api";
 
-const profile = await getCollection<any>('profile');
-const contact = await getCollection<any>('contact');
-const credentialsData = await getCollection<any[]>('credentials');
+const profile = await getCollection<any>("profile");
 
-const headline = profile?.headline ?? '';
-const biography = profile?.biography ?? '';
-const credentials = credentialsData ?? [];
-const links = contact?.about_links ?? [];
+const headline = profile?.headline ?? "";
+const biography = profile?.biography ?? "";
+const credentials = Array.isArray(profile?.summary) ? profile.summary : [];
+const links = Array.isArray(profile?.portfolioLinks) ? profile.portfolioLinks : [];
+const contact = Array.isArray(profile?.contact) ? profile.contact : [];
 ---
 
 <section id="about">
@@ -17,8 +16,8 @@ const links = contact?.about_links ?? [];
   <div class="about-grid">
     <div>
       <h3 class="ah fade">
-        {headline}<br />
-        <em>{profile?.preferredName ?? ''}</em>
+        {profile?.name ?? ""}<br />
+        <em>{headline}</em>
       </h3>
 
       <div class="ab fade">
@@ -27,18 +26,7 @@ const links = contact?.about_links ?? [];
 
       <div class="cred-row fade">
         {credentials.map((c) => (
-          <span
-            class={`cred-badge ${
-              c.type === 'professional-accreditation'
-                ? 'cb-teal'
-                : c.type === 'certification'
-                  ? 'cb-v'
-                  : 'cb-m'
-            }`}
-            title={`${c.name} — ${c.issuer}`}
-          >
-            {c.name}
-          </span>
+          <span class="cred-badge cb-m">{c}</span>
         ))}
       </div>
     </div>
@@ -47,10 +35,18 @@ const links = contact?.about_links ?? [];
       <div class="sp-h">Find me elsewhere</div>
 
       {links.map((link) => (
-        <a class="si" href={link.url} target="_blank" rel="noopener noreferrer">
+        <a class="si" href={link.href} target="_blank" rel="noopener noreferrer">
           <div class="sl2">
-            <span class="su">{link.title}</span>
-            <span class="sd2">{link.description}</span>
+            <span class="su">{link.label}</span>
+          </div>
+          <span class="sa">→</span>
+        </a>
+      ))}
+
+      {contact.map((item) => (
+        <a class="si" href={item.href} target="_blank" rel="noopener noreferrer">
+          <div class="sl2">
+            <span class="su">{item.label}</span>
           </div>
           <span class="sa">→</span>
         </a>

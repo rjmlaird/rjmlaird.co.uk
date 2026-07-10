@@ -1,21 +1,75 @@
 <section id="contact">
   <p class="cp">Contact</p>
 
-  <h2>
-    Let's build something meaningful.
-  </h2>
+  <div class="contact-grid">
+    <div class="contact-copy">
+      <h2>Let's build something meaningful.</h2>
+      <p>
+        Open to strategy, ESG comms, writing, speaking, and collaboration.
+      </p>
+    </div>
 
-  <p>
-    Open to strategy, ESG comms, writing, speaking, and collaboration.
-  </p>
-
-  <a class="ce" href="mailto:web@rjmlaird.co.uk">
-    ryan@rjmlaird.co.uk
-  </a>
-
-  <div class="socs">
-    <a href="https://linkedin.com">LinkedIn</a>
-    <a href="https://github.com">GitHub</a>
-    <a href="https://muckrack.com">Writing</a>
+    <div class="contact-meta">
+      <p class="contact-label">Email</p>
+      <a class="ce" href="mailto:ryan@rjmlaird.co.uk">
+        ryan@rjmlaird.co.uk
+      </a>
+      <p class="contact-note">
+        Best for project inquiries, partnerships, and editorial work.
+      </p>
+    </div>
   </div>
 </section>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .contact-copy,
+  .contact-meta {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .contact-copy h2 {
+    margin: 0;
+    max-width: 12ch;
+  }
+
+  .contact-copy p,
+  .contact-note {
+    margin: 0;
+    max-width: 42ch;
+  }
+
+  .contact-label {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  .ce {
+    display: inline-flex;
+    width: fit-content;
+    color: inherit;
+    text-decoration: none;
+    word-break: break-word;
+  }
+
+  .ce:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (max-width: 800px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
