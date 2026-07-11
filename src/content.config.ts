@@ -16,13 +16,13 @@ const baseSchema = z.object({
 });
 
 const projectLinksSchema = z.object({
-  github: z.string().optional(),
-  live: z.string().optional(),
-  demo: z.string().optional(),
-  docs: z.string().optional(),
-  video: z.string().optional(),
-  store: z.string().optional(),
-  api: z.string().optional(),
+  github: z.string().url().optional(),
+  live: z.string().url().optional(),
+  demo: z.string().url().optional(),
+  docs: z.string().url().optional(),
+  video: z.string().url().optional(),
+  store: z.string().url().optional(),
+  api: z.string().url().optional(),
 });
 
 const projectSchema = baseSchema.extend({
@@ -34,34 +34,36 @@ const projectSchema = baseSchema.extend({
   impact: z.record(z.string(), z.unknown()).optional(),
 });
 
-const blog = defineCollection({
-  loader: glob({
-    base: "./src/content/blog",
-    pattern: "**/*.md",
-  }),
-  schema: baseSchema,
+const authorSchema = z.object({
+  name: z.string(),
+  author: z.string().optional(),
+  bio: z.string().optional(),
+  avatar: z.string().optional(),
+  role: z.string().optional(),
 });
 
-const projects = defineCollection({
-  loader: glob({
-    base: "./src/content/projects",
-    pattern: "**/*.md",
+export const collections = {
+  blog: defineCollection({
+    loader: glob({
+      base: "./src/content/blog",
+      pattern: "**/*.md",
+    }),
+    schema: baseSchema,
   }),
-  schema: projectSchema,
-});
 
-const authors = defineCollection({
-  loader: glob({
-    base: "./src/content/authors",
-    pattern: "**/*.md",
+  projects: defineCollection({
+    loader: glob({
+      base: "./src/content/projects",
+      pattern: "**/*.md",
+    }),
+    schema: projectSchema,
   }),
-  schema: z.object({
-    name: z.string(),
-    author: z.string().optional(),
-    bio: z.string().optional(),
-    avatar: z.string().optional(),
-    role: z.string().optional(),
-  }),
-});
 
-export const collections = { blog, projects, authors };
+  authors: defineCollection({
+    loader: glob({
+      base: "./src/content/authors",
+      pattern: "**/*.md",
+    }),
+    schema: authorSchema,
+  }),
+};

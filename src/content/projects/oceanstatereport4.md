@@ -16,7 +16,7 @@ features:
 tags:
   - portfolio
   - web
-  - example
+  - science policy
 links:
   github: https://github.com/yourname/example-project
   live: https://example.com

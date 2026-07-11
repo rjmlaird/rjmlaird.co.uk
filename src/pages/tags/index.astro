@@ -1,0 +1,40 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+
+const allTags = Array.from(
+  new Set(
+    posts.flatMap((post) => {
+      const tags = Array.isArray(post.data.tags) ? post.data.tags : [];
+      const primaryTag = typeof post.data.tag === "string" ? [post.data.tag] : [];
+      return [...tags, ...primaryTag];
+    })
+  )
+)
+  .filter(Boolean)
+  .sort((a, b) => a.localeCompare(b));
+
+const tagCounts = Object.fromEntries(
+  allTags.map((tag) => [
+    tag,
+    posts.filter((post) => {
+      const tags = Array.isArray(post.data.tags) ? post.data.tags : [];
+      const primaryTag = typeof post.data.tag === "string" ? [post.data.tag] : [];
+      return [...tags, ...primaryTag].includes(tag);
+    }).length,
+  ])
+);
+---
+<Layout>
+<ul class="tag-list">
+  {allTags.map((tag) => (
+    <li>
+      <a href={`/tags/${encodeURIComponent(tag.toLowerCase().replace(/\s+/g, "-"))}/`}>
+        {tag} ({tagCounts[tag]})
+      </a>
+    </li>
+  ))}
+</ul>
+</Layout>

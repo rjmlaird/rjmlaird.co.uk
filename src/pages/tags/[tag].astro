@@ -1,0 +1,159 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BlogCard from "../../components/Publications/BlogCard.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const [blogPosts, projectPosts] = await Promise.all([
+    getCollection("blog", ({ data }) => !data.draft),
+    getCollection("projects", ({ data }) => !data.draft),
+  ]);
+
+  const allPosts = [...blogPosts, ...projectPosts];
+  const tagSet = new Set<string>();
+
+  for (const post of allPosts) {
+    const tags = Array.isArray(post.data.tags) ? post.data.tags : [];
+    const primaryTag = typeof post.data.tag === "string" ? [post.data.tag] : [];
+
+    for (const tag of [...tags, ...primaryTag]) {
+      if (tag && tag.trim()) tagSet.add(tag.trim());
+    }
+  }
+
+  return Array.from(tagSet).map((tag) => ({
+    params: {
+      tag: encodeURIComponent(tag.toLowerCase().replace(/\s+/g, "-")),
+    },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props as { tag: string };
+
+const toTime = (value?: string | Date) => {
+  const time = value ? new Date(value).getTime() : 0;
+  return Number.isFinite(time) ? time : 0;
+};
+
+const [blogPosts, projectPosts] = await Promise.all([
+  getCollection("blog"),
+  getCollection("projects"),
+]);
+
+const entries = [...blogPosts, ...projectPosts]
+  .filter((entry) => !entry.data.draft)
+  .filter((entry) => {
+    const topics =
+      Array.isArray(entry.data.tags) && entry.data.tags.length > 0
+        ? entry.data.tags
+        : entry.data.tag
+          ? [entry.data.tag]
+          : [];
+
+    return topics.some(
+      (topic) => topic.trim().toLowerCase() === tag.toLowerCase()
+    );
+  })
+  .sort((a, b) => toTime(b.data.date) - toTime(a.data.date));
+
+const prettyTag = tag.replace(/-/g, " ");
+---
+
+<Layout>
+  <section class="section blog-gallery">
+    <div class="container pg-shell">
+      <header class="pg-head">
+        <p class="eyebrow">Tags</p>
+
+        <h1 class="ch fade">
+          Posts about <em>{prettyTag}</em>
+        </h1>
+
+        <div class="pg-intro">
+          <p class="pg-lead">
+            Selected articles, reports, and projects tagged with {prettyTag}.
+          </p>
+
+          <p class="pg-note">
+            Browse the full set of matching items below.
+          </p>
+        </div>
+      </header>
+
+      <div class="pg-grid">
+        {entries.map((entry) => (
+          <div class="publication-item">
+            <BlogCard post={entry} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .blog-gallery {
+    padding-block: clamp(4rem, 7vw, 7rem);
+  }
+
+  .pg-shell {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .pg-head {
+    max-width: 78rem;
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.78rem;
+    opacity: 0.72;
+  }
+
+  .pg-head h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.05;
+  }
+
+  .pg-intro {
+    max-width: 72ch;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid color-mix(in srgb, currentColor 28%, transparent);
+    background: color-mix(in srgb, currentColor 4%, transparent);
+    border-radius: 0.9rem;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .pg-lead,
+  .pg-note {
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  .pg-lead {
+    font-size: 1.08rem;
+    font-weight: 500;
+    opacity: 0.96;
+  }
+
+  .pg-note {
+    font-size: 0.98rem;
+    opacity: 0.84;
+  }
+
+  .pg-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+</style>

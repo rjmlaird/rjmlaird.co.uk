@@ -62,25 +62,32 @@
       "type": "object",
       "properties": {
         "github": {
-          "type": "string"
+          "type": "string",
+          "format": "uri"
         },
         "live": {
-          "type": "string"
+          "type": "string",
+          "format": "uri"
         },
         "demo": {
-          "type": "string"
+          "type": "string",
+          "format": "uri"
         },
         "docs": {
-          "type": "string"
+          "type": "string",
+          "format": "uri"
         },
         "video": {
-          "type": "string"
+          "type": "string",
+          "format": "uri"
         },
         "store": {
-          "type": "string"
+          "type": "string",
+          "format": "uri"
         },
         "api": {
-          "type": "string"
+          "type": "string",
+          "format": "uri"
         }
       }
     },

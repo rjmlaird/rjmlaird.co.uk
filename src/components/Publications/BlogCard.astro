@@ -36,6 +36,9 @@ const avatar = typeof data.avatar === "string" ? data.avatar.trim() : "";
 const tags = Array.isArray(data.tags) ? data.tags : data.tag ? [data.tag] : [];
 const image = data.image || "/images/placeholder.jpg";
 const imageCredit = data.imageCredit ?? "";
+
+const tagSlug = (tag: string) =>
+  encodeURIComponent(tag.toLowerCase().replace(/\s+/g, "-"));
 ---
 
 <article class="pr pub">
@@ -51,6 +54,7 @@ const imageCredit = data.imageCredit ?? "";
       <h3>
         <a href={href} class="pub-title-link">{title}</a>
       </h3>
+
       {dateValue && !Number.isNaN(dateValue.getTime()) && (
         <span class="date">{dateValue.toLocaleDateString()}</span>
       )}
@@ -79,13 +83,15 @@ const imageCredit = data.imageCredit ?? "";
       </div>
     ) : null}
 
-    {tags.length > 0 && (
+    {tags.length > 0 ? (
       <div class="pt">
-        {tags.map((t) => (
-          <span class="tag">{t}</span>
+        {tags.map((tag) => (
+          <a class="tag" href={`/tags/${tagSlug(tag)}/`}>
+            {tag}
+          </a>
         ))}
       </div>
-    )}
+    ) : null}
   </div>
 
   <a href={href} class="pa">
@@ -122,5 +128,18 @@ const imageCredit = data.imageCredit ?? "";
   .author-by,
   .author-link {
     white-space: nowrap;
+  }
+
+  .pt {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
   }
 </style>
