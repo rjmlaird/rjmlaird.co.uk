@@ -1,6 +1,20 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
+const baseSchema = z.object({
+  id: z.number().optional(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  excerpt: z.string().optional(),
+  date: z.coerce.date(),
+  draft: z.boolean().default(false),
+  author: z.string().optional(),
+  tag: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  image: z.string().optional(),
+  imageCredit: z.string().optional(),
+});
+
 const projectLinksSchema = z.object({
   github: z.string().optional(),
   live: z.string().optional(),
@@ -11,18 +25,11 @@ const projectLinksSchema = z.object({
   api: z.string().optional(),
 });
 
-const projectSchema = z.object({
-  id: z.number().optional(),
-  slug: z.string().optional(),
-  title: z.string().optional(),
+const projectSchema = baseSchema.extend({
   type: z.string().optional(),
   status: z.string().optional(),
-  description: z.string().optional(),
-  date: z.string().optional(),
-  draft: z.boolean().optional(),
   tools_tech: z.array(z.string()).optional(),
   features: z.array(z.string()).optional(),
-  tags: z.array(z.string()).optional(),
   links: projectLinksSchema.optional(),
   impact: z.record(z.string(), z.unknown()).optional(),
 });
@@ -32,6 +39,7 @@ const blog = defineCollection({
     base: "./src/content/blog",
     pattern: "**/*.md",
   }),
+  schema: baseSchema,
 });
 
 const projects = defineCollection({
@@ -42,4 +50,18 @@ const projects = defineCollection({
   schema: projectSchema,
 });
 
-export const collections = { blog, projects };
+const authors = defineCollection({
+  loader: glob({
+    base: "./src/content/authors",
+    pattern: "**/*.md",
+  }),
+  schema: z.object({
+    name: z.string(),
+    author: z.string().optional(),
+    bio: z.string().optional(),
+    avatar: z.string().optional(),
+    role: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, projects, authors };

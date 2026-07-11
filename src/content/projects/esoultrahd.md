@@ -1,11 +1,11 @@
---
+---
 id: 41
 slug: esoultrahd
 title: ESO Ultra HD Expedition
 type: featured
 status: completed
 description: A short summary of what this project does.
-date: 2026-07
+date: 2026-07-01
 tools_tech:
   - TypeScript
   - Astro

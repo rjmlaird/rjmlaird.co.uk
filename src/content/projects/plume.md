@@ -1,11 +1,11 @@
---
+---
 id: 41
 slug: plume
 title: PLUME (Picosatellite of Leicester University Micrometeoroid Experiment)
 type: featured
 status: completed
 description: A short summary of what this project does.
-date: 2026-07
+date: 2026-07-01
 tools_tech:
   - TypeScript
   - Astro

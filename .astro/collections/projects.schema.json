@@ -5,22 +5,45 @@
     "id": {
       "type": "number"
     },
-    "slug": {
+    "title": {
       "type": "string"
     },
-    "title": {
+    "description": {
+      "type": "string"
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "draft": {
+      "default": false,
+      "type": "boolean"
+    },
+    "author": {
+      "type": "string"
+    },
+    "tag": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "image": {
+      "type": "string"
+    },
+    "imageCredit": {
       "type": "string"
     },
     "type": {
       "type": "string"
     },
     "status": {
-      "type": "string"
-    },
-    "description": {
-      "type": "string"
-    },
-    "date": {
       "type": "string"
     },
     "tools_tech": {
@@ -30,12 +53,6 @@
       }
     },
     "features": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "tags": {
       "type": "array",
       "items": {
         "type": "string"
@@ -65,8 +82,7 @@
         "api": {
           "type": "string"
         }
-      },
-      "additionalProperties": {}
+      }
     },
     "impact": {
       "type": "object",
@@ -79,5 +95,7 @@
       "type": "string"
     }
   },
-  "additionalProperties": {}
+  "required": [
+    "date"
+  ]
 }

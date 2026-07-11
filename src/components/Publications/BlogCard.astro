@@ -1,6 +1,7 @@
 ---
 interface Props {
   post?: {
+    id?: string;
     slug?: string;
     collection?: string;
     data?: {
@@ -9,6 +10,7 @@ interface Props {
       description?: string;
       date?: Date | string;
       author?: string;
+      avatar?: string;
       tags?: string[];
       tag?: string;
       image?: string;
@@ -20,12 +22,17 @@ interface Props {
 const { post } = Astro.props as Props;
 const data = post?.data ?? {};
 
-const slug = post?.slug ?? "untitled";
 const collection = post?.collection ?? "blog";
+const slug = post?.slug ?? post?.id ?? "untitled";
+const href = `/${collection}/${slug}`;
 const title = data.title ?? "Untitled";
 const excerpt = data.excerpt ?? data.description ?? "";
 const dateValue = data.date ? new Date(data.date) : null;
-const author = data.author ?? "";
+const authorSlug = typeof data.author === "string" ? data.author.trim() : "";
+const authorLabel = authorSlug
+  ? authorSlug.replace(/(^|-)\w/g, (m) => m.toUpperCase()).replace(/-/g, " ")
+  : "";
+const avatar = typeof data.avatar === "string" ? data.avatar.trim() : "";
 const tags = Array.isArray(data.tags) ? data.tags : data.tag ? [data.tag] : [];
 const image = data.image || "/images/placeholder.jpg";
 const imageCredit = data.imageCredit ?? "";
@@ -33,7 +40,7 @@ const imageCredit = data.imageCredit ?? "";
 
 <article class="pr pub">
   {image ? (
-    <a href={`/${collection}/${slug}`} class="pub-media pub-image">
+    <a href={href} class="pub-media pub-image" aria-label={title}>
       <img src={image} alt={title} loading="lazy" />
       {imageCredit && <span class="image-credit">{imageCredit}</span>}
     </a>
@@ -41,7 +48,9 @@ const imageCredit = data.imageCredit ?? "";
 
   <div class="pm">
     <div class="pub-top">
-      <h3>{title}</h3>
+      <h3>
+        <a href={href} class="pub-title-link">{title}</a>
+      </h3>
       {dateValue && !Number.isNaN(dateValue.getTime()) && (
         <span class="date">{dateValue.toLocaleDateString()}</span>
       )}
@@ -49,7 +58,26 @@ const imageCredit = data.imageCredit ?? "";
 
     {excerpt && <p>{excerpt}</p>}
 
-    {author && <div class="client-badge">By {author}</div>}
+    {authorSlug ? (
+      <div class="author-badge">
+        {avatar ? (
+          <img
+            class="author-avatar"
+            src={avatar}
+            alt={authorLabel || authorSlug}
+            width="32"
+            height="32"
+            loading="lazy"
+          />
+        ) : null}
+
+        <span class="author-by">By</span>
+
+        <a class="author-link" href={`/authors/${authorSlug}`}>
+          {authorLabel || authorSlug}
+        </a>
+      </div>
+    ) : null}
 
     {tags.length > 0 && (
       <div class="pt">
@@ -60,8 +88,39 @@ const imageCredit = data.imageCredit ?? "";
     )}
   </div>
 
-  <a href={`/${collection}/${slug}`} class="pa">
+  <a href={href} class="pa">
     <span class="pa-i">↗</span>
     <span>View</span>
   </a>
 </article>
+
+<style>
+  .author-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+    flex-wrap: nowrap;
+  }
+
+  .author-avatar {
+    display: block !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    border-radius: 9999px !important;
+    object-fit: cover !important;
+    flex: 0 0 32px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    overflow: hidden !important;
+  }
+
+  .author-by,
+  .author-link {
+    white-space: nowrap;
+  }
+</style>

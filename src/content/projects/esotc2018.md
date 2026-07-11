@@ -1,11 +1,11 @@
---
+---
 id: 41
 slug: esotc2018
 title: European State of the Climate 2018
 type: featured
 status: completed
 description: A short summary of what this project does.
-date: 2026-07
+date: 2026-07-01
 tools_tech:
   - TypeScript
   - Astro

@@ -2,49 +2,42 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "properties": {
+    "id": {
+      "type": "number"
+    },
     "title": {
-      "type": "string",
-      "minLength": 5
+      "type": "string"
     },
     "description": {
-      "default": "",
-      "type": "string",
-      "maxLength": 160
+      "type": "string"
     },
     "excerpt": {
-      "default": "",
-      "type": "string",
-      "maxLength": 300
+      "type": "string"
     },
     "date": {
       "type": "string",
       "format": "date-time"
     },
+    "draft": {
+      "default": false,
+      "type": "boolean"
+    },
     "author": {
-      "default": "",
+      "type": "string"
+    },
+    "tag": {
       "type": "string"
     },
     "tags": {
-      "default": [],
       "type": "array",
       "items": {
         "type": "string"
       }
     },
-    "tag": {
-      "default": "",
-      "type": "string"
-    },
-    "draft": {
-      "default": false,
-      "type": "boolean"
-    },
     "image": {
-      "default": "",
       "type": "string"
     },
     "imageCredit": {
-      "default": "",
       "type": "string"
     },
     "$schema": {
@@ -52,7 +45,6 @@
     }
   },
   "required": [
-    "title",
     "date"
   ]
 }

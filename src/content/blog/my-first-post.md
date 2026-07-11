@@ -8,7 +8,7 @@ tags:
   - Space
   - Science policy
 draft: false
-author: "Ryan Laird"
+author: ryan-laird
 image: "/images/blog/my-first-post.jpg"
 imageCredit: "Cover image for My First Post"
 ---

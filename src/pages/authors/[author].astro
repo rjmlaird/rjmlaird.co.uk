@@ -1,0 +1,65 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, render, type CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const authors = await getCollection("authors");
+
+  return authors.map((author) => ({
+    params: { author: author.id },
+    props: { author },
+  }));
+}
+
+const { author } = Astro.props as {
+  author: CollectionEntry<"authors">;
+};
+
+const { Content } = await render(author);
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .filter((post) => {
+    const postAuthor = post.data.author;
+    return typeof postAuthor === "string"
+      ? postAuthor.toLowerCase() === author.data.name.toLowerCase() ||
+          postAuthor.toLowerCase() === author.id.toLowerCase()
+      : false;
+  })
+  .sort((a, b) => {
+    const aDate = a.data.date instanceof Date ? a.data.date.getTime() : 0;
+    const bDate = b.data.date instanceof Date ? b.data.date.getTime() : 0;
+    return bDate - aDate;
+  });
+---
+
+<Layout>
+  <article class="author-page">
+    <header class="container author-head">
+      <p class="eyebrow">Author</p>
+      <h1>{author.data.name}</h1>
+      {author.data.role ? <p class="lede">{author.data.role}</p> : null}
+    </header>
+
+    <div class="container author-bio">
+      <Content />
+    </div>
+
+    <section class="container author-posts" aria-labelledby="author-posts-title">
+      <h2 id="author-posts-title">Published posts</h2>
+
+      {posts.length > 0 ? (
+        <ul class="post-list">
+          {posts.map((post) => (
+            <li>
+              <a href={`/blog/${post.id}`}>{post.data.title ?? post.id}</a>
+              {post.data.excerpt ? <p>{post.data.excerpt}</p> : null}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No posts found for this author yet.</p>
+      )}
+    </section>
+  </article>
+</Layout>
