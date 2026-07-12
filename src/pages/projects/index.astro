@@ -1,123 +1,87 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Citation from "citation-js";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import Card from "../../components/Publications/PublicationsCard.astro";
+import { getCollection } from "astro:content";
+import ProjectCard from "../../components/Projects/ProjectCard.astro";
 
-type CslItem = {
-  type?: string;
-  title?: string | string[];
-  issued?: { "date-parts"?: number[][] };
-  year?: string | number;
-  publisher?: string;
-  "container-title"?: string;
-  journal?: string;
-  booktitle?: string;
-};
+const entries = (await getCollection("projects", ({ data }) => data.draft !== true))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-type PublicationView = {
-  item: CslItem;
-  year: number;
-  type: string;
-  publisher: string;
-};
-
-const bibPath = path.join(process.cwd(), "src/data/publications.bib");
-const bibText = await readFile(bibPath, "utf8");
-
-const input = new Citation(bibText);
-const items = input.format("data", { format: "object" }) as CslItem[];
-
-const getYear = (item: CslItem) => {
-  const y = item?.issued?.["date-parts"]?.[0]?.[0] || item?.year || "";
-  return y ? Number(y) : 0;
-};
-
-const getType = (item: CslItem) => {
-  if (item.type === "article-journal") return "Journal article";
-  if (item.type === "paper-conference") return "Conference paper";
-  if (item.type === "report") return "Report";
-  if (item.type === "webpage") return "Web page";
-  if (item.type === "thesis") return "Thesis";
-  return item.type || "Publication";
-};
-
-const getPublisher = (item: CslItem) =>
-  item.publisher || item["container-title"] || item.journal || item.booktitle || "";
-
-const publications: PublicationView[] = items
-  .map((item) => ({
-    item,
-    year: getYear(item),
-    type: getType(item),
-    publisher: getPublisher(item),
-  }))
-  .sort(
-    (a, b) =>
-      b.year - a.year ||
-      String(a.item.title ?? "").localeCompare(String(b.item.title ?? "")),
-  );
-
-const types = [...new Set(publications.map((p) => p.type).filter(Boolean))].sort();
-const years = [...new Set(publications.map((p) => p.year).filter(Boolean))].sort((a, b) => b - a);
-const publishers = [...new Set(publications.map((p) => p.publisher).filter(Boolean))].sort();
+const typeList = [...new Set(entries.map((entry) => entry.data.type).filter(Boolean))].sort();
+const statusList = [...new Set(entries.map((entry) => entry.data.status).filter(Boolean))].sort();
+const tagList = [
+  ...new Set(
+    entries.flatMap((entry) => {
+      if (Array.isArray(entry.data.tags) && entry.data.tags.length > 0) return entry.data.tags;
+      if (entry.data.tag) return [entry.data.tag];
+      return [];
+    })
+  ),
+].sort();
 ---
 
 <Layout>
   <section class="section research-page">
     <div class="container rp-shell">
       <header class="rp-head">
-        <p class="eyebrow">Research</p>
-        <h1>Publications</h1>
+        <p class="eyebrow">Projects</p>
+        <h1>Project index</h1>
 
         <div class="rp-intro">
           <p class="rp-lead">
-            A selected bibliography of journal articles, conference papers, reports, and outreach publications.
+            A selected collection of work spanning software, research, communication, and systems design.
           </p>
           <p class="rp-note">
-            Browse by publication type, publisher, or year.
+            Browse by type, status, or tag.
           </p>
         </div>
 
-        <div class="rp-filters" aria-label="Research filters">
+        <div class="rp-filters" aria-label="Project filters">
           <label class="filter-field" for="typeSelect">
             <span>Type</span>
             <select id="typeSelect">
               <option value="all">All types</option>
-              {types.map((type: string) => <option value={type}>{type}</option>)}
+              {typeList.map((type) => <option value={type}>{type}</option>)}
             </select>
           </label>
 
-          <label class="filter-field" for="publisherSelect">
-            <span>Publisher</span>
-            <select id="publisherSelect">
-              <option value="all">All publishers</option>
-              {publishers.map((publisher: string) => <option value={publisher}>{publisher}</option>)}
+          <label class="filter-field" for="statusSelect">
+            <span>Status</span>
+            <select id="statusSelect">
+              <option value="all">All statuses</option>
+              {statusList.map((status) => <option value={status}>{status}</option>)}
             </select>
           </label>
 
-          <label class="filter-field" for="yearSelect">
-            <span>Year</span>
-            <select id="yearSelect">
-              <option value="all">All years</option>
-              {years.map((year: number) => <option value={String(year)}>{year}</option>)}
+          <label class="filter-field" for="tagSelect">
+            <span>Tag</span>
+            <select id="tagSelect">
+              <option value="all">All tags</option>
+              {tagList.map((tag) => <option value={tag}>{tag}</option>)}
             </select>
           </label>
         </div>
       </header>
 
-      <div class="rp-grid" id="researchGrid">
-        {publications.map((pub, index) => (
-          <div
-            class="research-item"
-            data-type={pub.type}
-            data-year={String(pub.year)}
-            data-publisher={pub.publisher}
-          >
-            <Card item={pub.item} index={index + 1} bibText={bibText} />
-          </div>
-        ))}
+      <div class="rp-grid" id="projectGrid">
+        {entries.map((entry) => {
+          const tags =
+            Array.isArray(entry.data.tags) && entry.data.tags.length > 0
+              ? entry.data.tags
+              : entry.data.tag
+                ? [entry.data.tag]
+                : [];
+
+          return (
+            <div
+              class="research-item"
+              data-type={entry.data.type || ""}
+              data-status={entry.data.status || ""}
+              data-tags={tags.join(",")}
+            >
+              <ProjectCard project={{ ...entry.data, slug: entry.id, id: Number(entry.data.id ?? 0) }} slug={entry.id} />
+            </div>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -126,165 +90,31 @@ const publishers = [...new Set(publications.map((p) => p.publisher).filter(Boole
     const norm = (s) => (s ?? "").toLowerCase().trim();
 
     const typeSelect = document.getElementById("typeSelect");
-    const yearSelect = document.getElementById("yearSelect");
-    const publisherSelect = document.getElementById("publisherSelect");
-    const items = document.querySelectorAll("#researchGrid .research-item");
+    const statusSelect = document.getElementById("statusSelect");
+    const tagSelect = document.getElementById("tagSelect");
+    const items = document.querySelectorAll("#projectGrid .research-item");
 
     const applyFilters = () => {
       const activeType = norm(typeSelect?.value || "all");
-      const activeYear = norm(yearSelect?.value || "all");
-      const activePublisher = norm(publisherSelect?.value || "all");
+      const activeStatus = norm(statusSelect?.value || "all");
+      const activeTag = norm(tagSelect?.value || "all");
 
       items.forEach((el) => {
         const type = norm(el.dataset.type);
-        const year = norm(el.dataset.year);
-        const publisher = norm(el.dataset.publisher);
+        const status = norm(el.dataset.status);
+        const tags = (el.dataset.tags || "").split(",").map(norm).filter(Boolean);
 
         const typeOk = activeType === "all" || type === activeType;
-        const yearOk = activeYear === "all" || year === activeYear;
-        const publisherOk = activePublisher === "all" || publisher === activePublisher;
+        const statusOk = activeStatus === "all" || status === activeStatus;
+        const tagOk = activeTag === "all" || tags.includes(activeTag);
 
-        el.hidden = !(typeOk && yearOk && publisherOk);
+        el.hidden = !(typeOk && statusOk && tagOk);
       });
     };
 
     typeSelect?.addEventListener("change", applyFilters);
-    yearSelect?.addEventListener("change", applyFilters);
-    publisherSelect?.addEventListener("change", applyFilters);
+    statusSelect?.addEventListener("change", applyFilters);
+    tagSelect?.addEventListener("change", applyFilters);
     applyFilters();
   </script>
 </Layout>
-
-<style>
-  .publications-gallery {
-    padding-block: clamp(4rem, 7vw, 7rem);
-  }
-
-  .pg-shell {
-    display: grid;
-    gap: clamp(1.5rem, 3vw, 2.5rem);
-  }
-
-  .pg-head {
-    max-width: 78rem;
-    display: grid;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .eyebrow {
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-size: 0.78rem;
-    opacity: 0.72;
-  }
-
-  .pg-head h1 {
-    margin: 0;
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    line-height: 1.05;
-  }
-
-  .pg-intro {
-    max-width: 72ch;
-    padding: 1rem 1.25rem;
-    border-left: 3px solid color-mix(in srgb, currentColor 28%, transparent);
-    background: color-mix(in srgb, currentColor 4%, transparent);
-    border-radius: 0.9rem;
-    display: grid;
-    gap: 0.85rem;
-  }
-
-  .pg-lead,
-  .pg-note {
-    margin: 0;
-    line-height: 1.65;
-  }
-
-  .pg-lead {
-    font-size: 1.08rem;
-    font-weight: 500;
-    opacity: 0.96;
-  }
-
-  .pg-note {
-    font-size: 0.98rem;
-    opacity: 0.84;
-  }
-
-  .rp-filters {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    margin-top: 0.5rem;
-  }
-
-  .filter-field {
-    display: grid;
-    gap: 0.45rem;
-  }
-
-  .filter-field span {
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    opacity: 0.7;
-  }
-
-  .filter-field select {
-    width: 100%;
-    padding: 0.75rem 0.9rem;
-    border-radius: 0.9rem;
-    border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
-    background: transparent;
-    color: currentColor;
-    font: inherit;
-  }
-
-  .filter-field select option {
-    color: #111;
-    background: #fff;
-  }
-
-  .rp-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    align-items: stretch;
-  }
-
-  .research-item[hidden] {
-    display: none;
-  }
-
-  :global(.pub-media) {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border-radius: 1rem;
-    background: #111;
-    margin-bottom: 1rem;
-  }
-
-  :global(.pub-media img),
-  :global(.pub-media iframe) {
-    width: 100%;
-    height: 100%;
-    display: block;
-    border: 0;
-  }
-
-  :global(.pub-media img) {
-    object-fit: cover;
-    object-position: center;
-  }
-
-  @media (max-width: 640px) {
-    :global(.pub-media) {
-      aspect-ratio: 4 / 3;
-      margin-bottom: 0.85rem;
-    }
-  }
-</style>

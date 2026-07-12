@@ -28,6 +28,13 @@ const href = `/${collection}/${slug}`;
 const title = data.title ?? "Untitled";
 const excerpt = data.excerpt ?? data.description ?? "";
 const dateValue = data.date ? new Date(data.date) : null;
+const formattedDate = dateValue && !Number.isNaN(dateValue.getTime())
+  ? dateValue.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    })
+  : "";
 const authorSlug = typeof data.author === "string" ? data.author.trim() : "";
 const authorLabel = authorSlug
   ? authorSlug.replace(/(^|-)\w/g, (m) => m.toUpperCase()).replace(/-/g, " ")
@@ -55,9 +62,7 @@ const tagSlug = (tag: string) =>
         <a href={href} class="pub-title-link">{title}</a>
       </h3>
 
-      {dateValue && !Number.isNaN(dateValue.getTime()) && (
-        <span class="date">{dateValue.toLocaleDateString()}</span>
-      )}
+      {formattedDate ? <time class="date">{formattedDate}</time> : null}
     </div>
 
     {excerpt && <p>{excerpt}</p>}
@@ -99,47 +104,3 @@ const tagSlug = (tag: string) =>
     <span>View</span>
   </a>
 </article>
-
-<style>
-  .author-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: 0.25rem;
-    flex-wrap: nowrap;
-  }
-
-  .author-avatar {
-    display: block !important;
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
-    border-radius: 9999px !important;
-    object-fit: cover !important;
-    flex: 0 0 32px !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    overflow: hidden !important;
-  }
-
-  .author-by,
-  .author-link {
-    white-space: nowrap;
-  }
-
-  .pt {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
-  }
-
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-  }
-</style>

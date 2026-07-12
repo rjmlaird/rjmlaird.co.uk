@@ -2,9 +2,6 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "properties": {
-    "id": {
-      "type": "number"
-    },
     "title": {
       "type": "string"
     },
@@ -14,30 +11,53 @@
     "excerpt": {
       "type": "string"
     },
+    "image": {
+      "type": "string"
+    },
+    "imageCredit": {
+      "type": "string"
+    },
+    "canonical": {
+      "type": "string",
+      "format": "uri"
+    },
+    "noindex": {
+      "default": false,
+      "type": "boolean"
+    },
+    "nofollow": {
+      "default": false,
+      "type": "boolean"
+    },
+    "id": {
+      "type": "number"
+    },
     "date": {
       "type": "string",
       "format": "date-time"
     },
     "draft": {
+      "default": true,
+      "type": "boolean"
+    },
+    "featured": {
       "default": false,
       "type": "boolean"
     },
     "author": {
       "type": "string"
     },
-    "tag": {
-      "type": "string"
-    },
     "tags": {
+      "default": [],
       "type": "array",
       "items": {
         "type": "string"
       }
     },
-    "image": {
+    "category": {
       "type": "string"
     },
-    "imageCredit": {
+    "slug": {
       "type": "string"
     },
     "type": {
@@ -97,6 +117,18 @@
         "type": "string"
       },
       "additionalProperties": {}
+    },
+    "caseStudy": {
+      "type": "string"
+    },
+    "client": {
+      "type": "string"
+    },
+    "organisation": {
+      "type": "string"
+    },
+    "institution": {
+      "type": "string"
     },
     "$schema": {
       "type": "string"

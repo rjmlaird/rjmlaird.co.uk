@@ -2,32 +2,19 @@
 import { getCollection } from "astro:content";
 import ProjectCard from "../components/Projects/ProjectCard.astro";
 
-const entries = await getCollection("projects");
-
-const projects = entries
-  .map((entry) => {
-    const slug = entry.data.slug ?? entry.id;
-
-    if (!slug) {
-      throw new Error(`Missing slug for project entry: ${entry.id}`);
-    }
-
-    const project = {
-      ...entry.data,
-      id: entry.data.id ?? Number.NaN,
-      slug: String(slug),
-    };
-
-    return {
-      slug: String(slug),
-      project,
-    };
-  })
-  .filter(({ project }) => Number.isFinite(project.id));
+const projects = (await getCollection(
+  "projects",
+  ({ data }) => data.draft !== true && data.featured === true
+))
+  .filter((entry) => typeof entry.data.id === "number");
 ---
 
-<div class="projects-grid">
-  {projects.map(({ project, slug }) => (
-    <ProjectCard project={project} slug={slug} />
-  ))}
-</div>
+<section id="featured-projects">
+  <div class="container pg-shell">
+    <p class="sl">Featured Projects</p>
+
+    {projects.map((entry) => (
+      <ProjectCard project={entry.data} slug={entry.id} />
+    ))}
+  </div>
+</section>

@@ -2,6 +2,7 @@
 id: 41
 slug: white-dwarves
 title: White dwarves
+featured: true
 type: featured
 status: completed
 description: A short summary of what this project does.
@@ -21,6 +22,5 @@ links:
   github: https://github.com/yourname/example-project
   live: https://example.com
 impact: {}
+institution: University of Leicester 
 ---
-
-Organisations: University of Leicester (https://app.notion.com/p/University-of-Leicester-37b3a96540ad80a6b28df9b193fce1c6?pvs=21)

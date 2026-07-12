@@ -3,7 +3,8 @@ title: "My First Post"
 description: "A short summary of the post."
 excerpt: "A slightly longer excerpt for cards and previews."
 date: 2026-07-07
-tag: "Space"
+featured: true
+category: "Space"
 tags:
   - Space
   - Science policy

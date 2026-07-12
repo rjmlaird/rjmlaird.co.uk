@@ -6,7 +6,7 @@ type Project = {
   type?: string;
   status?: string;
   description?: string;
-  date?: string;
+  date?: Date | string;
   tools_tech?: string[];
   features?: string[];
   tags?: string[];
@@ -27,9 +27,17 @@ const { project, slug } = Astro.props as {
   slug: string;
 };
 
+const dateValue = project.date ? new Date(project.date) : null;
 const links = project.links ?? {};
 const liveLink = links.live || links.demo || links.github || links.docs;
 const number = project.id ? String(project.id).padStart(2, "0") : "";
+const formattedDate = dateValue
+  ? dateValue.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    })
+  : "";
 ---
 
 <article class="pr pub">
@@ -43,7 +51,9 @@ const number = project.id ? String(project.id).padStart(2, "0") : "";
             {project.title}
           </a>
         </h3>
-        <span class="date">{project.date}</span>
+        <time class="date" datetime={dateValue?.toISOString()}>
+          {formattedDate}
+        </time>
       </div>
 
       <div class="client-badge">{project.type}</div>
@@ -70,19 +80,6 @@ const number = project.id ? String(project.id).padStart(2, "0") : "";
   </div>
 
   <div class="pub-links">
-    {links.github ? (
-      <a
-        class="btn-link github-badge"
-        href={links.github}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="View GitHub repository"
-      >
-        <span class="gh-icon" aria-hidden="true">⌂</span>
-        <span>GitHub</span>
-      </a>
-    ) : null}
-
     {liveLink ? (
       <a class="btn-link" href={liveLink} target="_blank" rel="noreferrer">
         View project

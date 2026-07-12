@@ -17,6 +17,10 @@
     "role": {
       "type": "string"
     },
+    "website": {
+      "type": "string",
+      "format": "uri"
+    },
     "$schema": {
       "type": "string"
     }
