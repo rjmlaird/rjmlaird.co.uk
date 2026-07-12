@@ -1,4 +1,4 @@
-import { defineCollection } from "astro:content";
+import { defineCollection, reference } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
@@ -47,6 +47,15 @@ const projectSchema = baseSchema.extend({
   institution: z.string().optional(),
 });
 
+const caseStudySchema = baseSchema.extend({
+  status: z.string().optional(),
+  client: z.string().optional(),
+  organisation: z.string().optional(),
+  institution: z.string().optional(),
+  relatedProjects: z.array(reference("projects")).default([]),
+  impact: z.record(z.string(), z.unknown()).optional(),
+});
+
 const authorSchema = z.object({
   name: z.string(),
   author: z.string().optional(),
@@ -64,6 +73,10 @@ export const collections = {
   projects: defineCollection({
     loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
     schema: projectSchema,
+  }),
+  caseStudy: defineCollection({
+    loader: glob({ pattern: "**/*.md", base: "./src/content/case-studies" }),
+    schema: caseStudySchema,
   }),
   authors: defineCollection({
     loader: glob({ pattern: "**/*.md", base: "./src/content/authors" }),

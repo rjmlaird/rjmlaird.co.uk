@@ -8,52 +8,53 @@ const entries = (await getCollection("projects", ({ data }) => data.draft !== tr
 
 const typeList = [...new Set(entries.map((entry) => entry.data.type).filter(Boolean))].sort();
 const statusList = [...new Set(entries.map((entry) => entry.data.status).filter(Boolean))].sort();
-
 const tagList = [...new Set(entries.flatMap((entry) => entry.data.tags))].sort();
 ---
 
 <Layout>
-  <section class="section research-page">
-    <div class="container rp-shell">
-      <header class="rp-head">
+  <section class="section projects-gallery">
+    <div class="container pg-shell">
+      <header class="pg-head">
         <p class="eyebrow">Projects</p>
-        <h1>Project index</h1>
 
-        <div class="rp-intro">
-          <p class="rp-lead">
-            A selected collection of work spanning software, research, communication, and systems design.
+        <h1 class="ch fade">
+          Writing across <em>space, sustainability &amp; science policy</em>
+        </h1>
+
+        <div class="pg-intro">
+          <p class="pg-lead">
+            Selected articles, reports, and commentary across space systems, climate intelligence, and innovation ecosystems.
           </p>
-          <p class="rp-note">
-            Browse by type, status, or tag.
+          <p class="pg-note">
+            Browse the full set of published case studies below.
           </p>
-        </div>
-
-        <div class="rp-filters" aria-label="Project filters">
-          <label class="filter-field" for="typeSelect">
-            <span>Type</span>
-            <select id="typeSelect">
-              <option value="all">All types</option>
-              {typeList.map((type) => <option value={type}>{type}</option>)}
-            </select>
-          </label>
-
-          <label class="filter-field" for="statusSelect">
-            <span>Status</span>
-            <select id="statusSelect">
-              <option value="all">All statuses</option>
-              {statusList.map((status) => <option value={status}>{status}</option>)}
-            </select>
-          </label>
-
-          <label class="filter-field" for="tagSelect">
-            <span>Tag</span>
-            <select id="tagSelect">
-              <option value="all">All tags</option>
-              {tagList.map((tag) => <option value={tag}>{tag}</option>)}
-            </select>
-          </label>
         </div>
       </header>
+<div class="rp-filters" aria-label="Project filters">
+  <label class="filter-field" for="typeSelect">
+    <span>Type</span>
+    <select id="typeSelect">
+      <option value="all">All types</option>
+      {typeList.map((type) => <option value={type}>{type}</option>)}
+    </select>
+  </label>
+
+  <label class="filter-field" for="statusSelect">
+    <span>Status</span>
+    <select id="statusSelect">
+      <option value="all">All statuses</option>
+      {statusList.map((status) => <option value={status}>{status}</option>)}
+    </select>
+  </label>
+
+  <label class="filter-field" for="tagSelect">
+    <span>Tag</span>
+    <select id="tagSelect">
+      <option value="all">All tags</option>
+      {tagList.map((tag) => <option value={tag}>{tag}</option>)}
+    </select>
+  </label>
+</div>
 
       <div class="rp-grid" id="projectGrid">
         {entries.map((entry) => {

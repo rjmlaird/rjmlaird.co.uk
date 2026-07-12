@@ -15,33 +15,135 @@ type NavItem = {
 const items = nav as NavItem[];
 ---
 
-<nav class="site-nav" data-nav>
-  <a href="." class="logo">RJM<span>L</span></a>
+<nav class="site-nav" data-nav aria-label="Primary">
+  <div class="nav-left">
+    <a href="/" class="logo">RJM<span>L</span></a>
+  </div>
 
-  <ul class="nl">
-    {items.map((item) => {
-      const hasChildren = Boolean(item.children?.length);
+  <div class="nav-center">
+    <ul class="nl">
+      {items.map((item) => {
+        const hasChildren = Boolean(item.children?.length);
 
-      return (
-        <li class:list={["nitem", hasChildren && "has-dropdown"]}>
-          <a href={`/${item.id}`}>{item.label}</a>
+        return (
+          <li class:list={["nitem", hasChildren && "has-dropdown"]}>
+            {hasChildren ? (
+              <>
+                <button class="nav-link nav-parent" type="button" aria-expanded="false">
+                  {item.label}
+                </button>
 
-          {hasChildren ? (
-            <ul class="dropdown">
-              {item.children!.map((child) => (
-                <li>
-                  <a href={`/${child.id}`}>{child.label}</a>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </li>
-      );
-    })}
-  </ul>
+                <ul class="dropdown">
+                  {item.children!.map((child) => (
+                    <li>
+                      <a href={`/${child.id}`}>{child.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <a class="nav-link" href={`/${item.id}`}>{item.label}</a>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  </div>
 
-  <div class="nr">
+  <div class="nav-right">
     <a href="https://cv.rjmlaird.co.uk" class="nsub">Full CV ↗</a>
     <a href="/contact" class="ncta">Get in touch</a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-menu">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="hamburger" aria-hidden="true"></span>
+    </button>
   </div>
+
+  <script is:inline>
+    const initNav = () => {
+      const siteNav = document.querySelector("[data-nav]");
+      if (!siteNav) return;
+
+      const toggle = siteNav.querySelector(".nav-toggle");
+      const dropdownButtons = siteNav.querySelectorAll(".nav-parent");
+
+      const closeAllDropdowns = () => {
+        siteNav.querySelectorAll(".has-dropdown").forEach((item) => {
+          item.classList.remove("open");
+          const btn = item.querySelector(".nav-parent");
+          if (btn) btn.setAttribute("aria-expanded", "false");
+        });
+      };
+
+      dropdownButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const parent = btn.closest(".has-dropdown");
+          if (!parent) return;
+
+          const isOpen = parent.classList.toggle("open");
+          btn.setAttribute("aria-expanded", String(isOpen));
+        });
+      });
+
+      toggle?.addEventListener("click", () => {
+        const open = siteNav.classList.toggle("menu-open");
+        toggle.setAttribute("aria-expanded", String(open));
+        if (!open) closeAllDropdowns();
+      });
+
+      document.addEventListener(
+        "click",
+        (event) => {
+          if (!siteNav.contains(event.target)) closeAllDropdowns();
+        },
+        { once: true }
+      );
+    };
+
+    initNav();
+    document.addEventListener("astro:page-load", initNav);
+  </script>
 </nav>
+
+<style>
+.rp-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+.filter-field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.filter-field span {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+}
+
+.filter-field select {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+  background: transparent;
+  color: currentColor;
+  font: inherit;
+}
+
+.filter-field select option {
+  color: #111;
+  background: #fff;
+}
+
+@media (max-width: 900px) {
+  .rp-filters {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

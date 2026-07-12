@@ -5,6 +5,7 @@
     "label": "Work",
     "children": [
       { "id": "projects", "label": "Projects" },
+      { "id": "case-studies", "label": "Case Studies" },
       { "id": "articles", "label": "Articles" },
       { "id": "research", "label": "Research" },
       { "id": "initiatives", "label": "Initiatives" }

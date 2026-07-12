@@ -1,0 +1,45 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const caseStudy = (await getCollection("caseStudy", ({ data }) => data.draft !== true))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout>
+  <section class="section cs-gallery">
+    <div class="container pg-shell">
+      <header class="pg-head">
+        <p class="eyebrow">Case Studies</p>
+
+        <h1 class="ch fade">
+          Writing across <em>space, sustainability &amp; science policy</em>
+        </h1>
+
+        <div class="pg-intro">
+          <p class="pg-lead">
+            Selected articles, reports, and commentary across space systems, climate intelligence, and innovation ecosystems.
+          </p>
+          <p class="pg-note">
+            Browse the full set of published case studies below.
+          </p>
+        </div>
+      </header>
+
+      <div class="pg-grid">
+        {caseStudy.map((entry) => {
+          const slug = entry.id.split("/").pop()?.replace(/\.[^.]+$/, "") ?? entry.id;
+
+          return (
+            <article class="publication-item">
+              <a href={`/case-studies/${slug}/`}>
+                <h2>{entry.data.title}</h2>
+                {entry.data.description && <p>{entry.data.description}</p>}
+              </a>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</Layout>

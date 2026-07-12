@@ -3,7 +3,6 @@ id: 41
 slug: esoultrahd
 title: ESO Ultra HD Expedition
 featured: true
-type: featured
 status: completed
 description: A short summary of what this project does.
 date: 2026-07-01
@@ -24,6 +23,6 @@ links:
 impact: {}
 draft: false
 caseStudy: ESO Ultra HD
-Client: European Southern Observatory
+client: European Southern Observatory
 ---
-# Case studies
+

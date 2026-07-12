@@ -2,6 +2,8 @@
 id: 41
 slug: spaceupleics2019
 title: SpaceUp Leicester 2019
+featured: false
+draft: false
 type: featured
 status: completed
 description: A short summary of what this project does.

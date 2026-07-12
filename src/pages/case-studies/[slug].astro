@@ -1,0 +1,160 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, render, type CollectionEntry, getEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("caseStudy", ({ data }) => data.draft !== true);
+
+  return entries
+    .filter((entry) => typeof entry.id === "string" && entry.id.trim().length > 0)
+    .map((entry) => ({
+      params: { slug: entry.id },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props as {
+  entry: CollectionEntry<"caseStudy">;
+};
+
+const slug = Astro.params.slug;
+const caseStudy = entry.data;
+const { Content } = await render(entry);
+
+const dateLabel = caseStudy.date
+  ? new Date(caseStudy.date).toLocaleDateString("en-GB", {
+      year: "numeric",
+      month: "long",
+    })
+  : "";
+
+const tools = Array.isArray(caseStudy.tools_tech) ? caseStudy.tools_tech : [];
+const features = Array.isArray(caseStudy.features) ? caseStudy.features : [];
+const tags = Array.isArray(caseStudy.tags) ? caseStudy.tags : [];
+const links = caseStudy.links || {};
+
+const relatedProjects = Array.isArray(caseStudy.relatedProjects)
+  ? (await Promise.all(caseStudy.relatedProjects.map((ref) => getEntry(ref)))).filter(Boolean)
+  : [];
+---
+
+<Layout>
+  <section class="section publications-gallery">
+    <div class="container pg-shell">
+      <header class="pg-head">
+        <p class="eyebrow">Case Studies</p>
+        <h1 class="ch fade">{caseStudy.title || slug}</h1>
+
+        <dl class="project-meta" aria-label="Case study metadata">
+          {caseStudy.type && <div><dd>{caseStudy.type}</dd></div>}
+          {caseStudy.status && <div><dd>{caseStudy.status}</dd></div>}
+          {dateLabel && <div><dd>{dateLabel}</dd></div>}
+        </dl>
+      </header>
+
+      <div class="project-layout">
+        <aside class="project-sidebar" aria-label="Case study details">
+          <div class="pg-intro">
+            {caseStudy.description && <p class="pg-lead">{caseStudy.description}</p>}
+            <p class="pg-note">
+              A full case study with metadata, links, related projects, and supporting detail.
+            </p>
+          </div>
+
+          {caseStudy.client && (
+            <section class="sidebar-block">
+              <h2>Client</h2>
+              <p>{caseStudy.client}</p>
+            </section>
+          )}
+
+          {caseStudy.organisation && (
+            <section class="sidebar-block">
+              <h2>Organisation</h2>
+              <p>{caseStudy.organisation}</p>
+            </section>
+          )}
+
+          {caseStudy.institution && (
+            <section class="sidebar-block">
+              <h2>Institution</h2>
+              <p>{caseStudy.institution}</p>
+            </section>
+          )}
+
+          {tools.length > 0 && (
+            <section class="sidebar-block">
+              <h2>Tools</h2>
+              <ul class="chip-list">
+                {tools.map((tool) => <li>{tool}</li>)}
+              </ul>
+            </section>
+          )}
+
+          {features.length > 0 && (
+            <section class="sidebar-block">
+              <h2>Features</h2>
+              <ul class="bullet-list">
+                {features.map((feature) => <li>{feature}</li>)}
+              </ul>
+            </section>
+          )}
+
+          {tags.length > 0 && (
+            <section class="sidebar-block">
+              <h2>Tags</h2>
+              <ul class="chip-list">
+                {tags.map((tag) => <li>{tag}</li>)}
+              </ul>
+            </section>
+          )}
+
+          {(links.github || links.live || links.demo || links.docs || links.video) && (
+            <section class="sidebar-block">
+              <h2>Links</h2>
+              <ul class="link-list">
+                {links.github && <li><a href={links.github} target="_blank" rel="noreferrer">GitHub</a></li>}
+                {links.live && <li><a href={links.live} target="_blank" rel="noreferrer">Live site</a></li>}
+                {links.demo && <li><a href={links.demo} target="_blank" rel="noreferrer">Demo</a></li>}
+                {links.docs && <li><a href={links.docs} target="_blank" rel="noreferrer">Docs</a></li>}
+                {links.video && <li><a href={links.video} target="_blank" rel="noreferrer">Video</a></li>}
+              </ul>
+            </section>
+          )}
+
+          {relatedProjects.length > 0 && (
+            <section class="sidebar-block">
+              <h2>Related projects</h2>
+              <ul class="link-list">
+                {relatedProjects.map((project) =>
+                  project ? (
+                    <li>
+                      <a href={`/projects/${project.id.split("/").pop()?.replace(/\.[^.]+$/, "")}/`}>
+                        {project.data.title}
+                      </a>
+                    </li>
+                  ) : null
+                )}
+              </ul>
+            </section>
+          )}
+        </aside>
+
+        <article class="project-content">
+          <div class="project-body">
+            <Content />
+          </div>
+
+          <section class="sidebar-block">
+            <h2>Impact</h2>
+            {caseStudy.impact && Object.keys(caseStudy.impact).length > 0 ? (
+              <pre>{JSON.stringify(caseStudy.impact, null, 2)}</pre>
+            ) : (
+              <p>No impact data provided yet.</p>
+            )}
+          </section>
+        </article>
+      </div>
+    </div>
+  </section>
+</Layout>

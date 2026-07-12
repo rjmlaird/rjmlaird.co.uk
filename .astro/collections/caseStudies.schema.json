@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "imageCredit": {
+      "type": "string"
+    },
+    "canonical": {
+      "type": "string",
+      "format": "uri"
+    },
+    "noindex": {
+      "default": false,
+      "type": "boolean"
+    },
+    "nofollow": {
+      "default": false,
+      "type": "boolean"
+    },
+    "id": {
+      "type": "number"
+    },
+    "date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "draft": {
+      "default": true,
+      "type": "boolean"
+    },
+    "featured": {
+      "default": false,
+      "type": "boolean"
+    },
+    "author": {
+      "type": "string"
+    },
+    "tags": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "category": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "const": "case-study"
+    },
+    "status": {
+      "type": "string"
+    },
+    "client": {
+      "type": "string"
+    },
+    "organisation": {
+      "type": "string"
+    },
+    "institution": {
+      "type": "string"
+    },
+    "relatedProjects": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "collection": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "collection"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "slug": {
+                "type": "string"
+              },
+              "collection": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "slug",
+              "collection"
+            ]
+          }
+        ]
+      }
+    },
+    "impact": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {}
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "date"
+  ]
+}
