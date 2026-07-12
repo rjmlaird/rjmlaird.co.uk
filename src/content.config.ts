@@ -8,7 +8,7 @@ const seoSchema = z.object({
   excerpt: z.string().optional(),
   image: z.string().optional(),
   imageCredit: z.string().optional(),
-  canonical: z.string().url().optional(),
+  canonical: z.url().optional(),
   noindex: z.boolean().default(false),
   nofollow: z.boolean().default(false),
 });
@@ -22,11 +22,6 @@ const baseSchema = seoSchema.extend({
   tags: z.array(z.string()).default([]),
   category: z.string().optional(),
   slug: z.string().optional(),
-});
-
-const linkSchema = z.object({
-  label: z.string(),
-  href: z.string().url(),
 });
 
 const projectLinksSchema = z.object({

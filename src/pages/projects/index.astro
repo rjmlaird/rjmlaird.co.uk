@@ -8,15 +8,8 @@ const entries = (await getCollection("projects", ({ data }) => data.draft !== tr
 
 const typeList = [...new Set(entries.map((entry) => entry.data.type).filter(Boolean))].sort();
 const statusList = [...new Set(entries.map((entry) => entry.data.status).filter(Boolean))].sort();
-const tagList = [
-  ...new Set(
-    entries.flatMap((entry) => {
-      if (Array.isArray(entry.data.tags) && entry.data.tags.length > 0) return entry.data.tags;
-      if (entry.data.tag) return [entry.data.tag];
-      return [];
-    })
-  ),
-].sort();
+
+const tagList = [...new Set(entries.flatMap((entry) => entry.data.tags))].sort();
 ---
 
 <Layout>
@@ -64,12 +57,7 @@ const tagList = [
 
       <div class="rp-grid" id="projectGrid">
         {entries.map((entry) => {
-          const tags =
-            Array.isArray(entry.data.tags) && entry.data.tags.length > 0
-              ? entry.data.tags
-              : entry.data.tag
-                ? [entry.data.tag]
-                : [];
+          const tags = entry.data.tags;
 
           return (
             <div
