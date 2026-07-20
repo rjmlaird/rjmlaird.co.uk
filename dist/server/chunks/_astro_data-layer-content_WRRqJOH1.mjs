@@ -1,0 +1,6314 @@
+globalThis.process ??= {};
+globalThis.process.env ??= {};
+//#region \0astro:data-layer-content
+var _astro_data_layer_content_default = [
+	[
+		"Map",
+		1,
+		2,
+		20,
+		21,
+		47,
+		48,
+		94,
+		95,
+		66,
+		102
+	],
+	"authors",
+	[
+		"Map",
+		3,
+		4
+	],
+	"ryan-laird",
+	{
+		id: 3,
+		data: 5,
+		filePath: 10,
+		digest: 11,
+		rendered: 12
+	},
+	{
+		name: 6,
+		bio: 7,
+		avatar: 8,
+		role: 9
+	},
+	"Ryan Laird",
+	"Ryan Laird writes and builds content-focused web projects.",
+	"/img/person/ryan-laird.jpg",
+	"Writer and builder",
+	"src/content/authors/ryan-laird.md",
+	"deecd20a0eb99836",
+	{
+		html: 13,
+		metadata: 14
+	},
+	"",
+	{
+		headings: 15,
+		localImagePaths: 16,
+		remoteImagePaths: 17,
+		frontmatter: 18,
+		imagePaths: 19
+	},
+	[],
+	[],
+	[],
+	{
+		name: 6,
+		author: 3,
+		role: 9,
+		bio: 7,
+		avatar: 8
+	},
+	[],
+	"blog",
+	[
+		"Map",
+		22,
+		23
+	],
+	"seo-for-space-orgs-2026",
+	{
+		id: 22,
+		data: 24,
+		body: 41,
+		filePath: 42,
+		assetImports: 43,
+		digest: 45,
+		deferredRender: 46
+	},
+	{
+		title: 25,
+		description: 26,
+		noindex: 27,
+		nofollow: 27,
+		updatedDate: 28,
+		draft: 27,
+		featured: 27,
+		author: 29,
+		tags: 30,
+		category: 36,
+		pubDate: 38,
+		heroImage: 39,
+		heroAlt: 40
+	},
+	"SEO for space organisations in 2026: what actually works now",
+	"A practical guide to SEO for space organisations, covering topical authority, structured content, AI search, and technical best practices.",
+	false,
+	["Date", "2026-07-14T00:00:00.000Z"],
+	{
+		id: 6,
+		collection: 1
+	},
+	[
+		31,
+		32,
+		33,
+		34,
+		35
+	],
+	"seo",
+	"space",
+	"communications",
+	"accessibility",
+	"content strategy",
+	[37],
+	"marketing",
+	["Date", "2026-07-14T00:00:00.000Z"],
+	"__ASTRO_IMAGE_../../assets/images/blog/seo-space-organisations-2026.jpg",
+	"A satellite orbiting Earth representing space sector search engine optimisation",
+	"import seoFrameworkImg from '../../assets/images/blog/seo-space-organisations-2026.jpg';\n\n<Callout title=\"What works now\" variant=\"info\">\nFocus on topic clusters, entity clarity, fast pages, and content that answers real user intent.\n</Callout>\n\n## Why space SEO is different\n\nSpace organisations often publish technically accurate content that is difficult for non-specialists to discover. That creates a gap between what the organisation knows and what users can actually find through search. Good SEO helps bridge that gap by connecting mission pages, research outputs, funding calls, services, and educational content into one discoverable ecosystem.\n\nThis matters because search intent in the sector is mixed. A user might want mission updates, a journalist might want a quote, a student might want a plain-English explanation, and a procurement lead might want technical specifications. A strong SEO strategy maps each of those intents to a different page type rather than forcing everything onto one blog.\n\n## What works now\n\nThe most effective approach in 2026 is to build topical authority around a small number of recurring themes. For a space organisation, those themes might be Earth observation, satellite communications, launch services, planetary science, space policy, STEM outreach, or climate applications. Search engines reward content ecosystems that show depth, consistency, and clear internal relationships between pages.\n\n<ComparisonTable\n  leftTitle=\"Old SEO\"\n  rightTitle=\"2026 SEO\"\n  rows={[\n    { left: \"Target broad keywords.\", right: \"Build topical authority around clear themes.\" },\n    { left: \"Hide detail in PDFs.\", right: \"Publish discoverable web pages with structured data.\" },\n    { left: \"Write for search engines first.\", right: \"Write for users, AI summaries, and search engines together.\" }\n  ]}\n/>\n\nThe second thing that works is entity clarity. Search systems increasingly understand organisations, people, missions, instruments, locations, and projects as connected entities, so your site should make those relationships explicit through structured headings, metadata, author pages, and schema. This helps both classic SEO and AI-driven search experiences.\n\nThe third thing is speed and technical cleanliness. Space organisations often have visually rich pages, but pages that are heavy, poorly structured, or inaccessible will lose ranking potential and user trust. Fast loading, mobile-friendly layouts, semantic HTML, and accessible media remain foundational rather than optional.\n\n## Content that wins\n\nThe best-performing content tends to be practical, specific, and audience-led. For space organisations, that usually means mission explainers, data portals, FAQs, glossary pages, careers content, case studies, funding guidance, and research summaries written for different levels of expertise. Broad news content still has a place, but it works best when supported by evergreen explainers that can rank consistently over time.\n\nIn 2026, content should also be written to answer a question completely enough that it can surface in AI summaries or featured answers. That means concise lead paragraphs, strong definitions, bullet lists, and clear takeaways. Search visibility increasingly rewards pages that are easy to quote accurately.\n\n<Checklist\n  title=\"Technical checklist\"\n  items={[\n    \"Clear page titles and meta descriptions for every mission, project, and service page.\",\n    \"Structured data for organisations, articles, events, videos, and FAQs where relevant.\",\n    \"Logical heading structure and internal linking between related topics.\",\n    \"Fast performance on mobile and desktop.\",\n    \"Accessible images, charts, captions, transcripts, and downloadable assets.\",\n    \"Canonical URLs and clean indexation rules for campaign pages and event pages.\"\n  ]}\n/>\n\nIt also helps to keep the information architecture simple. Many space sites bury important material in PDFs or event microsites, which makes indexing and user journeys harder. If a page matters to the public, put the full, discoverable version on the web page itself and use the PDF as a supporting asset rather than the primary source.\n\n## SEO for AI search\n\nAI search has changed how people discover information, but it has not replaced SEO; it has raised the bar. To appear well in AI summaries and answer engines, your site needs explicit terminology, trustworthy authorship, and content that states facts without unnecessary jargon. That is especially important for space topics where precision matters.\n\nFor space organisations, this means writing with named missions, instruments, agencies, dates, and technical terms instead of vague branding language. It also means adding context that helps models and users understand why the page matters. The content should answer questions like “What is this mission?”, “Who is it for?”, “What does the data do?”, and “Why does it matter?” within the first few paragraphs.\n\n## Keyword clusters\n\n<QuoteBlock\n  quote=\"Clarity, authority, and entity depth matter more than broad keyword chasing.\"\n  cite=\"Editorial principle for 2026 SEO\"\n/>\n\n- Space organisation SEO.\n- Earth observation content strategy.\n- Satellite communications marketing.\n- Astronomy outreach resources.\n- Space policy communications.\n- Climate and space applications.\n- Mission updates and data portals.\n- Space sector careers.\n- Research communication for space.\n- Science communication SEO.\n\n<Figure>\n  <Image \n    src={seoFrameworkImg} \n    alt=\"Diagram showing SEO content clusters for space organisations\" \n    width={1200}\n    height={675}\n  />\n  <span slot=\"caption\">A simple content cluster model for a space organisation.</span>\n</Figure>\n\n<StatCard\n  label=\"Priority\"\n  value=\"High\"\n  note=\"Because this topic combines SEO, space communications, and thought leadership.\"\n/>\n\nThese terms map more closely to actual user intent and are easier to build authority around than generic head terms like “space” or “astronomy.” They also support a clearer content cluster strategy across the site.\n\n## Conclusion\n\nThe organisations that win in 2026 are not the ones publishing the most content. They are the ones publishing the right content, with a clear information architecture, strong internal linking, and enough technical quality for both search engines and human readers. For space brands, SEO now sits at the intersection of communications, education, accessibility, and digital infrastructure.",
+	"src/content/blog/seo-for-space-orgs-2026.mdx",
+	[44],
+	"../../assets/images/blog/seo-space-organisations-2026.jpg",
+	"8767b671ac18b562",
+	true,
+	"caseStudy",
+	[
+		"Map",
+		49,
+		50
+	],
+	"eso-ultra-hd",
+	{
+		id: 49,
+		data: 51,
+		filePath: 70,
+		digest: 71,
+		rendered: 72
+	},
+	{
+		title: 52,
+		description: 53,
+		excerpt: 54,
+		image: 55,
+		imageCredit: 56,
+		noindex: 27,
+		nofollow: 27,
+		draft: 27,
+		featured: 46,
+		author: 57,
+		tags: 58,
+		category: 61,
+		status: 62,
+		relatedProjects: 63,
+		impact: 67
+	},
+	"ESO Ultra HD",
+	"A short summary of the project.",
+	"A slightly longer excerpt for cards and previews.",
+	"/images/blog/my-first-post.jpg",
+	"Cover image for ESO Ultra HD",
+	{
+		id: 3,
+		collection: 1
+	},
+	[59, 60],
+	"Space",
+	"Science policy",
+	[59],
+	"completed",
+	[64],
+	{
+		id: 65,
+		collection: 66
+	},
+	"windy",
+	"projects",
+	{
+		outcome: 68,
+		engagement: 69
+	},
+	"Improved discoverability and storytelling",
+	"High",
+	"src/content/case-studies/esoultrahd.md",
+	"983f30506caa3de5",
+	{
+		html: 13,
+		metadata: 73
+	},
+	{
+		headings: 74,
+		localImagePaths: 75,
+		remoteImagePaths: 76,
+		frontmatter: 77,
+		imagePaths: 93
+	},
+	[],
+	[],
+	[],
+	{
+		slug: 49,
+		title: 52,
+		description: 53,
+		excerpt: 54,
+		date: 78,
+		featured: 46,
+		category: 79,
+		tags: 80,
+		draft: 27,
+		author: 3,
+		image: 55,
+		imageCredit: 56,
+		status: 62,
+		links: 81,
+		impact: 84,
+		tools_tech: 85,
+		features: 89,
+		relatedProjects: 92
+	},
+	["Date", "2026-07-07T00:00:00.000Z"],
+	[59],
+	[59, 60],
+	{
+		github: 82,
+		live: 83
+	},
+	"https://github.com/yourname/example-project",
+	"https://example.com",
+	{
+		outcome: 68,
+		engagement: 69
+	},
+	[
+		86,
+		87,
+		88
+	],
+	"TypeScript",
+	"Astro",
+	"Zod",
+	[90, 91],
+	"Feature one",
+	"Feature two",
+	[65],
+	[],
+	"meta::meta",
+	[
+		"Map",
+		96,
+		97,
+		98,
+		99,
+		100,
+		101
+	],
+	"astro-config-digest",
+	"{\"root\":{},\"srcDir\":{},\"publicDir\":{},\"outDir\":{},\"cacheDir\":{},\"site\":\"https://rjmlaird.co.uk\",\"compressHTML\":\"jsx\",\"base\":\"/\",\"trailingSlash\":\"ignore\",\"output\":\"server\",\"scopedStyleStrategy\":\"class\",\"build\":{\"format\":\"directory\",\"client\":{},\"server\":{},\"assets\":\"_astro\",\"serverEntry\":\"entry.mjs\",\"redirects\":false,\"inlineStylesheets\":\"auto\",\"concurrency\":1},\"server\":{\"open\":false,\"host\":false,\"port\":4321,\"allowedHosts\":[]},\"redirects\":{},\"image\":{\"endpoint\":{\"route\":\"/_image\",\"entrypoint\":\"@astrojs/cloudflare/image-passthrough-endpoint\"},\"service\":{\"entrypoint\":\"astro/assets/services/noop\",\"config\":{}},\"dangerouslyProcessSVG\":false,\"domains\":[],\"remotePatterns\":[],\"responsiveStyles\":false},\"devToolbar\":{\"enabled\":true},\"markdown\":{\"syntaxHighlight\":{\"type\":\"shiki\",\"excludeLangs\":[\"math\"]},\"shikiConfig\":{\"langs\":[],\"langAlias\":{},\"theme\":\"github-dark\",\"themes\":{},\"wrap\":false,\"transformers\":[]},\"remarkPlugins\":[],\"rehypePlugins\":[],\"remarkRehype\":{},\"processor\":{\"name\":\"satteri\",\"options\":{\"mdastPlugins\":[],\"hastPlugins\":[],\"features\":{}}}},\"security\":{\"checkOrigin\":true,\"allowedDomains\":[],\"csp\":false,\"actionBodySizeLimit\":1048576,\"serverIslandBodySizeLimit\":1048576},\"env\":{\"schema\":{},\"validateSecrets\":false},\"prerenderConflictBehavior\":\"warn\",\"fetchFile\":\"fetch\",\"experimental\":{\"clientPrerender\":false,\"contentIntellisense\":false,\"chromeDevtoolsWorkspace\":false},\"legacy\":{\"collectionsBackwardsCompat\":false},\"session\":{\"driver\":{\"entrypoint\":\"unstorage/drivers/cloudflare-kv-binding\",\"config\":{\"binding\":\"SESSION\"}}}}",
+	"astro-version",
+	"7.0.7",
+	"content-config-digest",
+	"a51aab1294a59be6",
+	[
+		"Map",
+		103,
+		104,
+		139,
+		140,
+		168,
+		169,
+		198,
+		199,
+		227,
+		228,
+		256,
+		257,
+		285,
+		286,
+		314,
+		315,
+		343,
+		344,
+		372,
+		373,
+		401,
+		402,
+		430,
+		431,
+		457,
+		458,
+		486,
+		487,
+		515,
+		516,
+		544,
+		545,
+		573,
+		574,
+		600,
+		601,
+		627,
+		628,
+		656,
+		657,
+		685,
+		686,
+		715,
+		716,
+		744,
+		745,
+		773,
+		774,
+		802,
+		803,
+		829,
+		830,
+		858,
+		859,
+		885,
+		886,
+		914,
+		915,
+		943,
+		944,
+		970,
+		971,
+		999,
+		1e3,
+		1029,
+		1030,
+		1058,
+		1059,
+		1087,
+		1088,
+		1116,
+		1117,
+		1145,
+		1146,
+		1174,
+		1175,
+		1203,
+		1204,
+		1232,
+		1233,
+		1262,
+		1263,
+		1291,
+		1292,
+		1320,
+		1321,
+		1348,
+		1349,
+		1378,
+		1379,
+		1405,
+		1406,
+		1435,
+		1436,
+		1465,
+		1466,
+		1494,
+		1495,
+		1522,
+		1523,
+		1551,
+		1552,
+		1582,
+		1583,
+		1613,
+		1614,
+		1642,
+		1643,
+		1672,
+		1673,
+		1701,
+		1702,
+		1729,
+		1730,
+		65,
+		1756,
+		1784,
+		1785
+	],
+	"aeolus",
+	{
+		id: 103,
+		data: 105,
+		filePath: 124,
+		digest: 125,
+		rendered: 126
+	},
+	{
+		title: 106,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 108,
+		startDate: 109,
+		draft: 27,
+		featured: 46,
+		tags: 110,
+		category: 114,
+		type: 115,
+		status: 62,
+		tools_tech: 116,
+		features: 117,
+		links: 118,
+		impact: 120,
+		caseStudy: 121,
+		client: 122,
+		organisation: 123
+	},
+	"Aeolus",
+	"A short summary of what this project does.",
+	43,
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	"portfolio",
+	"web",
+	"example",
+	[],
+	"featured",
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{ video: 119 },
+	"https://youtu.be/OOHS8nN1Hcg?is=FGvsLz2ULXEdDodP",
+	{},
+	"ESA material labs",
+	"European Space Agency",
+	"Design & Data GmbH",
+	"src/content/projects/aeolus.md",
+	"7481811c020ac5a0",
+	{
+		html: 13,
+		metadata: 127
+	},
+	{
+		headings: 128,
+		localImagePaths: 129,
+		remoteImagePaths: 130,
+		frontmatter: 131,
+		imagePaths: 138
+	},
+	[],
+	[],
+	[],
+	{
+		id: 108,
+		slug: 103,
+		title: 106,
+		featured: 46,
+		draft: 27,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 132,
+		tools_tech: 133,
+		features: 134,
+		tags: 135,
+		links: 136,
+		impact: 137,
+		caseStudy: 121,
+		client: 122,
+		organisation: 123
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{ video: 119 },
+	{},
+	[],
+	"bake-in-space",
+	{
+		id: 139,
+		data: 141,
+		body: 151,
+		filePath: 152,
+		digest: 153,
+		rendered: 154
+	},
+	{
+		title: 142,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 144,
+		draft: 27,
+		featured: 27,
+		tags: 145,
+		category: 146,
+		type: 115,
+		status: 62,
+		tools_tech: 147,
+		features: 148,
+		links: 149,
+		impact: 150
+	},
+	"Bake In Space",
+	41,
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"Awards : INNOspace Masters 2017 (https://app.notion.com/p/INNOspace-Masters-2017-3803a96540ad80da8cc7f62c94dc0eda?pvs=21)\nCase studies: Bake In space (https://app.notion.com/p/Bake-In-space-3813a96540ad803793e9c822a1f6403c?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)",
+	"src/content/projects/bake-in-space.md",
+	"f22fa2132263263c",
+	{
+		html: 155,
+		metadata: 156
+	},
+	"<p>Awards : INNOspace Masters 2017 (<a href=\"https://app.notion.com/p/INNOspace-Masters-2017-3803a96540ad80da8cc7f62c94dc0eda?pvs=21\">https://app.notion.com/p/INNOspace-Masters-2017-3803a96540ad80da8cc7f62c94dc0eda?pvs=21</a>)\nCase studies: Bake In space (<a href=\"https://app.notion.com/p/Bake-In-space-3813a96540ad803793e9c822a1f6403c?pvs=21\">https://app.notion.com/p/Bake-In-space-3813a96540ad803793e9c822a1f6403c?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n",
+	{
+		headings: 157,
+		localImagePaths: 158,
+		remoteImagePaths: 159,
+		frontmatter: 160,
+		imagePaths: 167
+	},
+	[],
+	[],
+	[],
+	{
+		id: 143,
+		slug: 139,
+		title: 142,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 161,
+		tools_tech: 162,
+		features: 163,
+		tags: 164,
+		links: 165,
+		impact: 166
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"bepi-colombo",
+	{
+		id: 168,
+		data: 170,
+		body: 179,
+		filePath: 180,
+		digest: 181,
+		rendered: 182
+	},
+	{
+		title: 171,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 172,
+		draft: 27,
+		featured: 27,
+		tags: 173,
+		category: 174,
+		type: 115,
+		status: 62,
+		tools_tech: 175,
+		features: 176,
+		links: 177,
+		impact: 178
+	},
+	"Bepi Colombo",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nCase studies: ESA material labs (https://app.notion.com/p/ESA-material-labs-3813a96540ad8026b4a3e506aaa92615?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)\n\n[https://youtu.be/djerGKGiNC4?is=Gi6qlOIEgSixa52-](https://youtu.be/djerGKGiNC4?is=Gi6qlOIEgSixa52-)",
+	"src/content/projects/bepi-colombo.md",
+	"79ae2ae80ca29cc1",
+	{
+		html: 183,
+		metadata: 184
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: ESA material labs (<a href=\"https://app.notion.com/p/ESA-material-labs-3813a96540ad8026b4a3e506aaa92615?pvs=21\">https://app.notion.com/p/ESA-material-labs-3813a96540ad8026b4a3e506aaa92615?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n<p><a href=\"https://youtu.be/djerGKGiNC4?is=Gi6qlOIEgSixa52-\">https://youtu.be/djerGKGiNC4?is=Gi6qlOIEgSixa52-</a></p>\n",
+	{
+		headings: 185,
+		localImagePaths: 188,
+		remoteImagePaths: 189,
+		frontmatter: 190,
+		imagePaths: 197
+	},
+	[186],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	1,
+	[],
+	[],
+	{
+		id: 143,
+		slug: 168,
+		title: 171,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 191,
+		tools_tech: 192,
+		features: 193,
+		tags: 194,
+		links: 195,
+		impact: 196
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"bloodhound-blast",
+	{
+		id: 198,
+		data: 200,
+		body: 209,
+		filePath: 210,
+		digest: 211,
+		rendered: 212
+	},
+	{
+		title: 201,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 202,
+		draft: 27,
+		featured: 27,
+		tags: 203,
+		category: 204,
+		type: 115,
+		status: 62,
+		tools_tech: 205,
+		features: 206,
+		links: 207,
+		impact: 208
+	},
+	"Bloodhound blast example",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nCase studies: Bloodhound blast (https://app.notion.com/p/Bloodhound-blast-3813a96540ad80438374d5c57614226f?pvs=21)\nOrganisations: Bloodhound SSC (https://app.notion.com/p/Bloodhound-SSC-37b3a96540ad807bbbe8cead8c8737d3?pvs=21)",
+	"src/content/projects/bloodhound-blast.md",
+	"287c0c2127c324bc",
+	{
+		html: 213,
+		metadata: 214
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: Bloodhound blast (<a href=\"https://app.notion.com/p/Bloodhound-blast-3813a96540ad80438374d5c57614226f?pvs=21\">https://app.notion.com/p/Bloodhound-blast-3813a96540ad80438374d5c57614226f?pvs=21</a>)\nOrganisations: Bloodhound SSC (<a href=\"https://app.notion.com/p/Bloodhound-SSC-37b3a96540ad807bbbe8cead8c8737d3?pvs=21\">https://app.notion.com/p/Bloodhound-SSC-37b3a96540ad807bbbe8cead8c8737d3?pvs=21</a>)</p>\n",
+	{
+		headings: 215,
+		localImagePaths: 217,
+		remoteImagePaths: 218,
+		frontmatter: 219,
+		imagePaths: 226
+	},
+	[216],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 198,
+		title: 201,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 220,
+		tools_tech: 221,
+		features: 222,
+		tags: 223,
+		links: 224,
+		impact: 225
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"breezometer",
+	{
+		id: 227,
+		data: 229,
+		body: 238,
+		filePath: 239,
+		digest: 240,
+		rendered: 241
+	},
+	{
+		title: 230,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 231,
+		draft: 27,
+		featured: 27,
+		tags: 232,
+		category: 233,
+		type: 115,
+		status: 62,
+		tools_tech: 234,
+		features: 235,
+		links: 236,
+		impact: 237
+	},
+	"Breezometer",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)\n\n[https://youtu.be/VRv6sqPa2o8?is=BfBOjFiu-O0h_aiY](https://youtu.be/VRv6sqPa2o8?is=BfBOjFiu-O0h_aiY)",
+	"src/content/projects/breezometer.md",
+	"924b22a9a0c5aad7",
+	{
+		html: 242,
+		metadata: 243
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n<p><a href=\"https://youtu.be/VRv6sqPa2o8?is=BfBOjFiu-O0h_aiY\">https://youtu.be/VRv6sqPa2o8?is=BfBOjFiu-O0h_aiY</a></p>\n",
+	{
+		headings: 244,
+		localImagePaths: 246,
+		remoteImagePaths: 247,
+		frontmatter: 248,
+		imagePaths: 255
+	},
+	[245],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 227,
+		title: 230,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 249,
+		tools_tech: 250,
+		features: 251,
+		tags: 252,
+		links: 253,
+		impact: 254
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"build4space",
+	{
+		id: 256,
+		data: 258,
+		body: 267,
+		filePath: 268,
+		digest: 269,
+		rendered: 270
+	},
+	{
+		title: 259,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 260,
+		draft: 27,
+		featured: 27,
+		tags: 261,
+		category: 262,
+		type: 115,
+		status: 62,
+		tools_tech: 263,
+		features: 264,
+		links: 265,
+		impact: 266
+	},
+	"Build4Space",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nOrganisations: R&R Space (https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21)",
+	"src/content/projects/build4space.md",
+	"76754c63c496c5dd",
+	{
+		html: 271,
+		metadata: 272
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: R&amp;R Space (<a href=\"https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21\">https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21</a>)</p>\n",
+	{
+		headings: 273,
+		localImagePaths: 275,
+		remoteImagePaths: 276,
+		frontmatter: 277,
+		imagePaths: 284
+	},
+	[274],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 256,
+		title: 259,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 278,
+		tools_tech: 279,
+		features: 280,
+		tags: 281,
+		links: 282,
+		impact: 283
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"copernicus-hackathon-leics",
+	{
+		id: 285,
+		data: 287,
+		body: 296,
+		filePath: 297,
+		digest: 298,
+		rendered: 299
+	},
+	{
+		title: 288,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 289,
+		draft: 27,
+		featured: 27,
+		tags: 290,
+		category: 291,
+		type: 115,
+		status: 62,
+		tools_tech: 292,
+		features: 293,
+		links: 294,
+		impact: 295
+	},
+	"Copernicus Hackathon",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nClient: University of Leicester (https://app.notion.com/p/University-of-Leicester-37b3a96540ad80a6b28df9b193fce1c6?pvs=21)\nOrganisations: Freelance (https://app.notion.com/p/Freelance-3813a96540ad80549866f8665fe238aa?pvs=21)",
+	"src/content/projects/copernicus-hackathon-leics.md",
+	"5d2d553bfc9ce262",
+	{
+		html: 300,
+		metadata: 301
+	},
+	"<h1 id=\"\"></h1>\n<p>Client: University of Leicester (<a href=\"https://app.notion.com/p/University-of-Leicester-37b3a96540ad80a6b28df9b193fce1c6?pvs=21\">https://app.notion.com/p/University-of-Leicester-37b3a96540ad80a6b28df9b193fce1c6?pvs=21</a>)\nOrganisations: Freelance (<a href=\"https://app.notion.com/p/Freelance-3813a96540ad80549866f8665fe238aa?pvs=21\">https://app.notion.com/p/Freelance-3813a96540ad80549866f8665fe238aa?pvs=21</a>)</p>\n",
+	{
+		headings: 302,
+		localImagePaths: 304,
+		remoteImagePaths: 305,
+		frontmatter: 306,
+		imagePaths: 313
+	},
+	[303],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 285,
+		title: 288,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 307,
+		tools_tech: 308,
+		features: 309,
+		tags: 310,
+		links: 311,
+		impact: 312
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"desert-living",
+	{
+		id: 314,
+		data: 316,
+		body: 325,
+		filePath: 326,
+		digest: 327,
+		rendered: 328
+	},
+	{
+		title: 317,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 318,
+		draft: 27,
+		featured: 27,
+		tags: 319,
+		category: 320,
+		type: 115,
+		status: 62,
+		tools_tech: 321,
+		features: 322,
+		links: 323,
+		impact: 324
+	},
+	"Desert Living",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nOrganisations: Bloodhound SSC (https://app.notion.com/p/Bloodhound-SSC-37b3a96540ad807bbbe8cead8c8737d3?pvs=21)",
+	"src/content/projects/desert-living.md",
+	"c4012c482d74ff92",
+	{
+		html: 329,
+		metadata: 330
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: Bloodhound SSC (<a href=\"https://app.notion.com/p/Bloodhound-SSC-37b3a96540ad807bbbe8cead8c8737d3?pvs=21\">https://app.notion.com/p/Bloodhound-SSC-37b3a96540ad807bbbe8cead8c8737d3?pvs=21</a>)</p>\n",
+	{
+		headings: 331,
+		localImagePaths: 333,
+		remoteImagePaths: 334,
+		frontmatter: 335,
+		imagePaths: 342
+	},
+	[332],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 314,
+		title: 317,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 336,
+		tools_tech: 337,
+		features: 338,
+		tags: 339,
+		links: 340,
+		impact: 341
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"discovair",
+	{
+		id: 343,
+		data: 345,
+		body: 354,
+		filePath: 355,
+		digest: 356,
+		rendered: 357
+	},
+	{
+		title: 346,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 347,
+		draft: 27,
+		featured: 27,
+		tags: 348,
+		category: 349,
+		type: 115,
+		status: 62,
+		tools_tech: 350,
+		features: 351,
+		links: 352,
+		impact: 353
+	},
+	"Discovair",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nCase studies: European State of the Climate  (https://app.notion.com/p/European-State-of-the-Climate-3813a96540ad80b9b474e68a4ee37de5?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)\n\n[https://youtu.be/1r3QI88w4BI?is=6elRbvBmc2HJFfKH](https://youtu.be/1r3QI88w4BI?is=6elRbvBmc2HJFfKH)",
+	"src/content/projects/discovair.md",
+	"f2878fe44f204d37",
+	{
+		html: 358,
+		metadata: 359
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: European State of the Climate  (<a href=\"https://app.notion.com/p/European-State-of-the-Climate-3813a96540ad80b9b474e68a4ee37de5?pvs=21\">https://app.notion.com/p/European-State-of-the-Climate-3813a96540ad80b9b474e68a4ee37de5?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n<p><a href=\"https://youtu.be/1r3QI88w4BI?is=6elRbvBmc2HJFfKH\">https://youtu.be/1r3QI88w4BI?is=6elRbvBmc2HJFfKH</a></p>\n",
+	{
+		headings: 360,
+		localImagePaths: 362,
+		remoteImagePaths: 363,
+		frontmatter: 364,
+		imagePaths: 371
+	},
+	[361],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 343,
+		title: 346,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 365,
+		tools_tech: 366,
+		features: 367,
+		tags: 368,
+		links: 369,
+		impact: 370
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"esa-ba-newsletter",
+	{
+		id: 372,
+		data: 374,
+		body: 383,
+		filePath: 384,
+		digest: 385,
+		rendered: 386
+	},
+	{
+		title: 375,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 376,
+		draft: 27,
+		featured: 27,
+		tags: 377,
+		category: 378,
+		type: 115,
+		status: 62,
+		tools_tech: 379,
+		features: 380,
+		links: 381,
+		impact: 382
+	},
+	"ESA Business Applicarions newsletter",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nOrganisations: HE Space Operations (https://app.notion.com/p/HE-Space-Operations-3813a96540ad805e8690df50702e22ba?pvs=21)",
+	"src/content/projects/esa-ba-newsletter.md",
+	"6dbb37c303f080aa",
+	{
+		html: 387,
+		metadata: 388
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: HE Space Operations (<a href=\"https://app.notion.com/p/HE-Space-Operations-3813a96540ad805e8690df50702e22ba?pvs=21\">https://app.notion.com/p/HE-Space-Operations-3813a96540ad805e8690df50702e22ba?pvs=21</a>)</p>\n",
+	{
+		headings: 389,
+		localImagePaths: 391,
+		remoteImagePaths: 392,
+		frontmatter: 393,
+		imagePaths: 400
+	},
+	[390],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 372,
+		title: 375,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 394,
+		tools_tech: 395,
+		features: 396,
+		tags: 397,
+		links: 398,
+		impact: 399
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"esa-ba-webinars",
+	{
+		id: 401,
+		data: 403,
+		body: 412,
+		filePath: 413,
+		digest: 414,
+		rendered: 415
+	},
+	{
+		title: 404,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 405,
+		draft: 27,
+		featured: 27,
+		tags: 406,
+		category: 407,
+		type: 115,
+		status: 62,
+		tools_tech: 408,
+		features: 409,
+		links: 410,
+		impact: 411
+	},
+	"ESA Business Applications Webinars",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nClient: European Space Agency (https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21)\nOrganisations: HE Space Operations (https://app.notion.com/p/HE-Space-Operations-3813a96540ad805e8690df50702e22ba?pvs=21)",
+	"src/content/projects/esa-ba-webinars.md",
+	"856507c5b954ae47",
+	{
+		html: 416,
+		metadata: 417
+	},
+	"<h1 id=\"\"></h1>\n<p>Client: European Space Agency (<a href=\"https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21\">https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21</a>)\nOrganisations: HE Space Operations (<a href=\"https://app.notion.com/p/HE-Space-Operations-3813a96540ad805e8690df50702e22ba?pvs=21\">https://app.notion.com/p/HE-Space-Operations-3813a96540ad805e8690df50702e22ba?pvs=21</a>)</p>\n",
+	{
+		headings: 418,
+		localImagePaths: 420,
+		remoteImagePaths: 421,
+		frontmatter: 422,
+		imagePaths: 429
+	},
+	[419],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 401,
+		title: 404,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 423,
+		tools_tech: 424,
+		features: 425,
+		tags: 426,
+		links: 427,
+		impact: 428
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"esa-green-dossier",
+	{
+		id: 430,
+		data: 432,
+		body: 383,
+		filePath: 441,
+		digest: 442,
+		rendered: 443
+	},
+	{
+		title: 433,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 434,
+		draft: 27,
+		featured: 27,
+		tags: 435,
+		category: 436,
+		type: 115,
+		status: 62,
+		tools_tech: 437,
+		features: 438,
+		links: 439,
+		impact: 440
+	},
+	"Green dossier",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"src/content/projects/esa-green-dossier.md",
+	"6f695fbd7e61d300",
+	{
+		html: 387,
+		metadata: 444
+	},
+	{
+		headings: 445,
+		localImagePaths: 447,
+		remoteImagePaths: 448,
+		frontmatter: 449,
+		imagePaths: 456
+	},
+	[446],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 430,
+		title: 433,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 450,
+		tools_tech: 451,
+		features: 452,
+		tags: 453,
+		links: 454,
+		impact: 455
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"esa-hubble",
+	{
+		id: 457,
+		data: 459,
+		body: 468,
+		filePath: 469,
+		digest: 470,
+		rendered: 471
+	},
+	{
+		title: 460,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 461,
+		draft: 27,
+		featured: 27,
+		tags: 462,
+		category: 463,
+		type: 115,
+		status: 62,
+		tools_tech: 464,
+		features: 465,
+		links: 466,
+		impact: 467
+	},
+	"ESA Hubble",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nOrganisations: European Southern Observatory (https://app.notion.com/p/European-Southern-Observatory-37b3a96540ad807eb7bbc2a5283e7a66?pvs=21)",
+	"src/content/projects/esa-hubble.md",
+	"ae93f09e1b769b65",
+	{
+		html: 472,
+		metadata: 473
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: European Southern Observatory (<a href=\"https://app.notion.com/p/European-Southern-Observatory-37b3a96540ad807eb7bbc2a5283e7a66?pvs=21\">https://app.notion.com/p/European-Southern-Observatory-37b3a96540ad807eb7bbc2a5283e7a66?pvs=21</a>)</p>\n",
+	{
+		headings: 474,
+		localImagePaths: 476,
+		remoteImagePaths: 477,
+		frontmatter: 478,
+		imagePaths: 485
+	},
+	[475],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 457,
+		title: 460,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 479,
+		tools_tech: 480,
+		features: 481,
+		tags: 482,
+		links: 483,
+		impact: 484
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"esa-industry-days",
+	{
+		id: 486,
+		data: 488,
+		body: 497,
+		filePath: 498,
+		digest: 499,
+		rendered: 500
+	},
+	{
+		title: 489,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 490,
+		draft: 27,
+		featured: 27,
+		tags: 491,
+		category: 492,
+		type: 115,
+		status: 62,
+		tools_tech: 493,
+		features: 494,
+		links: 495,
+		impact: 496
+	},
+	"ESA Industry Days",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)",
+	"src/content/projects/esa-industry-days.md",
+	"e0f269e469a89e08",
+	{
+		html: 501,
+		metadata: 502
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n",
+	{
+		headings: 503,
+		localImagePaths: 505,
+		remoteImagePaths: 506,
+		frontmatter: 507,
+		imagePaths: 514
+	},
+	[504],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 486,
+		title: 489,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 508,
+		tools_tech: 509,
+		features: 510,
+		tags: 511,
+		links: 512,
+		impact: 513
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"esocast",
+	{
+		id: 515,
+		data: 517,
+		body: 526,
+		filePath: 527,
+		digest: 528,
+		rendered: 529
+	},
+	{
+		title: 518,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 519,
+		draft: 27,
+		featured: 27,
+		tags: 520,
+		category: 521,
+		type: 115,
+		status: 62,
+		tools_tech: 522,
+		features: 523,
+		links: 524,
+		impact: 525
+	},
+	"Esocast",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nArticles: Esocast 65 (https://app.notion.com/p/Esocast-65-3803a96540ad80429b64dfcdfef5851f?pvs=21), Esocast 66 (https://app.notion.com/p/Esocast-66-3803a96540ad803d9ed1fb1c2d3f8a6c?pvs=21), Esocast 64 (https://app.notion.com/p/Esocast-64-3803a96540ad8004bb97dc5813c3fa31?pvs=21)\nOrganisations: European Southern Observatory (https://app.notion.com/p/European-Southern-Observatory-37b3a96540ad807eb7bbc2a5283e7a66?pvs=21)",
+	"src/content/projects/ecocast.md",
+	"8ccfceb67fe49c63",
+	{
+		html: 530,
+		metadata: 531
+	},
+	"<h1 id=\"\"></h1>\n<p>Articles: Esocast 65 (<a href=\"https://app.notion.com/p/Esocast-65-3803a96540ad80429b64dfcdfef5851f?pvs=21\">https://app.notion.com/p/Esocast-65-3803a96540ad80429b64dfcdfef5851f?pvs=21</a>), Esocast 66 (<a href=\"https://app.notion.com/p/Esocast-66-3803a96540ad803d9ed1fb1c2d3f8a6c?pvs=21\">https://app.notion.com/p/Esocast-66-3803a96540ad803d9ed1fb1c2d3f8a6c?pvs=21</a>), Esocast 64 (<a href=\"https://app.notion.com/p/Esocast-64-3803a96540ad8004bb97dc5813c3fa31?pvs=21\">https://app.notion.com/p/Esocast-64-3803a96540ad8004bb97dc5813c3fa31?pvs=21</a>)\nOrganisations: European Southern Observatory (<a href=\"https://app.notion.com/p/European-Southern-Observatory-37b3a96540ad807eb7bbc2a5283e7a66?pvs=21\">https://app.notion.com/p/European-Southern-Observatory-37b3a96540ad807eb7bbc2a5283e7a66?pvs=21</a>)</p>\n",
+	{
+		headings: 532,
+		localImagePaths: 534,
+		remoteImagePaths: 535,
+		frontmatter: 536,
+		imagePaths: 543
+	},
+	[533],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 515,
+		title: 518,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 537,
+		tools_tech: 538,
+		features: 539,
+		tags: 540,
+		links: 541,
+		impact: 542
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"esotc2018",
+	{
+		id: 544,
+		data: 546,
+		body: 555,
+		filePath: 556,
+		digest: 557,
+		rendered: 558
+	},
+	{
+		title: 547,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 548,
+		draft: 27,
+		featured: 27,
+		tags: 549,
+		category: 550,
+		type: 115,
+		status: 62,
+		tools_tech: 551,
+		features: 552,
+		links: 553,
+		impact: 554
+	},
+	"European State of the Climate 2018",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nClient: ECMWF (https://app.notion.com/p/ECMWF-3803a96540ad80b2b602c677cd95a3f9?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)\nSectors: Energy (https://app.notion.com/p/Energy-36c3a96540ad80419343c44e3de39fe6?pvs=21), Climate (https://app.notion.com/p/Climate-3803a96540ad80acbe9dfa79689a0dda?pvs=21)",
+	"src/content/projects/esotc2018.md",
+	"ebb556050856bd2d",
+	{
+		html: 559,
+		metadata: 560
+	},
+	"<h1 id=\"\"></h1>\n<p>Client: ECMWF (<a href=\"https://app.notion.com/p/ECMWF-3803a96540ad80b2b602c677cd95a3f9?pvs=21\">https://app.notion.com/p/ECMWF-3803a96540ad80b2b602c677cd95a3f9?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)\nSectors: Energy (<a href=\"https://app.notion.com/p/Energy-36c3a96540ad80419343c44e3de39fe6?pvs=21\">https://app.notion.com/p/Energy-36c3a96540ad80419343c44e3de39fe6?pvs=21</a>), Climate (<a href=\"https://app.notion.com/p/Climate-3803a96540ad80acbe9dfa79689a0dda?pvs=21\">https://app.notion.com/p/Climate-3803a96540ad80acbe9dfa79689a0dda?pvs=21</a>)</p>\n",
+	{
+		headings: 561,
+		localImagePaths: 563,
+		remoteImagePaths: 564,
+		frontmatter: 565,
+		imagePaths: 572
+	},
+	[562],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 544,
+		title: 547,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 566,
+		tools_tech: 567,
+		features: 568,
+		tags: 569,
+		links: 570,
+		impact: 571
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"esoultrahd",
+	{
+		id: 573,
+		data: 575,
+		filePath: 585,
+		digest: 586,
+		rendered: 587
+	},
+	{
+		title: 576,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 577,
+		draft: 27,
+		featured: 46,
+		tags: 578,
+		category: 579,
+		status: 62,
+		tools_tech: 580,
+		features: 581,
+		links: 582,
+		impact: 583,
+		caseStudy: 52,
+		client: 584
+	},
+	"ESO Ultra HD Expedition",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"European Southern Observatory",
+	"src/content/projects/esoultrahd.md",
+	"51aa3761bea7e22e",
+	{
+		html: 13,
+		metadata: 588
+	},
+	{
+		headings: 589,
+		localImagePaths: 590,
+		remoteImagePaths: 591,
+		frontmatter: 592,
+		imagePaths: 599
+	},
+	[],
+	[],
+	[],
+	{
+		id: 143,
+		slug: 573,
+		title: 576,
+		featured: 46,
+		status: 62,
+		description: 107,
+		startDate: 593,
+		tools_tech: 594,
+		features: 595,
+		tags: 596,
+		links: 597,
+		impact: 598,
+		draft: 27,
+		caseStudy: 52,
+		client: 584
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"eumetsat-africa",
+	{
+		id: 600,
+		data: 602,
+		body: 497,
+		filePath: 611,
+		digest: 612,
+		rendered: 613
+	},
+	{
+		title: 603,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 604,
+		draft: 27,
+		featured: 27,
+		tags: 605,
+		category: 606,
+		type: 115,
+		status: 62,
+		tools_tech: 607,
+		features: 608,
+		links: 609,
+		impact: 610
+	},
+	"Eumetsat Africa",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"src/content/projects/eumetsat-africa.md",
+	"9ac35fdded5fac26",
+	{
+		html: 501,
+		metadata: 614
+	},
+	{
+		headings: 615,
+		localImagePaths: 617,
+		remoteImagePaths: 618,
+		frontmatter: 619,
+		imagePaths: 626
+	},
+	[616],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 600,
+		title: 603,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 620,
+		tools_tech: 621,
+		features: 622,
+		tags: 623,
+		links: 624,
+		impact: 625
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"eumetsat-food",
+	{
+		id: 627,
+		data: 629,
+		body: 638,
+		filePath: 639,
+		digest: 640,
+		rendered: 641
+	},
+	{
+		title: 630,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 631,
+		draft: 27,
+		featured: 27,
+		tags: 632,
+		category: 633,
+		type: 115,
+		status: 62,
+		tools_tech: 634,
+		features: 635,
+		links: 636,
+		impact: 637
+	},
+	"Eumetsat food security",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nCase studies: Eumetsat in Africa  (https://app.notion.com/p/Eumetsat-in-Africa-3813a96540ad801c8dafc4f899b81794?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)\n\n[https://youtu.be/V1qxGUTaQlI?is=--A0vkxekfABrEBc](https://youtu.be/V1qxGUTaQlI?is=--A0vkxekfABrEBc)",
+	"src/content/projects/eumetsat-food.md",
+	"35fb96a252228857",
+	{
+		html: 642,
+		metadata: 643
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: Eumetsat in Africa  (<a href=\"https://app.notion.com/p/Eumetsat-in-Africa-3813a96540ad801c8dafc4f899b81794?pvs=21\">https://app.notion.com/p/Eumetsat-in-Africa-3813a96540ad801c8dafc4f899b81794?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n<p><a href=\"https://youtu.be/V1qxGUTaQlI?is=--A0vkxekfABrEBc\">https://youtu.be/V1qxGUTaQlI?is=–A0vkxekfABrEBc</a></p>\n",
+	{
+		headings: 644,
+		localImagePaths: 646,
+		remoteImagePaths: 647,
+		frontmatter: 648,
+		imagePaths: 655
+	},
+	[645],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 627,
+		title: 630,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 649,
+		tools_tech: 650,
+		features: 651,
+		tags: 652,
+		links: 653,
+		impact: 654
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"gaia",
+	{
+		id: 656,
+		data: 658,
+		body: 667,
+		filePath: 668,
+		digest: 669,
+		rendered: 670
+	},
+	{
+		title: 659,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 660,
+		draft: 27,
+		featured: 27,
+		tags: 661,
+		category: 662,
+		type: 115,
+		status: 62,
+		tools_tech: 663,
+		features: 664,
+		links: 665,
+		impact: 666
+	},
+	"Gaia",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nCase studies: ESA material labs (https://app.notion.com/p/ESA-material-labs-3813a96540ad8026b4a3e506aaa92615?pvs=21)\nClient: European Space Agency (https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)\n\n[https://youtu.be/9EB_h6RX0EA?is=iXPLuG-XC0bQCJyQ](https://youtu.be/9EB_h6RX0EA?is=iXPLuG-XC0bQCJyQ)",
+	"src/content/projects/gaia.md",
+	"6effda7bebc687c9",
+	{
+		html: 671,
+		metadata: 672
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: ESA material labs (<a href=\"https://app.notion.com/p/ESA-material-labs-3813a96540ad8026b4a3e506aaa92615?pvs=21\">https://app.notion.com/p/ESA-material-labs-3813a96540ad8026b4a3e506aaa92615?pvs=21</a>)\nClient: European Space Agency (<a href=\"https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21\">https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n<p><a href=\"https://youtu.be/9EB_h6RX0EA?is=iXPLuG-XC0bQCJyQ\">https://youtu.be/9EB_h6RX0EA?is=iXPLuG-XC0bQCJyQ</a></p>\n",
+	{
+		headings: 673,
+		localImagePaths: 675,
+		remoteImagePaths: 676,
+		frontmatter: 677,
+		imagePaths: 684
+	},
+	[674],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 656,
+		title: 659,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 678,
+		tools_tech: 679,
+		features: 680,
+		tags: 681,
+		links: 682,
+		impact: 683
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"gerb",
+	{
+		id: 685,
+		data: 687,
+		body: 696,
+		filePath: 697,
+		digest: 698,
+		rendered: 699
+	},
+	{
+		title: 688,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 689,
+		draft: 27,
+		featured: 27,
+		tags: 690,
+		category: 691,
+		type: 115,
+		status: 62,
+		tools_tech: 692,
+		features: 693,
+		links: 694,
+		impact: 695
+	},
+	"GERB",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# Gerb\n\nOrganisations: University of Leicester (https://app.notion.com/p/University-of-Leicester-37b3a96540ad80a6b28df9b193fce1c6?pvs=21)",
+	"src/content/projects/gerb.md",
+	"1844204422e57e06",
+	{
+		html: 700,
+		metadata: 701
+	},
+	"<h1 id=\"gerb\">Gerb</h1>\n<p>Organisations: University of Leicester (<a href=\"https://app.notion.com/p/University-of-Leicester-37b3a96540ad80a6b28df9b193fce1c6?pvs=21\">https://app.notion.com/p/University-of-Leicester-37b3a96540ad80a6b28df9b193fce1c6?pvs=21</a>)</p>\n",
+	{
+		headings: 702,
+		localImagePaths: 705,
+		remoteImagePaths: 706,
+		frontmatter: 707,
+		imagePaths: 714
+	},
+	[703],
+	{
+		depth: 187,
+		slug: 685,
+		text: 704
+	},
+	"Gerb",
+	[],
+	[],
+	{
+		id: 143,
+		slug: 685,
+		title: 688,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 708,
+		tools_tech: 709,
+		features: 710,
+		tags: 711,
+		links: 712,
+		impact: 713
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"green-orbit-workshops",
+	{
+		id: 715,
+		data: 717,
+		body: 726,
+		filePath: 727,
+		digest: 728,
+		rendered: 729
+	},
+	{
+		title: 718,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 719,
+		draft: 27,
+		featured: 27,
+		tags: 720,
+		category: 721,
+		type: 115,
+		status: 62,
+		tools_tech: 722,
+		features: 723,
+		links: 724,
+		impact: 725
+	},
+	"Green Orbit workshops",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nOrganisations: Green Orbit Digital (https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21)",
+	"src/content/projects/green-orbit-workshops.md",
+	"b17ae64af8133bfc",
+	{
+		html: 730,
+		metadata: 731
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: Green Orbit Digital (<a href=\"https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21\">https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21</a>)</p>\n",
+	{
+		headings: 732,
+		localImagePaths: 734,
+		remoteImagePaths: 735,
+		frontmatter: 736,
+		imagePaths: 743
+	},
+	[733],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 715,
+		title: 718,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 737,
+		tools_tech: 738,
+		features: 739,
+		tags: 740,
+		links: 741,
+		impact: 742
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"impulse2021",
+	{
+		id: 744,
+		data: 746,
+		body: 755,
+		filePath: 756,
+		digest: 757,
+		rendered: 758
+	},
+	{
+		title: 747,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 748,
+		draft: 27,
+		featured: 27,
+		tags: 749,
+		category: 750,
+		type: 115,
+		status: 62,
+		tools_tech: 751,
+		features: 752,
+		links: 753,
+		impact: 754
+	},
+	"Impulse 2021",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nOrganisations: Powering Space (https://app.notion.com/p/Powering-Space-3813a96540ad803aaca9c4e1f8e111df?pvs=21)",
+	"src/content/projects/impulse2021.md",
+	"74a73a61a1984c36",
+	{
+		html: 759,
+		metadata: 760
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: Powering Space (<a href=\"https://app.notion.com/p/Powering-Space-3813a96540ad803aaca9c4e1f8e111df?pvs=21\">https://app.notion.com/p/Powering-Space-3813a96540ad803aaca9c4e1f8e111df?pvs=21</a>)</p>\n",
+	{
+		headings: 761,
+		localImagePaths: 763,
+		remoteImagePaths: 764,
+		frontmatter: 765,
+		imagePaths: 772
+	},
+	[762],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 744,
+		title: 747,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 766,
+		tools_tech: 767,
+		features: 768,
+		tags: 769,
+		links: 770,
+		impact: 771
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"innospaceweekend2017",
+	{
+		id: 773,
+		data: 775,
+		body: 784,
+		filePath: 785,
+		digest: 786,
+		rendered: 787
+	},
+	{
+		title: 776,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 777,
+		draft: 27,
+		featured: 27,
+		tags: 778,
+		category: 779,
+		type: 115,
+		status: 62,
+		tools_tech: 780,
+		features: 781,
+		links: 782,
+		impact: 783
+	},
+	"InnoSpace Weekend 2017",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nClient: German Aerospace Center (DLR) (https://app.notion.com/p/German-Aerospace-Center-DLR-3803a96540ad8020bb1cd16a20d1a545?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)\nSectors: Logistics (https://app.notion.com/p/Logistics-3803a96540ad80079662c22d61e9a8ab?pvs=21), Automotive (https://app.notion.com/p/Automotive-3803a96540ad803db297cd7efd3f17d0?pvs=21), Space and Satellite Sector (https://app.notion.com/p/Space-and-Satellite-Sector-36c3a96540ad80918302f1c0b50eb24f?pvs=21)\n\n[https://youtu.be/4DccpiuX9Xw?is=uz0pkk9eU5Yykm0L](https://youtu.be/4DccpiuX9Xw?is=uz0pkk9eU5Yykm0L)\n\n[https://youtu.be/3ifypFNULlM?is=yCdpBEfI-y1RnP9z](https://youtu.be/3ifypFNULlM?is=yCdpBEfI-y1RnP9z)",
+	"src/content/projects/innospaceweekend2017.md",
+	"5d719d4ed0860bb1",
+	{
+		html: 788,
+		metadata: 789
+	},
+	"<h1 id=\"\"></h1>\n<p>Client: German Aerospace Center (DLR) (<a href=\"https://app.notion.com/p/German-Aerospace-Center-DLR-3803a96540ad8020bb1cd16a20d1a545?pvs=21\">https://app.notion.com/p/German-Aerospace-Center-DLR-3803a96540ad8020bb1cd16a20d1a545?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)\nSectors: Logistics (<a href=\"https://app.notion.com/p/Logistics-3803a96540ad80079662c22d61e9a8ab?pvs=21\">https://app.notion.com/p/Logistics-3803a96540ad80079662c22d61e9a8ab?pvs=21</a>), Automotive (<a href=\"https://app.notion.com/p/Automotive-3803a96540ad803db297cd7efd3f17d0?pvs=21\">https://app.notion.com/p/Automotive-3803a96540ad803db297cd7efd3f17d0?pvs=21</a>), Space and Satellite Sector (<a href=\"https://app.notion.com/p/Space-and-Satellite-Sector-36c3a96540ad80918302f1c0b50eb24f?pvs=21\">https://app.notion.com/p/Space-and-Satellite-Sector-36c3a96540ad80918302f1c0b50eb24f?pvs=21</a>)</p>\n<p><a href=\"https://youtu.be/4DccpiuX9Xw?is=uz0pkk9eU5Yykm0L\">https://youtu.be/4DccpiuX9Xw?is=uz0pkk9eU5Yykm0L</a></p>\n<p><a href=\"https://youtu.be/3ifypFNULlM?is=yCdpBEfI-y1RnP9z\">https://youtu.be/3ifypFNULlM?is=yCdpBEfI-y1RnP9z</a></p>\n",
+	{
+		headings: 790,
+		localImagePaths: 792,
+		remoteImagePaths: 793,
+		frontmatter: 794,
+		imagePaths: 801
+	},
+	[791],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 773,
+		title: 776,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 795,
+		tools_tech: 796,
+		features: 797,
+		tags: 798,
+		links: 799,
+		impact: 800
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"knex",
+	{
+		id: 802,
+		data: 804,
+		body: 325,
+		filePath: 813,
+		digest: 814,
+		rendered: 815
+	},
+	{
+		title: 805,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 806,
+		draft: 27,
+		featured: 27,
+		tags: 807,
+		category: 808,
+		type: 115,
+		status: 62,
+		tools_tech: 809,
+		features: 810,
+		links: 811,
+		impact: 812
+	},
+	"K’nex",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"src/content/projects/knex.md",
+	"f9512fad08a6db29",
+	{
+		html: 329,
+		metadata: 816
+	},
+	{
+		headings: 817,
+		localImagePaths: 819,
+		remoteImagePaths: 820,
+		frontmatter: 821,
+		imagePaths: 828
+	},
+	[818],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 802,
+		title: 805,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 822,
+		tools_tech: 823,
+		features: 824,
+		tags: 825,
+		links: 826,
+		impact: 827
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"leicesterspaceweek",
+	{
+		id: 829,
+		data: 831,
+		body: 840,
+		filePath: 841,
+		digest: 842,
+		rendered: 843
+	},
+	{
+		title: 832,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 833,
+		draft: 27,
+		featured: 27,
+		tags: 834,
+		category: 835,
+		type: 115,
+		status: 62,
+		tools_tech: 836,
+		features: 837,
+		links: 838,
+		impact: 839
+	},
+	"Leicester Space Week",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nOrganisations: Green Orbit Digital (https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21)\nProject URL: leicesterspaceweek.com",
+	"src/content/projects/leicesterspaceweek.md",
+	"04cf41370588eca7",
+	{
+		html: 844,
+		metadata: 845
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: Green Orbit Digital (<a href=\"https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21\">https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21</a>)\nProject URL: leicesterspaceweek.com</p>\n",
+	{
+		headings: 846,
+		localImagePaths: 848,
+		remoteImagePaths: 849,
+		frontmatter: 850,
+		imagePaths: 857
+	},
+	[847],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 829,
+		title: 832,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 851,
+		tools_tech: 852,
+		features: 853,
+		tags: 854,
+		links: 855,
+		impact: 856
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"little-spaceoneers",
+	{
+		id: 858,
+		data: 860,
+		body: 497,
+		filePath: 869,
+		digest: 870,
+		rendered: 871
+	},
+	{
+		title: 861,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 862,
+		draft: 27,
+		featured: 27,
+		tags: 863,
+		category: 864,
+		type: 115,
+		status: 62,
+		tools_tech: 865,
+		features: 866,
+		links: 867,
+		impact: 868
+	},
+	"Little Spaceoneers",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"src/content/projects/little-spaceoneers.md",
+	"10d23e47cdf31ecc",
+	{
+		html: 501,
+		metadata: 872
+	},
+	{
+		headings: 873,
+		localImagePaths: 875,
+		remoteImagePaths: 876,
+		frontmatter: 877,
+		imagePaths: 884
+	},
+	[874],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 858,
+		title: 861,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 878,
+		tools_tech: 879,
+		features: 880,
+		tags: 881,
+		links: 882,
+		impact: 883
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"living-with-space-40",
+	{
+		id: 885,
+		data: 887,
+		body: 896,
+		filePath: 897,
+		digest: 898,
+		rendered: 899
+	},
+	{
+		title: 888,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 889,
+		draft: 27,
+		featured: 27,
+		tags: 890,
+		category: 891,
+		type: 115,
+		status: 62,
+		tools_tech: 892,
+		features: 893,
+		links: 894,
+		impact: 895
+	},
+	"Living with Space 4.0",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nClient: European Space Agency (https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)\n\n[https://youtu.be/hpBKuqzYnKI?is=pJmzZaCQNSYm1dOC](https://youtu.be/hpBKuqzYnKI?is=pJmzZaCQNSYm1dOC)",
+	"src/content/projects/living-with-space-40.md",
+	"138e72273d64ce36",
+	{
+		html: 900,
+		metadata: 901
+	},
+	"<h1 id=\"\"></h1>\n<p>Client: European Space Agency (<a href=\"https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21\">https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n<p><a href=\"https://youtu.be/hpBKuqzYnKI?is=pJmzZaCQNSYm1dOC\">https://youtu.be/hpBKuqzYnKI?is=pJmzZaCQNSYm1dOC</a></p>\n",
+	{
+		headings: 902,
+		localImagePaths: 904,
+		remoteImagePaths: 905,
+		frontmatter: 906,
+		imagePaths: 913
+	},
+	[903],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 885,
+		title: 888,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 907,
+		tools_tech: 908,
+		features: 909,
+		tags: 910,
+		links: 911,
+		impact: 912
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"lunar-exp-interactive-docu",
+	{
+		id: 914,
+		data: 916,
+		body: 925,
+		filePath: 926,
+		digest: 927,
+		rendered: 928
+	},
+	{
+		title: 917,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 918,
+		draft: 27,
+		featured: 27,
+		tags: 919,
+		category: 920,
+		type: 115,
+		status: 62,
+		tools_tech: 921,
+		features: 922,
+		links: 923,
+		impact: 924
+	},
+	"Lunar Exploration Interactive Documentary",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nAwards : Award of Excellence - The Communicator Awards (https://app.notion.com/p/Award-of-Excellence-The-Communicator-Awards-3803a96540ad8024b927fce03692a86b?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)",
+	"src/content/projects/lunar-exp-interactive-docu.md",
+	"f0377fbb4d6e4228",
+	{
+		html: 929,
+		metadata: 930
+	},
+	"<h1 id=\"\"></h1>\n<p>Awards : Award of Excellence - The Communicator Awards (<a href=\"https://app.notion.com/p/Award-of-Excellence-The-Communicator-Awards-3803a96540ad8024b927fce03692a86b?pvs=21\">https://app.notion.com/p/Award-of-Excellence-The-Communicator-Awards-3803a96540ad8024b927fce03692a86b?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n",
+	{
+		headings: 931,
+		localImagePaths: 933,
+		remoteImagePaths: 934,
+		frontmatter: 935,
+		imagePaths: 942
+	},
+	[932],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 914,
+		title: 917,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 936,
+		tools_tech: 937,
+		features: 938,
+		tags: 939,
+		links: 940,
+		impact: 941
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"lunch-and-learn",
+	{
+		id: 943,
+		data: 945,
+		body: 755,
+		filePath: 954,
+		digest: 955,
+		rendered: 956
+	},
+	{
+		title: 946,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 947,
+		draft: 27,
+		featured: 27,
+		tags: 948,
+		category: 949,
+		type: 115,
+		status: 62,
+		tools_tech: 950,
+		features: 951,
+		links: 952,
+		impact: 953
+	},
+	"Lunch and Learn",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"src/content/projects/lunch-and-learn.md",
+	"17e43eef87e340a5",
+	{
+		html: 759,
+		metadata: 957
+	},
+	{
+		headings: 958,
+		localImagePaths: 960,
+		remoteImagePaths: 961,
+		frontmatter: 962,
+		imagePaths: 969
+	},
+	[959],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 943,
+		title: 946,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 963,
+		tools_tech: 964,
+		features: 965,
+		tags: 966,
+		links: 967,
+		impact: 968
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"marketing-audit",
+	{
+		id: 970,
+		data: 972,
+		body: 981,
+		filePath: 982,
+		digest: 983,
+		rendered: 984
+	},
+	{
+		title: 973,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 974,
+		draft: 27,
+		featured: 27,
+		tags: 975,
+		category: 976,
+		type: 115,
+		status: 62,
+		tools_tech: 977,
+		features: 978,
+		links: 979,
+		impact: 980
+	},
+	"Marketing audit",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nClient: Climate Action Leicester and Leicestershire (https://app.notion.com/p/Climate-Action-Leicester-and-Leicestershire-37b3a96540ad80b1a688f8fa51024706?pvs=21)\nOrganisations: Green Orbit Digital (https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21)\nSectors: Climate (https://app.notion.com/p/Climate-3803a96540ad80acbe9dfa79689a0dda?pvs=21), Energy (https://app.notion.com/p/Energy-36c3a96540ad80419343c44e3de39fe6?pvs=21), Built Environment (https://app.notion.com/p/Built-Environment-36c3a96540ad805cab01e5d7ec77e9d3?pvs=21)",
+	"src/content/projects/marketing-audit.md",
+	"815eda2ad5e9cedb",
+	{
+		html: 985,
+		metadata: 986
+	},
+	"<h1 id=\"\"></h1>\n<p>Client: Climate Action Leicester and Leicestershire (<a href=\"https://app.notion.com/p/Climate-Action-Leicester-and-Leicestershire-37b3a96540ad80b1a688f8fa51024706?pvs=21\">https://app.notion.com/p/Climate-Action-Leicester-and-Leicestershire-37b3a96540ad80b1a688f8fa51024706?pvs=21</a>)\nOrganisations: Green Orbit Digital (<a href=\"https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21\">https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21</a>)\nSectors: Climate (<a href=\"https://app.notion.com/p/Climate-3803a96540ad80acbe9dfa79689a0dda?pvs=21\">https://app.notion.com/p/Climate-3803a96540ad80acbe9dfa79689a0dda?pvs=21</a>), Energy (<a href=\"https://app.notion.com/p/Energy-36c3a96540ad80419343c44e3de39fe6?pvs=21\">https://app.notion.com/p/Energy-36c3a96540ad80419343c44e3de39fe6?pvs=21</a>), Built Environment (<a href=\"https://app.notion.com/p/Built-Environment-36c3a96540ad805cab01e5d7ec77e9d3?pvs=21\">https://app.notion.com/p/Built-Environment-36c3a96540ad805cab01e5d7ec77e9d3?pvs=21</a>)</p>\n",
+	{
+		headings: 987,
+		localImagePaths: 989,
+		remoteImagePaths: 990,
+		frontmatter: 991,
+		imagePaths: 998
+	},
+	[988],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 970,
+		title: 973,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 992,
+		tools_tech: 993,
+		features: 994,
+		tags: 995,
+		links: 996,
+		impact: 997
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"oceanstatereport4",
+	{
+		id: 999,
+		data: 1001,
+		body: 1011,
+		filePath: 1012,
+		digest: 1013,
+		rendered: 1014
+	},
+	{
+		title: 1002,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1003,
+		draft: 27,
+		featured: 27,
+		tags: 1004,
+		category: 1006,
+		type: 115,
+		status: 62,
+		tools_tech: 1007,
+		features: 1008,
+		links: 1009,
+		impact: 1010
+	},
+	"Ocean State Report 4",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		1005
+	],
+	"science policy",
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nClient: Mercator Ocean (https://app.notion.com/p/Mercator-Ocean-3803a96540ad800d8e8ad96104ca9452?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)\n\n[https://youtu.be/xlKmSGvqaFo?is=CkpLT3PQgJK1UkrG](https://youtu.be/xlKmSGvqaFo?is=CkpLT3PQgJK1UkrG)",
+	"src/content/projects/oceanstatereport4.md",
+	"40265a6224dd069d",
+	{
+		html: 1015,
+		metadata: 1016
+	},
+	"<h1 id=\"\"></h1>\n<p>Client: Mercator Ocean (<a href=\"https://app.notion.com/p/Mercator-Ocean-3803a96540ad800d8e8ad96104ca9452?pvs=21\">https://app.notion.com/p/Mercator-Ocean-3803a96540ad800d8e8ad96104ca9452?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n<p><a href=\"https://youtu.be/xlKmSGvqaFo?is=CkpLT3PQgJK1UkrG\">https://youtu.be/xlKmSGvqaFo?is=CkpLT3PQgJK1UkrG</a></p>\n",
+	{
+		headings: 1017,
+		localImagePaths: 1019,
+		remoteImagePaths: 1020,
+		frontmatter: 1021,
+		imagePaths: 1028
+	},
+	[1018],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 999,
+		title: 1002,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1022,
+		tools_tech: 1023,
+		features: 1024,
+		tags: 1025,
+		links: 1026,
+		impact: 1027
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		1005
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"pan-starrs",
+	{
+		id: 1029,
+		data: 1031,
+		body: 1040,
+		filePath: 1041,
+		digest: 1042,
+		rendered: 1043
+	},
+	{
+		title: 1032,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1033,
+		draft: 27,
+		featured: 27,
+		tags: 1034,
+		category: 1035,
+		type: 115,
+		status: 62,
+		tools_tech: 1036,
+		features: 1037,
+		links: 1038,
+		impact: 1039
+	},
+	"Pan-STARRS Asteroid Search Campaign",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nExperience: Team Lead, UKSEDS Asteroid Chasers (https://app.notion.com/p/Team-Lead-UKSEDS-Asteroid-Chasers-3813a96540ad80289a62fa5eabb7e2c4?pvs=21)\nOrganisations: UKSEDS (https://app.notion.com/p/UKSEDS-37b3a96540ad80c0ab89f463c38899dd?pvs=21)",
+	"src/content/projects/pan-starrs.md",
+	"18ad00dc5266830c",
+	{
+		html: 1044,
+		metadata: 1045
+	},
+	"<h1 id=\"\"></h1>\n<p>Experience: Team Lead, UKSEDS Asteroid Chasers (<a href=\"https://app.notion.com/p/Team-Lead-UKSEDS-Asteroid-Chasers-3813a96540ad80289a62fa5eabb7e2c4?pvs=21\">https://app.notion.com/p/Team-Lead-UKSEDS-Asteroid-Chasers-3813a96540ad80289a62fa5eabb7e2c4?pvs=21</a>)\nOrganisations: UKSEDS (<a href=\"https://app.notion.com/p/UKSEDS-37b3a96540ad80c0ab89f463c38899dd?pvs=21\">https://app.notion.com/p/UKSEDS-37b3a96540ad80c0ab89f463c38899dd?pvs=21</a>)</p>\n",
+	{
+		headings: 1046,
+		localImagePaths: 1048,
+		remoteImagePaths: 1049,
+		frontmatter: 1050,
+		imagePaths: 1057
+	},
+	[1047],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1029,
+		title: 1032,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1051,
+		tools_tech: 1052,
+		features: 1053,
+		tags: 1054,
+		links: 1055,
+		impact: 1056
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"phiweekbootcamp2018",
+	{
+		id: 1058,
+		data: 1060,
+		body: 1069,
+		filePath: 1070,
+		digest: 1071,
+		rendered: 1072
+	},
+	{
+		title: 1061,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1062,
+		draft: 27,
+		featured: 27,
+		tags: 1063,
+		category: 1064,
+		type: 115,
+		status: 62,
+		tools_tech: 1065,
+		features: 1066,
+		links: 1067,
+		impact: 1068
+	},
+	"PhiWeek Bootcamp 2018",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nCase studies: PhiWeek Bootcamp (https://app.notion.com/p/PhiWeek-Bootcamp-3813a96540ad80e29281f7c1046f685a?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)",
+	"src/content/projects/phiweekbootcamp2018.md",
+	"09ae31ce7a657f70",
+	{
+		html: 1073,
+		metadata: 1074
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: PhiWeek Bootcamp (<a href=\"https://app.notion.com/p/PhiWeek-Bootcamp-3813a96540ad80e29281f7c1046f685a?pvs=21\">https://app.notion.com/p/PhiWeek-Bootcamp-3813a96540ad80e29281f7c1046f685a?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n",
+	{
+		headings: 1075,
+		localImagePaths: 1077,
+		remoteImagePaths: 1078,
+		frontmatter: 1079,
+		imagePaths: 1086
+	},
+	[1076],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1058,
+		title: 1061,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1080,
+		tools_tech: 1081,
+		features: 1082,
+		tags: 1083,
+		links: 1084,
+		impact: 1085
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"phiweekbootcamp2019",
+	{
+		id: 1087,
+		data: 1089,
+		body: 1098,
+		filePath: 1099,
+		digest: 1100,
+		rendered: 1101
+	},
+	{
+		title: 1090,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1091,
+		draft: 27,
+		featured: 27,
+		tags: 1092,
+		category: 1093,
+		type: 115,
+		status: 62,
+		tools_tech: 1094,
+		features: 1095,
+		links: 1096,
+		impact: 1097
+	},
+	"PhiWeek Bootcamp 2019",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nCase studies: PhiWeek Bootcamp (https://app.notion.com/p/PhiWeek-Bootcamp-3813a96540ad80e29281f7c1046f685a?pvs=21)\nClient: European Space Agency (https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)\nSectors: Energy (https://app.notion.com/p/Energy-36c3a96540ad80419343c44e3de39fe6?pvs=21)\n\n[https://youtu.be/kbaoIb3s29s?is=Q16BVec5UxT-VImz](https://youtu.be/kbaoIb3s29s?is=Q16BVec5UxT-VImz)",
+	"src/content/projects/phiweekbootcamp2019.md",
+	"4f15605be5b91ba5",
+	{
+		html: 1102,
+		metadata: 1103
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: PhiWeek Bootcamp (<a href=\"https://app.notion.com/p/PhiWeek-Bootcamp-3813a96540ad80e29281f7c1046f685a?pvs=21\">https://app.notion.com/p/PhiWeek-Bootcamp-3813a96540ad80e29281f7c1046f685a?pvs=21</a>)\nClient: European Space Agency (<a href=\"https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21\">https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)\nSectors: Energy (<a href=\"https://app.notion.com/p/Energy-36c3a96540ad80419343c44e3de39fe6?pvs=21\">https://app.notion.com/p/Energy-36c3a96540ad80419343c44e3de39fe6?pvs=21</a>)</p>\n<p><a href=\"https://youtu.be/kbaoIb3s29s?is=Q16BVec5UxT-VImz\">https://youtu.be/kbaoIb3s29s?is=Q16BVec5UxT-VImz</a></p>\n",
+	{
+		headings: 1104,
+		localImagePaths: 1106,
+		remoteImagePaths: 1107,
+		frontmatter: 1108,
+		imagePaths: 1115
+	},
+	[1105],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1087,
+		title: 1090,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1109,
+		tools_tech: 1110,
+		features: 1111,
+		tags: 1112,
+		links: 1113,
+		impact: 1114
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"plume",
+	{
+		id: 1116,
+		data: 1118,
+		body: 1127,
+		filePath: 1128,
+		digest: 1129,
+		rendered: 1130
+	},
+	{
+		title: 1119,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1120,
+		draft: 27,
+		featured: 27,
+		tags: 1121,
+		category: 1122,
+		type: 115,
+		status: 62,
+		tools_tech: 1123,
+		features: 1124,
+		links: 1125,
+		impact: 1126
+	},
+	"PLUME (Picosatellite of Leicester University Micrometeoroid Experiment)",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nExperience: Comms Officer (https://app.notion.com/p/Comms-Officer-3813a96540ad80449b11d385b55de577?pvs=21)\nOrganisations: University of Leicester (https://app.notion.com/p/University-of-Leicester-37b3a96540ad80a6b28df9b193fce1c6?pvs=21)",
+	"src/content/projects/plume.md",
+	"d436659f8a82c2c7",
+	{
+		html: 1131,
+		metadata: 1132
+	},
+	"<h1 id=\"\"></h1>\n<p>Experience: Comms Officer (<a href=\"https://app.notion.com/p/Comms-Officer-3813a96540ad80449b11d385b55de577?pvs=21\">https://app.notion.com/p/Comms-Officer-3813a96540ad80449b11d385b55de577?pvs=21</a>)\nOrganisations: University of Leicester (<a href=\"https://app.notion.com/p/University-of-Leicester-37b3a96540ad80a6b28df9b193fce1c6?pvs=21\">https://app.notion.com/p/University-of-Leicester-37b3a96540ad80a6b28df9b193fce1c6?pvs=21</a>)</p>\n",
+	{
+		headings: 1133,
+		localImagePaths: 1135,
+		remoteImagePaths: 1136,
+		frontmatter: 1137,
+		imagePaths: 1144
+	},
+	[1134],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1116,
+		title: 1119,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1138,
+		tools_tech: 1139,
+		features: 1140,
+		tags: 1141,
+		links: 1142,
+		impact: 1143
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"point-iot-mooc",
+	{
+		id: 1145,
+		data: 1147,
+		body: 1156,
+		filePath: 1157,
+		digest: 1158,
+		rendered: 1159
+	},
+	{
+		title: 1148,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1149,
+		draft: 27,
+		featured: 27,
+		tags: 1150,
+		category: 1151,
+		type: 115,
+		status: 62,
+		tools_tech: 1152,
+		features: 1153,
+		links: 1154,
+		impact: 1155
+	},
+	"Point.IOT.MOOC",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nClient: SpaceTec Partners (https://app.notion.com/p/SpaceTec-Partners-3813a96540ad804a87a8cd87ed6e6a24?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)",
+	"src/content/projects/point-iot-mooc.md",
+	"3b4cdd37c8ba007b",
+	{
+		html: 1160,
+		metadata: 1161
+	},
+	"<h1 id=\"\"></h1>\n<p>Client: SpaceTec Partners (<a href=\"https://app.notion.com/p/SpaceTec-Partners-3813a96540ad804a87a8cd87ed6e6a24?pvs=21\">https://app.notion.com/p/SpaceTec-Partners-3813a96540ad804a87a8cd87ed6e6a24?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n",
+	{
+		headings: 1162,
+		localImagePaths: 1164,
+		remoteImagePaths: 1165,
+		frontmatter: 1166,
+		imagePaths: 1173
+	},
+	[1163],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1145,
+		title: 1148,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1167,
+		tools_tech: 1168,
+		features: 1169,
+		tags: 1170,
+		links: 1171,
+		impact: 1172
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"riga-airtext",
+	{
+		id: 1174,
+		data: 1176,
+		body: 1185,
+		filePath: 1186,
+		digest: 1187,
+		rendered: 1188
+	},
+	{
+		title: 1177,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1178,
+		draft: 27,
+		featured: 27,
+		tags: 1179,
+		category: 1180,
+		type: 115,
+		status: 62,
+		tools_tech: 1181,
+		features: 1182,
+		links: 1183,
+		impact: 1184
+	},
+	"Riga Airtext",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nCase studies: European State of the Climate  (https://app.notion.com/p/European-State-of-the-Climate-3813a96540ad80b9b474e68a4ee37de5?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)",
+	"src/content/projects/riga-airtext.md",
+	"83fd34bae0423795",
+	{
+		html: 1189,
+		metadata: 1190
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: European State of the Climate  (<a href=\"https://app.notion.com/p/European-State-of-the-Climate-3813a96540ad80b9b474e68a4ee37de5?pvs=21\">https://app.notion.com/p/European-State-of-the-Climate-3813a96540ad80b9b474e68a4ee37de5?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n",
+	{
+		headings: 1191,
+		localImagePaths: 1193,
+		remoteImagePaths: 1194,
+		frontmatter: 1195,
+		imagePaths: 1202
+	},
+	[1192],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1174,
+		title: 1177,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1196,
+		tools_tech: 1197,
+		features: 1198,
+		tags: 1199,
+		links: 1200,
+		impact: 1201
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"rosetta-philae-animations",
+	{
+		id: 1203,
+		data: 1205,
+		body: 1214,
+		filePath: 1215,
+		digest: 1216,
+		rendered: 1217
+	},
+	{
+		title: 1206,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1207,
+		draft: 27,
+		featured: 27,
+		tags: 1208,
+		category: 1209,
+		type: 115,
+		status: 62,
+		tools_tech: 1210,
+		features: 1211,
+		links: 1212,
+		impact: 1213
+	},
+	"Rosetta & Philae animations",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nCase studies: Rosetta Philae (https://app.notion.com/p/Rosetta-Philae-3813a96540ad806c8fe3cc9164fc35a9?pvs=21)\nClient: European Space Agency (https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)",
+	"src/content/projects/rosetta-philae-animations.md",
+	"fad1fed390b4cbbc",
+	{
+		html: 1218,
+		metadata: 1219
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: Rosetta Philae (<a href=\"https://app.notion.com/p/Rosetta-Philae-3813a96540ad806c8fe3cc9164fc35a9?pvs=21\">https://app.notion.com/p/Rosetta-Philae-3813a96540ad806c8fe3cc9164fc35a9?pvs=21</a>)\nClient: European Space Agency (<a href=\"https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21\">https://app.notion.com/p/European-Space-Agency-37b3a96540ad805f9b4cd705f7e7cd42?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n",
+	{
+		headings: 1220,
+		localImagePaths: 1222,
+		remoteImagePaths: 1223,
+		frontmatter: 1224,
+		imagePaths: 1231
+	},
+	[1221],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1203,
+		title: 1206,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1225,
+		tools_tech: 1226,
+		features: 1227,
+		tags: 1228,
+		links: 1229,
+		impact: 1230
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"rosetta-shop",
+	{
+		id: 1232,
+		data: 1234,
+		body: 1244,
+		filePath: 1245,
+		digest: 1246,
+		rendered: 1247
+	},
+	{
+		title: 1235,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1236,
+		draft: 27,
+		featured: 27,
+		tags: 1237,
+		category: 1238,
+		type: 115,
+		status: 62,
+		tools_tech: 1239,
+		features: 1240,
+		links: 1241,
+		impact: 1243
+	},
+	"Rosetta Shop",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 1242
+	},
+	"https://rosettashop.eu",
+	{},
+	"# \n\nCase studies: Rosetta Philae (https://app.notion.com/p/Rosetta-Philae-3813a96540ad806c8fe3cc9164fc35a9?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)",
+	"src/content/projects/rosetta-shop.md",
+	"52ce4d25c2f31bee",
+	{
+		html: 1248,
+		metadata: 1249
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: Rosetta Philae (<a href=\"https://app.notion.com/p/Rosetta-Philae-3813a96540ad806c8fe3cc9164fc35a9?pvs=21\">https://app.notion.com/p/Rosetta-Philae-3813a96540ad806c8fe3cc9164fc35a9?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n",
+	{
+		headings: 1250,
+		localImagePaths: 1252,
+		remoteImagePaths: 1253,
+		frontmatter: 1254,
+		imagePaths: 1261
+	},
+	[1251],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1232,
+		title: 1235,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1255,
+		tools_tech: 1256,
+		features: 1257,
+		tags: 1258,
+		links: 1259,
+		impact: 1260
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 1242
+	},
+	{},
+	[],
+	"rosetta-strato",
+	{
+		id: 1262,
+		data: 1264,
+		body: 1273,
+		filePath: 1274,
+		digest: 1275,
+		rendered: 1276
+	},
+	{
+		title: 1265,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1266,
+		draft: 27,
+		featured: 27,
+		tags: 1267,
+		category: 1268,
+		type: 115,
+		status: 62,
+		tools_tech: 1269,
+		features: 1270,
+		links: 1271,
+		impact: 1272
+	},
+	"Rosetta Strato Campaign",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nCase studies: Rosetta Philae (https://app.notion.com/p/Rosetta-Philae-3813a96540ad806c8fe3cc9164fc35a9?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)\n\n[https://youtu.be/iYaFGL7dEBk?is=aYOy039ug9GnuNcj](https://youtu.be/iYaFGL7dEBk?is=aYOy039ug9GnuNcj)",
+	"src/content/projects/rosetta-strato.md",
+	"02f84daf32811732",
+	{
+		html: 1277,
+		metadata: 1278
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: Rosetta Philae (<a href=\"https://app.notion.com/p/Rosetta-Philae-3813a96540ad806c8fe3cc9164fc35a9?pvs=21\">https://app.notion.com/p/Rosetta-Philae-3813a96540ad806c8fe3cc9164fc35a9?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n<p><a href=\"https://youtu.be/iYaFGL7dEBk?is=aYOy039ug9GnuNcj\">https://youtu.be/iYaFGL7dEBk?is=aYOy039ug9GnuNcj</a></p>\n",
+	{
+		headings: 1279,
+		localImagePaths: 1281,
+		remoteImagePaths: 1282,
+		frontmatter: 1283,
+		imagePaths: 1290
+	},
+	[1280],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1262,
+		title: 1265,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1284,
+		tools_tech: 1285,
+		features: 1286,
+		tags: 1287,
+		links: 1288,
+		impact: 1289
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"seppcon",
+	{
+		id: 1291,
+		data: 1293,
+		body: 1302,
+		filePath: 1303,
+		digest: 1304,
+		rendered: 1305
+	},
+	{
+		title: 1294,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1295,
+		draft: 27,
+		featured: 27,
+		tags: 1296,
+		category: 1297,
+		type: 115,
+		status: 62,
+		tools_tech: 1298,
+		features: 1299,
+		links: 1300,
+		impact: 1301
+	},
+	"SEPPCoN",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nOrganisations: University of Kent (https://app.notion.com/p/University-of-Kent-37b3a96540ad80f0860fd523996d55e1?pvs=21)",
+	"src/content/projects/seppcon.md",
+	"7f7c7c1780724b34",
+	{
+		html: 1306,
+		metadata: 1307
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: University of Kent (<a href=\"https://app.notion.com/p/University-of-Kent-37b3a96540ad80f0860fd523996d55e1?pvs=21\">https://app.notion.com/p/University-of-Kent-37b3a96540ad80f0860fd523996d55e1?pvs=21</a>)</p>\n",
+	{
+		headings: 1308,
+		localImagePaths: 1310,
+		remoteImagePaths: 1311,
+		frontmatter: 1312,
+		imagePaths: 1319
+	},
+	[1309],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1291,
+		title: 1294,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1313,
+		tools_tech: 1314,
+		features: 1315,
+		tags: 1316,
+		links: 1317,
+		impact: 1318
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"sgac-asteroid",
+	{
+		id: 1320,
+		data: 1322,
+		body: 1331,
+		filePath: 1332,
+		digest: 1333,
+		rendered: 1334
+	},
+	{
+		title: 1323,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1324,
+		draft: 27,
+		featured: 27,
+		tags: 1325,
+		category: 1326,
+		type: 115,
+		status: 62,
+		tools_tech: 1327,
+		features: 1328,
+		links: 1329,
+		impact: 1330
+	},
+	"SGAC Find An Asteroid Search Campaign",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"Organisations: Space Generation Advisory Council (https://app.notion.com/p/Space-Generation-Advisory-Council-37b3a96540ad805886d8ef493cefd3f9?pvs=21)",
+	"src/content/projects/sgac-asteroid.md",
+	"e304fb37ebe89b93",
+	{
+		html: 1335,
+		metadata: 1336
+	},
+	"<p>Organisations: Space Generation Advisory Council (<a href=\"https://app.notion.com/p/Space-Generation-Advisory-Council-37b3a96540ad805886d8ef493cefd3f9?pvs=21\">https://app.notion.com/p/Space-Generation-Advisory-Council-37b3a96540ad805886d8ef493cefd3f9?pvs=21</a>)</p>\n",
+	{
+		headings: 1337,
+		localImagePaths: 1338,
+		remoteImagePaths: 1339,
+		frontmatter: 1340,
+		imagePaths: 1347
+	},
+	[],
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1320,
+		title: 1323,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1341,
+		tools_tech: 1342,
+		features: 1343,
+		tags: 1344,
+		links: 1345,
+		impact: 1346
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"spaceforneurodiversity",
+	{
+		id: 1348,
+		data: 1350,
+		body: 1358,
+		filePath: 1359,
+		digest: 1360,
+		rendered: 1361
+	},
+	{
+		title: 1351,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		draft: 27,
+		featured: 27,
+		tags: 1352,
+		category: 1353,
+		type: 115,
+		status: 62,
+		tools_tech: 1354,
+		features: 1355,
+		links: 1356,
+		impact: 1357
+	},
+	"Space for Neurodiversity",
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# Campaign\n\nOrganisations: Space for Neurodiversity (https://app.notion.com/p/Space-for-Neurodiversity-3813a96540ad80bdaa0bdb48e82bbf65?pvs=21)",
+	"src/content/projects/campaign.md",
+	"c4bf7dea9d1d9bf3",
+	{
+		html: 1362,
+		metadata: 1363
+	},
+	"<h1 id=\"campaign\">Campaign</h1>\n<p>Organisations: Space for Neurodiversity (<a href=\"https://app.notion.com/p/Space-for-Neurodiversity-3813a96540ad80bdaa0bdb48e82bbf65?pvs=21\">https://app.notion.com/p/Space-for-Neurodiversity-3813a96540ad80bdaa0bdb48e82bbf65?pvs=21</a>)</p>\n",
+	{
+		headings: 1364,
+		localImagePaths: 1368,
+		remoteImagePaths: 1369,
+		frontmatter: 1370,
+		imagePaths: 1377
+	},
+	[1365],
+	{
+		depth: 187,
+		slug: 1366,
+		text: 1367
+	},
+	"campaign",
+	"Campaign",
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1348,
+		title: 1351,
+		type: 115,
+		status: 62,
+		description: 107,
+		startstartDate: 1371,
+		tools_tech: 1372,
+		features: 1373,
+		tags: 1374,
+		links: 1375,
+		impact: 1376
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"spaceimpactforum",
+	{
+		id: 1378,
+		data: 1380,
+		filePath: 1390,
+		digest: 1391,
+		rendered: 1392
+	},
+	{
+		title: 1381,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1382,
+		draft: 27,
+		featured: 27,
+		tags: 1383,
+		category: 1384,
+		type: 115,
+		status: 62,
+		tools_tech: 1385,
+		features: 1386,
+		links: 1387,
+		impact: 1389
+	},
+	"Space Impact Forum",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 1388
+	},
+	"https://spaceimpactforum.com",
+	{},
+	"src/content/projects/spaceimpactforum.md",
+	"fd7e3063f92607b2",
+	{
+		html: 13,
+		metadata: 1393
+	},
+	{
+		headings: 1394,
+		localImagePaths: 1395,
+		remoteImagePaths: 1396,
+		frontmatter: 1397,
+		imagePaths: 1404
+	},
+	[],
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1378,
+		title: 1381,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1398,
+		tools_tech: 1399,
+		features: 1400,
+		tags: 1401,
+		links: 1402,
+		impact: 1403
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 1388
+	},
+	{},
+	[],
+	"spaceintegrity",
+	{
+		id: 1405,
+		data: 1407,
+		body: 1417,
+		filePath: 1418,
+		digest: 1419,
+		rendered: 1420
+	},
+	{
+		title: 1408,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1409,
+		draft: 27,
+		featured: 27,
+		tags: 1410,
+		category: 1411,
+		type: 115,
+		status: 62,
+		tools_tech: 1412,
+		features: 1413,
+		links: 1414,
+		impact: 1416
+	},
+	"Space Integrity Initiative",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 1415
+	},
+	"https://spaceintegrity.org",
+	{},
+	"# \n\nOrganisations: Green Orbit Digital (https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21)\nPlace: Leicester, England, United Kingdom",
+	"src/content/projects/spaceintegrity.md",
+	"9017cee6b12c80b8",
+	{
+		html: 1421,
+		metadata: 1422
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: Green Orbit Digital (<a href=\"https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21\">https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21</a>)\nPlace: Leicester, England, United Kingdom</p>\n",
+	{
+		headings: 1423,
+		localImagePaths: 1425,
+		remoteImagePaths: 1426,
+		frontmatter: 1427,
+		imagePaths: 1434
+	},
+	[1424],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1405,
+		title: 1408,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1428,
+		tools_tech: 1429,
+		features: 1430,
+		tags: 1431,
+		links: 1432,
+		impact: 1433
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 1415
+	},
+	{},
+	[],
+	"spaceoneers",
+	{
+		id: 1435,
+		data: 1437,
+		body: 1447,
+		filePath: 1448,
+		digest: 1449,
+		rendered: 1450
+	},
+	{
+		title: 1438,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1439,
+		draft: 27,
+		featured: 27,
+		tags: 1440,
+		category: 1441,
+		type: 115,
+		status: 62,
+		tools_tech: 1442,
+		features: 1443,
+		links: 1444,
+		impact: 1446
+	},
+	"Spaceoneers",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 1445
+	},
+	"https://spaceoneers.io",
+	{},
+	"# \n\nArticles: Spaceoneers (https://app.notion.com/p/Spaceoneers-3803a96540ad80549535df4e398304a4?pvs=21)\nCase studies: Spaceoneers (https://app.notion.com/p/Spaceoneers-3813a96540ad80a188dcdcad4ef8e5c5?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)",
+	"src/content/projects/spaceoneers.md",
+	"99d9fd2de84a994e",
+	{
+		html: 1451,
+		metadata: 1452
+	},
+	"<h1 id=\"\"></h1>\n<p>Articles: Spaceoneers (<a href=\"https://app.notion.com/p/Spaceoneers-3803a96540ad80549535df4e398304a4?pvs=21\">https://app.notion.com/p/Spaceoneers-3803a96540ad80549535df4e398304a4?pvs=21</a>)\nCase studies: Spaceoneers (<a href=\"https://app.notion.com/p/Spaceoneers-3813a96540ad80a188dcdcad4ef8e5c5?pvs=21\">https://app.notion.com/p/Spaceoneers-3813a96540ad80a188dcdcad4ef8e5c5?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n",
+	{
+		headings: 1453,
+		localImagePaths: 1455,
+		remoteImagePaths: 1456,
+		frontmatter: 1457,
+		imagePaths: 1464
+	},
+	[1454],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1435,
+		title: 1438,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1458,
+		tools_tech: 1459,
+		features: 1460,
+		tags: 1461,
+		links: 1462,
+		impact: 1463
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 1445
+	},
+	{},
+	[],
+	"spaceup-live",
+	{
+		id: 1465,
+		data: 1467,
+		body: 1476,
+		filePath: 1477,
+		digest: 1478,
+		rendered: 1479
+	},
+	{
+		title: 1468,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1469,
+		draft: 27,
+		featured: 27,
+		tags: 1470,
+		category: 1471,
+		type: 115,
+		status: 62,
+		tools_tech: 1472,
+		features: 1473,
+		links: 1474,
+		impact: 1475
+	},
+	"SpaceUp Live",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nCase studies: Spaceup Live (https://app.notion.com/p/Spaceup-Live-3813a96540ad80a19986f5d9d0d3ef76?pvs=21)\nClient: SpaceUp (https://app.notion.com/p/SpaceUp-3803a96540ad80c58f5dd9e289030b0c?pvs=21)\nOrganisations: R&R Space (https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21)",
+	"src/content/projects/spaceup-live.md",
+	"358944568e8645ad",
+	{
+		html: 1480,
+		metadata: 1481
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: Spaceup Live (<a href=\"https://app.notion.com/p/Spaceup-Live-3813a96540ad80a19986f5d9d0d3ef76?pvs=21\">https://app.notion.com/p/Spaceup-Live-3813a96540ad80a19986f5d9d0d3ef76?pvs=21</a>)\nClient: SpaceUp (<a href=\"https://app.notion.com/p/SpaceUp-3803a96540ad80c58f5dd9e289030b0c?pvs=21\">https://app.notion.com/p/SpaceUp-3803a96540ad80c58f5dd9e289030b0c?pvs=21</a>)\nOrganisations: R&amp;R Space (<a href=\"https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21\">https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21</a>)</p>\n",
+	{
+		headings: 1482,
+		localImagePaths: 1484,
+		remoteImagePaths: 1485,
+		frontmatter: 1486,
+		imagePaths: 1493
+	},
+	[1483],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1465,
+		title: 1468,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1487,
+		tools_tech: 1488,
+		features: 1489,
+		tags: 1490,
+		links: 1491,
+		impact: 1492
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"spaceupleics2018",
+	{
+		id: 1494,
+		data: 1496,
+		body: 1505,
+		filePath: 1506,
+		digest: 1507,
+		rendered: 1508
+	},
+	{
+		title: 1497,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1498,
+		draft: 27,
+		featured: 27,
+		tags: 1499,
+		category: 1500,
+		type: 115,
+		status: 62,
+		tools_tech: 1501,
+		features: 1502,
+		links: 1503,
+		impact: 1504
+	},
+	"SpaceUp Leicester 2018",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"Organisations: R&R Space (https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21)\nPlace: Leicester, England, United Kingdom",
+	"src/content/projects/spaceupleics2018.md",
+	"58a2015b552c53c2",
+	{
+		html: 1509,
+		metadata: 1510
+	},
+	"<p>Organisations: R&amp;R Space (<a href=\"https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21\">https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21</a>)\nPlace: Leicester, England, United Kingdom</p>\n",
+	{
+		headings: 1511,
+		localImagePaths: 1512,
+		remoteImagePaths: 1513,
+		frontmatter: 1514,
+		imagePaths: 1521
+	},
+	[],
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1494,
+		title: 1497,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1515,
+		tools_tech: 1516,
+		features: 1517,
+		tags: 1518,
+		links: 1519,
+		impact: 1520
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"spaceupleics2019",
+	{
+		id: 1522,
+		data: 1524,
+		body: 1533,
+		filePath: 1534,
+		digest: 1535,
+		rendered: 1536
+	},
+	{
+		title: 1525,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1526,
+		draft: 27,
+		featured: 27,
+		tags: 1527,
+		category: 1528,
+		type: 115,
+		status: 62,
+		tools_tech: 1529,
+		features: 1530,
+		links: 1531,
+		impact: 1532
+	},
+	"SpaceUp Leicester 2019",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nOrganisations: R&R Space (https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21)\nPlace: Leicester, England, United Kingdom",
+	"src/content/projects/spaceupleics2019.md",
+	"d6751d32a81a0f64",
+	{
+		html: 1537,
+		metadata: 1538
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: R&amp;R Space (<a href=\"https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21\">https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21</a>)\nPlace: Leicester, England, United Kingdom</p>\n",
+	{
+		headings: 1539,
+		localImagePaths: 1541,
+		remoteImagePaths: 1542,
+		frontmatter: 1543,
+		imagePaths: 1550
+	},
+	[1540],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1522,
+		title: 1525,
+		featured: 27,
+		draft: 27,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1544,
+		tools_tech: 1545,
+		features: 1546,
+		tags: 1547,
+		links: 1548,
+		impact: 1549
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"telescope-astrosoc",
+	{
+		id: 1551,
+		data: 1553,
+		body: 1562,
+		filePath: 1563,
+		digest: 1564,
+		rendered: 1565
+	},
+	{
+		title: 1554,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1555,
+		draft: 27,
+		featured: 27,
+		tags: 1556,
+		category: 1557,
+		type: 115,
+		status: 62,
+		tools_tech: 1558,
+		features: 1559,
+		links: 1560,
+		impact: 1561
+	},
+	"Telescope Coordinator - Astrosoc",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# Telescope Coordinator\n\nOrganisations: University of Leicester Astrosoc (https://app.notion.com/p/University-of-Leicester-Astrosoc-3813a96540ad80ffbe73c4394909321c?pvs=21)",
+	"src/content/projects/telescope-astrosoc.md",
+	"3efb8b5167b56df4",
+	{
+		html: 1566,
+		metadata: 1567
+	},
+	"<h1 id=\"telescope-coordinator\">Telescope Coordinator</h1>\n<p>Organisations: University of Leicester Astrosoc (<a href=\"https://app.notion.com/p/University-of-Leicester-Astrosoc-3813a96540ad80ffbe73c4394909321c?pvs=21\">https://app.notion.com/p/University-of-Leicester-Astrosoc-3813a96540ad80ffbe73c4394909321c?pvs=21</a>)</p>\n",
+	{
+		headings: 1568,
+		localImagePaths: 1572,
+		remoteImagePaths: 1573,
+		frontmatter: 1574,
+		imagePaths: 1581
+	},
+	[1569],
+	{
+		depth: 187,
+		slug: 1570,
+		text: 1571
+	},
+	"telescope-coordinator",
+	"Telescope Coordinator",
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1551,
+		title: 1554,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1575,
+		tools_tech: 1576,
+		features: 1577,
+		tags: 1578,
+		links: 1579,
+		impact: 1580
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"tp-ambient",
+	{
+		id: 1582,
+		data: 1584,
+		body: 1593,
+		filePath: 1594,
+		digest: 1595,
+		rendered: 1596
+	},
+	{
+		title: 1585,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1586,
+		draft: 27,
+		featured: 27,
+		tags: 1587,
+		category: 1588,
+		type: 115,
+		status: 62,
+		tools_tech: 1589,
+		features: 1590,
+		links: 1591,
+		impact: 1592
+	},
+	"TP Ambient",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# Ambient\n\nOrganisations: International Space University (https://app.notion.com/p/International-Space-University-37b3a96540ad80c99f7dd9e615ab18c7?pvs=21)",
+	"src/content/projects/tp-ambient.md",
+	"627d80dc3b8098bf",
+	{
+		html: 1597,
+		metadata: 1598
+	},
+	"<h1 id=\"ambient\">Ambient</h1>\n<p>Organisations: International Space University (<a href=\"https://app.notion.com/p/International-Space-University-37b3a96540ad80c99f7dd9e615ab18c7?pvs=21\">https://app.notion.com/p/International-Space-University-37b3a96540ad80c99f7dd9e615ab18c7?pvs=21</a>)</p>\n",
+	{
+		headings: 1599,
+		localImagePaths: 1603,
+		remoteImagePaths: 1604,
+		frontmatter: 1605,
+		imagePaths: 1612
+	},
+	[1600],
+	{
+		depth: 187,
+		slug: 1601,
+		text: 1602
+	},
+	"ambient",
+	"Ambient",
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1582,
+		title: 1585,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1606,
+		tools_tech: 1607,
+		features: 1608,
+		tags: 1609,
+		links: 1610,
+		impact: 1611
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"ukseds-charity",
+	{
+		id: 1613,
+		data: 1615,
+		body: 1625,
+		filePath: 1626,
+		digest: 1627,
+		rendered: 1628
+	},
+	{
+		title: 1616,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 1617,
+		startDate: 1618,
+		draft: 27,
+		featured: 27,
+		tags: 1619,
+		category: 1620,
+		type: 115,
+		status: 62,
+		tools_tech: 1621,
+		features: 1622,
+		links: 1623,
+		impact: 1624
+	},
+	"UKSEDS charity status",
+	3,
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"Experience: Vice Chair (https://app.notion.com/p/Vice-Chair-3813a96540ad80da9db6c3c7b9d45d93?pvs=21)",
+	"src/content/projects/ukseds-charity.md",
+	"6463e6164edef25f",
+	{
+		html: 1629,
+		metadata: 1630
+	},
+	"<p>Experience: Vice Chair (<a href=\"https://app.notion.com/p/Vice-Chair-3813a96540ad80da9db6c3c7b9d45d93?pvs=21\">https://app.notion.com/p/Vice-Chair-3813a96540ad80da9db6c3c7b9d45d93?pvs=21</a>)</p>\n",
+	{
+		headings: 1631,
+		localImagePaths: 1632,
+		remoteImagePaths: 1633,
+		frontmatter: 1634,
+		imagePaths: 1641
+	},
+	[],
+	[],
+	[],
+	{
+		id: 1617,
+		slug: 1613,
+		title: 1616,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1635,
+		tools_tech: 1636,
+		features: 1637,
+		tags: 1638,
+		links: 1639,
+		impact: 1640
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"ukspace-startup",
+	{
+		id: 1642,
+		data: 1644,
+		body: 1654,
+		filePath: 1655,
+		digest: 1656,
+		rendered: 1657
+	},
+	{
+		title: 1645,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 1646,
+		startDate: 1647,
+		draft: 27,
+		featured: 27,
+		tags: 1648,
+		category: 1649,
+		type: 115,
+		status: 62,
+		tools_tech: 1650,
+		features: 1651,
+		links: 1652,
+		impact: 1653
+	},
+	"UKspace Startup working group",
+	2,
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \n\nOrganisations: UK Space (https://app.notion.com/p/UK-Space-37b3a96540ad80438299eef08319f4fb?pvs=21)",
+	"src/content/projects/ukspace-startup.md",
+	"8068f6a5e12670e6",
+	{
+		html: 1658,
+		metadata: 1659
+	},
+	"<h1 id=\"\"></h1>\n<p>Organisations: UK Space (<a href=\"https://app.notion.com/p/UK-Space-37b3a96540ad80438299eef08319f4fb?pvs=21\">https://app.notion.com/p/UK-Space-37b3a96540ad80438299eef08319f4fb?pvs=21</a>)</p>\n",
+	{
+		headings: 1660,
+		localImagePaths: 1662,
+		remoteImagePaths: 1663,
+		frontmatter: 1664,
+		imagePaths: 1671
+	},
+	[1661],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 1646,
+		slug: 1642,
+		title: 1645,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1665,
+		tools_tech: 1666,
+		features: 1667,
+		tags: 1668,
+		links: 1669,
+		impact: 1670
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"vega",
+	{
+		id: 1672,
+		data: 1674,
+		body: 1683,
+		filePath: 1684,
+		digest: 1685,
+		rendered: 1686
+	},
+	{
+		title: 1675,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1676,
+		draft: 27,
+		featured: 27,
+		tags: 1677,
+		category: 1678,
+		type: 115,
+		status: 62,
+		tools_tech: 1679,
+		features: 1680,
+		links: 1681,
+		impact: 1682
+	},
+	"Vega",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# \nCase studies: ESA material labs (https://app.notion.com/p/ESA-material-labs-3813a96540ad8026b4a3e506aaa92615?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)\n\n[https://youtu.be/dO6a3EtuF3U?is=1lUkQiCHpXe-Cp-t](https://youtu.be/dO6a3EtuF3U?is=1lUkQiCHpXe-Cp-t)",
+	"src/content/projects/vega.md",
+	"8259aa3f63868423",
+	{
+		html: 1687,
+		metadata: 1688
+	},
+	"<h1 id=\"\"></h1>\n<p>Case studies: ESA material labs (<a href=\"https://app.notion.com/p/ESA-material-labs-3813a96540ad8026b4a3e506aaa92615?pvs=21\">https://app.notion.com/p/ESA-material-labs-3813a96540ad8026b4a3e506aaa92615?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n<p><a href=\"https://youtu.be/dO6a3EtuF3U?is=1lUkQiCHpXe-Cp-t\">https://youtu.be/dO6a3EtuF3U?is=1lUkQiCHpXe-Cp-t</a></p>\n",
+	{
+		headings: 1689,
+		localImagePaths: 1691,
+		remoteImagePaths: 1692,
+		frontmatter: 1693,
+		imagePaths: 1700
+	},
+	[1690],
+	{
+		depth: 187,
+		slug: 13,
+		text: 13
+	},
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1672,
+		title: 1675,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1694,
+		tools_tech: 1695,
+		features: 1696,
+		tags: 1697,
+		links: 1698,
+		impact: 1699
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"vortex",
+	{
+		id: 1701,
+		data: 1703,
+		body: 1712,
+		filePath: 1713,
+		digest: 1714,
+		rendered: 1715
+	},
+	{
+		title: 1704,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1705,
+		draft: 27,
+		featured: 27,
+		tags: 1706,
+		category: 1707,
+		type: 115,
+		status: 62,
+		tools_tech: 1708,
+		features: 1709,
+		links: 1710,
+		impact: 1711
+	},
+	"Vortex",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"Case studies: European State of the Climate  (https://app.notion.com/p/European-State-of-the-Climate-3813a96540ad80b9b474e68a4ee37de5?pvs=21)\nOrganisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)",
+	"src/content/projects/vortex.md",
+	"b8bf654a06d3fde4",
+	{
+		html: 1716,
+		metadata: 1717
+	},
+	"<p>Case studies: European State of the Climate  (<a href=\"https://app.notion.com/p/European-State-of-the-Climate-3813a96540ad80b9b474e68a4ee37de5?pvs=21\">https://app.notion.com/p/European-State-of-the-Climate-3813a96540ad80b9b474e68a4ee37de5?pvs=21</a>)\nOrganisations: Design &amp; Data GmbH (<a href=\"https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21\">https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21</a>)</p>\n",
+	{
+		headings: 1718,
+		localImagePaths: 1719,
+		remoteImagePaths: 1720,
+		frontmatter: 1721,
+		imagePaths: 1728
+	},
+	[],
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1701,
+		title: 1704,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1722,
+		tools_tech: 1723,
+		features: 1724,
+		tags: 1725,
+		links: 1726,
+		impact: 1727
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	"white-dwarves",
+	{
+		id: 1729,
+		data: 1731,
+		filePath: 1741,
+		digest: 1742,
+		rendered: 1743
+	},
+	{
+		title: 1732,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1733,
+		draft: 27,
+		featured: 46,
+		tags: 1734,
+		category: 1735,
+		type: 115,
+		status: 62,
+		tools_tech: 1736,
+		features: 1737,
+		links: 1738,
+		impact: 1739,
+		institution: 1740
+	},
+	"White dwarves",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"University of Leicester",
+	"src/content/projects/white-dwarves.md",
+	"5c378ae3eebcb033",
+	{
+		html: 13,
+		metadata: 1744
+	},
+	{
+		headings: 1745,
+		localImagePaths: 1746,
+		remoteImagePaths: 1747,
+		frontmatter: 1748,
+		imagePaths: 1755
+	},
+	[],
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1729,
+		title: 1732,
+		featured: 46,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1749,
+		tools_tech: 1750,
+		features: 1751,
+		tags: 1752,
+		links: 1753,
+		impact: 1754,
+		institution: 1740
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[],
+	{
+		id: 65,
+		data: 1757,
+		filePath: 1769,
+		digest: 1770,
+		rendered: 1771
+	},
+	{
+		title: 1758,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 1759,
+		startDate: 1760,
+		draft: 27,
+		featured: 46,
+		tags: 1761,
+		category: 1762,
+		type: 115,
+		status: 62,
+		tools_tech: 1763,
+		features: 1764,
+		links: 1765,
+		impact: 1766,
+		caseStudy: 1767,
+		client: 1768,
+		organisation: 123
+	},
+	"Windy",
+	4,
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{ github: 82 },
+	{},
+	"European State of the Climate",
+	"ECMWF",
+	"src/content/projects/windy.md",
+	"d24532d8421a9b06",
+	{
+		html: 13,
+		metadata: 1772
+	},
+	{
+		headings: 1773,
+		localImagePaths: 1774,
+		remoteImagePaths: 1775,
+		frontmatter: 1776,
+		imagePaths: 1783
+	},
+	[],
+	[],
+	[],
+	{
+		id: 1759,
+		slug: 65,
+		title: 1758,
+		featured: 46,
+		draft: 27,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1777,
+		tools_tech: 1778,
+		features: 1779,
+		tags: 1780,
+		links: 1781,
+		impact: 1782,
+		caseStudy: 1767,
+		client: 1768,
+		organisation: 123
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{ github: 82 },
+	{},
+	[],
+	"woodland-qedjw",
+	{
+		id: 1784,
+		data: 1786,
+		body: 1795,
+		filePath: 1796,
+		digest: 1797,
+		rendered: 1798
+	},
+	{
+		title: 1787,
+		description: 107,
+		noindex: 27,
+		nofollow: 27,
+		id: 143,
+		startDate: 1788,
+		draft: 27,
+		featured: 27,
+		tags: 1789,
+		category: 1790,
+		type: 115,
+		status: 62,
+		tools_tech: 1791,
+		features: 1792,
+		links: 1793,
+		impact: 1794
+	},
+	"QEDJW",
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		111,
+		112,
+		113
+	],
+	[],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	"# QEDJW\n\nExperience: Volunteer (https://app.notion.com/p/Volunteer-3813a96540ad804db3dec2b17f84bf41?pvs=21)",
+	"src/content/projects/woodland-qedjw.md",
+	"a5c76d4bb5f31c24",
+	{
+		html: 1799,
+		metadata: 1800
+	},
+	"<h1 id=\"qedjw\">QEDJW</h1>\n<p>Experience: Volunteer (<a href=\"https://app.notion.com/p/Volunteer-3813a96540ad804db3dec2b17f84bf41?pvs=21\">https://app.notion.com/p/Volunteer-3813a96540ad804db3dec2b17f84bf41?pvs=21</a>)</p>\n",
+	{
+		headings: 1801,
+		localImagePaths: 1804,
+		remoteImagePaths: 1805,
+		frontmatter: 1806,
+		imagePaths: 1813
+	},
+	[1802],
+	{
+		depth: 187,
+		slug: 1803,
+		text: 1787
+	},
+	"qedjw",
+	[],
+	[],
+	{
+		id: 143,
+		slug: 1784,
+		title: 1787,
+		type: 115,
+		status: 62,
+		description: 107,
+		startDate: 1807,
+		tools_tech: 1808,
+		features: 1809,
+		tags: 1810,
+		links: 1811,
+		impact: 1812
+	},
+	["Date", "2026-07-01T00:00:00.000Z"],
+	[
+		86,
+		87,
+		88
+	],
+	[90, 91],
+	[
+		111,
+		112,
+		113
+	],
+	{
+		github: 82,
+		live: 83
+	},
+	{},
+	[]
+];
+//#endregion
+export { _astro_data_layer_content_default as default };
