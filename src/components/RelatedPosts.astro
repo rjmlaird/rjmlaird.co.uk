@@ -18,27 +18,18 @@ const safePosts = Array.isArray(posts) ? posts : [];
       {safePosts.map((post) => {
         const { heroImage, heroAlt, title } = post.data;
 
-        const imageSrc =
-          typeof heroImage === 'string' ? heroImage : heroImage?.src;
-
-        const imageAlt =
-          (heroImage &&
-          typeof heroImage === 'object' &&
-          'alt' in heroImage
-            ? (heroImage as any).alt
-            : null) ||
-          heroAlt ||
-          title ||
-          'Related post image';
+        // heroImage is a string path in your schema
+        const imageSrc = heroImage;
+        const imageAlt = heroAlt || title || 'Related post image';
 
         return (
           <a href={`/blog/${post.id}`} class="card">
             {imageSrc && (
-              <Image 
-                src={imageSrc} 
-                alt={imageAlt} 
-                width={320} 
-                height={180} 
+              <img
+                src={imageSrc}
+                alt={imageAlt}
+                width={320}
+                height={180}
               />
             )}
             <span class="title">{title}</span>

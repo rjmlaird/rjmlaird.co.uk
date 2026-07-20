@@ -1,6 +1,5 @@
 ---
 // src/components/PostCard.astro
-import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import CategoryBadge from './CategoryBadge.astro';
 import { getReadingTime } from '../utils/readingTime';
@@ -9,18 +8,20 @@ interface Props {
   post: CollectionEntry<'blog'>;
   featured?: boolean;
 }
+
 const { post, featured = false } = Astro.props;
 const { title, description, pubDate, category, heroImage, heroAlt } = post.data;
 const readingTime = getReadingTime(post.body || '');
 const safeCategory = Array.isArray(category) ? category[0] || '' : category;
 
-const imageSrc = typeof heroImage === 'string' ? heroImage : heroImage?.src;
-const imageAlt = (heroImage && typeof heroImage === 'object' && 'alt' in heroImage ? (heroImage as any).alt : null) || heroAlt || title || "Post thumbnail";
+// heroImage is a string path in your schema
+const imageSrc = heroImage;
+const imageAlt = heroAlt || title || 'Post thumbnail';
 ---
 
 <a href={`/blog/${post.id}`} class:list={['post-card', { featured }]}>
   {imageSrc && (
-    <Image
+    <img
       src={imageSrc}
       alt={imageAlt}
       width={featured ? 800 : 400}
@@ -30,8 +31,12 @@ const imageAlt = (heroImage && typeof heroImage === 'object' && 'alt' in heroIma
   )}
   <div class="body">
     {safeCategory && <CategoryBadge category={safeCategory} as="span" />}
-    <h3>{title}</h3>
-    {description && <p class="description">{description}</p>}
+    <h2>{title}</h2>
+    {description && (
+      <p class="description">
+        {description}
+      </p>
+    )}
     <div class="footer">
       <time datetime={pubDate.toISOString()}>
         {pubDate.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}
@@ -40,6 +45,7 @@ const imageAlt = (heroImage && typeof heroImage === 'object' && 'alt' in heroIma
     </div>
   </div>
 </a>
+
 
 <style>
   .post-card {

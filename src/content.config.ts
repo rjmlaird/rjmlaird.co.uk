@@ -31,14 +31,15 @@ const baseSchema = seoSchema.extend({
   endDate: z.coerce.date().optional(),
   draft: z.boolean().default(false),
   featured: z.boolean().default(false),
-  author: reference("authors").optional(), 
+  author: z.string().optional(),
   tags: z.array(z.string()).default([]),
-  // FLEXIBLE CATEGORY: Accepts a string OR an array of strings, 
-  // then transforms it into an array for consistent consumption.
   category: z
     .union([z.string(), z.array(z.string())])
     .default([])
     .transform((val) => (Array.isArray(val) ? val : [val])),
+  // Hero image as a string path to match your front matter
+  heroImage: z.string().optional(),
+  heroAlt: z.string().optional(),
 });
 
 // --- Collections Definition ---
@@ -46,11 +47,11 @@ const baseSchema = seoSchema.extend({
 export const collections = {
   blog: defineCollection({
     loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
-    schema: ({ image }) => baseSchema.extend({
-      pubDate: z.coerce.date(),
-      heroImage: image().optional(),
-      heroAlt: z.string().optional(),
-    }),
+    schema: () =>
+      baseSchema.extend({
+        pubDate: z.coerce.date(),
+        // heroImage and heroAlt inherited from baseSchema
+      }),
   }),
 
   projects: defineCollection({
@@ -60,15 +61,17 @@ export const collections = {
       status: z.string().optional(),
       tools_tech: z.array(z.string()).optional(),
       features: z.array(z.string()).optional(),
-      links: z.object({
-        github: z.url().optional(),
-        live: z.url().optional(),
-        demo: z.url().optional(),
-        docs: z.url().optional(),
-        video: z.url().optional(),
-        store: z.url().optional(),
-        api: z.url().optional(),
-      }).optional(),
+      links: z
+        .object({
+          github: z.url().optional(),
+          live: z.url().optional(),
+          demo: z.url().optional(),
+          docs: z.url().optional(),
+          video: z.url().optional(),
+          store: z.url().optional(),
+          api: z.url().optional(),
+        })
+        .optional(),
       impact: z.record(z.string(), z.unknown()).optional(),
       caseStudy: z.string().optional(),
       client: z.string().optional(),

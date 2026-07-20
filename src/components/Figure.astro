@@ -1,9 +1,9 @@
 ---
 // src/components/Figure.astro
-import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro:assets';
 
 interface Props {
-  src: ImageMetadata;
+  src: ImageMetadata | string;
   alt: string;
   caption?: string;
   credit?: string;
@@ -11,10 +11,12 @@ interface Props {
 }
 
 const { src, alt, caption, credit, wide = false } = Astro.props;
+
+const imgSrc = typeof src === 'string' ? src : (src as ImageMetadata).src;
 ---
 
 <figure class:list={['post-figure', { wide }]}>
-  <Image src={src} alt={alt} loading="lazy" />
+  <img src={imgSrc} alt={alt} loading="lazy" />
   {(caption || credit) && (
     <figcaption>
       {caption}

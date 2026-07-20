@@ -19,7 +19,7 @@ const safeCategories = Array.isArray(CATEGORIES) ? CATEGORIES : [];
       <h1>Blog</h1>
       <nav class="category-nav" aria-label="Filter by category">
         {safeCategories.map((c) => (
-          <a href={`/blog/category/${c}`}>{c.replace(/-/g, ' ')}</a>
+          <a href={`/category/${c}`}>{c.replace(/-/g, ' ')}</a>
         ))}
       </nav>
     </header>

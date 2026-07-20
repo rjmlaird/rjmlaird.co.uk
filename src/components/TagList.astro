@@ -16,7 +16,7 @@ const slugify = (t: string) => (t ? t.toLowerCase().replace(/\s+/g, '-') : '');
   <ul class="tag-list">
     {visible.map((tag) => (
       <li>
-        <a href={`/blog/tags/${slugify(tag)}`} class="tag">#{tag}</a>
+        <a href={`/tags/${slugify(tag)}`} class="tag">#{tag}</a>
       </li>
     ))}
     {overflow > 0 && <li class="overflow">+{overflow}</li>}
