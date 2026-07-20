@@ -75,61 +75,65 @@ const items = nav as NavItem[];
     </ul>
   </div>
 
-  <script is:inline>
-    const initNav = () => {
-      const siteNav = document.querySelector("[data-nav]");
-      if (!siteNav) return;
+<script is:inline>
+  const initNav = () => {
+    const siteNav = document.querySelector("[data-nav]");
+    if (!siteNav) return;
 
-      const toggle = siteNav.querySelector(".nav-toggle");
-      const menu = siteNav.querySelector("#site-nav-menu");
-      const dropdownButtons = siteNav.querySelectorAll<HTMLButtonElement>(".nav-parent");
+    const toggle = siteNav.querySelector(".nav-toggle");
+    const menu = siteNav.querySelector("#site-nav-menu");
+    const dropdownButtons = siteNav.querySelectorAll(".nav-parent");
 
-      const closeAllDropdowns = () => {
-        siteNav.querySelectorAll(".has-dropdown").forEach((item) => {
-          item.classList.remove("open");
-          const btn = item.querySelector<HTMLButtonElement>(".nav-parent");
-          const submenu = item.querySelector<HTMLUListElement>(".dropdown");
-          if (btn) btn.setAttribute("aria-expanded", "false");
-          if (submenu) submenu.hidden = true;
-        });
-      };
+    const closeAllDropdowns = () => {
+      siteNav.querySelectorAll(".has-dropdown").forEach((item) => {
+        item.classList.remove("open");
+        const btn = item.querySelector(".nav-parent");
+        const submenu = item.querySelector(".dropdown");
+        if (btn) btn.setAttribute("aria-expanded", "false");
+        if (submenu) submenu.hidden = true;
+      });
+    };
 
-      dropdownButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const parent = btn.closest(".has-dropdown");
-          if (!parent) return;
+    dropdownButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const parent = btn.closest(".has-dropdown");
+        if (!parent) return;
 
-          const submenu = parent.querySelector<HTMLUListElement>(".dropdown");
-          const isOpen = parent.classList.toggle("open");
-          btn.setAttribute("aria-expanded", String(isOpen));
-          if (submenu) submenu.hidden = !isOpen;
-        });
-
-        btn.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            btn.click();
-          }
-        });
+        const submenu = parent.querySelector(".dropdown");
+        const isOpen = parent.classList.toggle("open");
+        btn.setAttribute("aria-expanded", String(isOpen));
+        if (submenu) submenu.hidden = !isOpen;
       });
 
-      toggle?.addEventListener("click", () => {
+      btn.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          btn.click();
+        }
+      });
+    });
+
+    if (toggle) {
+      toggle.addEventListener("click", () => {
         const open = siteNav.classList.toggle("menu-open");
         toggle.setAttribute("aria-expanded", String(open));
         if (menu) menu.setAttribute("data-open", String(open));
         if (!open) closeAllDropdowns();
       });
+    }
 
-      document.addEventListener("click", (event) => {
-        if (!siteNav.contains(event.target as Node)) {
-          closeAllDropdowns();
-        }
-      });
-    };
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (!siteNav.contains(target)) {
+        closeAllDropdowns();
+      }
+    });
+  };
 
-    initNav();
-    document.addEventListener("astro:page-load", initNav);
-  </script>
+  initNav();
+  document.addEventListener("astro:page-load", initNav);
+</script>
 </nav>
 
 <style>
