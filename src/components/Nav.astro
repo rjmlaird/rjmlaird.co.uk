@@ -20,8 +20,23 @@ const items = nav as NavItem[];
     <a href="/" class="logo">RJM<span>Laird</span></a>
   </div>
 
+  <div class="nav-right">
+    <a href="https://cv.rjmlaird.co.uk" class="nsub">Full CV ↗</a>
+    <a href="/contact" class="ncta">Get in touch</a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav-menu"
+    >
+      <span class="sr-only">Toggle navigation</span>
+      <span class="hamburger" aria-hidden="true"></span>
+    </button>
+  </div>
+
   <div class="nav-center">
-    <ul class="nl">
+    <ul id="site-nav-menu" class="nl">
       {items.map((item) => {
         const hasChildren = Boolean(item.children?.length);
 
@@ -29,11 +44,21 @@ const items = nav as NavItem[];
           <li class:list={["nitem", hasChildren && "has-dropdown"]}>
             {hasChildren ? (
               <>
-                <button class="nav-link nav-parent" type="button" aria-expanded="false">
+                <button
+                  class="nav-link nav-parent"
+                  type="button"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  aria-controls={`${item.id}-submenu`}
+                >
                   {item.label}
                 </button>
 
-                <ul class="dropdown">
+                <ul
+                  id={`${item.id}-submenu`}
+                  class="dropdown"
+                  hidden
+                >
                   {item.children!.map((child) => (
                     <li>
                       <a href={`/${child.id}`}>{child.label}</a>
@@ -50,29 +75,22 @@ const items = nav as NavItem[];
     </ul>
   </div>
 
-  <div class="nav-right">
-    <a href="https://cv.rjmlaird.co.uk" class="nsub">Full CV ↗</a>
-    <a href="/contact" class="ncta">Get in touch</a>
-
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-menu">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="hamburger" aria-hidden="true"></span>
-    </button>
-  </div>
-
   <script is:inline>
     const initNav = () => {
       const siteNav = document.querySelector("[data-nav]");
       if (!siteNav) return;
 
       const toggle = siteNav.querySelector(".nav-toggle");
-      const dropdownButtons = siteNav.querySelectorAll(".nav-parent");
+      const menu = siteNav.querySelector("#site-nav-menu");
+      const dropdownButtons = siteNav.querySelectorAll<HTMLButtonElement>(".nav-parent");
 
       const closeAllDropdowns = () => {
         siteNav.querySelectorAll(".has-dropdown").forEach((item) => {
           item.classList.remove("open");
-          const btn = item.querySelector(".nav-parent");
+          const btn = item.querySelector<HTMLButtonElement>(".nav-parent");
+          const submenu = item.querySelector<HTMLUListElement>(".dropdown");
           if (btn) btn.setAttribute("aria-expanded", "false");
+          if (submenu) submenu.hidden = true;
         });
       };
 
@@ -81,30 +99,39 @@ const items = nav as NavItem[];
           const parent = btn.closest(".has-dropdown");
           if (!parent) return;
 
+          const submenu = parent.querySelector<HTMLUListElement>(".dropdown");
           const isOpen = parent.classList.toggle("open");
           btn.setAttribute("aria-expanded", String(isOpen));
+          if (submenu) submenu.hidden = !isOpen;
+        });
+
+        btn.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            btn.click();
+          }
         });
       });
 
       toggle?.addEventListener("click", () => {
         const open = siteNav.classList.toggle("menu-open");
         toggle.setAttribute("aria-expanded", String(open));
+        if (menu) menu.setAttribute("data-open", String(open));
         if (!open) closeAllDropdowns();
       });
 
-      document.addEventListener(
-        "click",
-        (event) => {
-          if (!siteNav.contains(event.target)) closeAllDropdowns();
-        },
-        { once: true }
-      );
+      document.addEventListener("click", (event) => {
+        if (!siteNav.contains(event.target as Node)) {
+          closeAllDropdowns();
+        }
+      });
     };
 
     initNav();
     document.addEventListener("astro:page-load", initNav);
   </script>
 </nav>
+
 <style>
 .site-nav {
   position: relative;
@@ -159,6 +186,10 @@ const items = nav as NavItem[];
   padding: 0;
 }
 
+.nitem {
+  position: relative;
+}
+
 .nav-link {
   font-family: var(--D);
   font-size: 0.75rem;
@@ -168,12 +199,40 @@ const items = nav as NavItem[];
   letter-spacing: 0.04em;
   background: none;
   border: 0;
-  padding: 0;
+  padding: 0.4rem 0;
   cursor: pointer;
 }
 
 .nav-link:hover,
 .nav-link:focus-visible {
+  color: var(--w);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.4rem;
+  min-width: 10rem;
+  list-style: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(11, 15, 26, 0.97);
+  border: 1px solid var(--bd);
+}
+
+.dropdown li a {
+  display: block;
+  font-family: var(--D);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--m);
+  text-decoration: none;
+  padding: 0.3rem 0;
+}
+
+.dropdown li a:hover,
+.dropdown li a:focus-visible {
   color: var(--w);
 }
 
@@ -184,7 +243,7 @@ const items = nav as NavItem[];
   color: var(--m);
   text-decoration: none;
   border: 1px solid var(--bm);
-  padding: 0.28rem 0.65rem;
+  padding: 0.4rem 0.65rem;
   border-radius: 3px;
 }
 
@@ -194,13 +253,114 @@ const items = nav as NavItem[];
   font-weight: 600;
   color: var(--ink);
   background: var(--teal);
-  padding: 0.36rem 0.95rem;
+  padding: 0.4rem 0.95rem;
   border-radius: 3px;
   text-decoration: none;
 }
 
 .nav-toggle {
   display: none;
+  border: 1px solid var(--bm);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--m);
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--D);
+  font-size: 0.75rem;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.hamburger {
+  display: inline-block;
+  width: 1.1rem;
+  height: 0.09rem;
+  background: var(--m);
+  position: relative;
+}
+.hamburger::before,
+.hamburger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 1.1rem;
+  height: 0.09rem;
+  background: var(--m);
+}
+.hamburger::before {
+  top: -0.28rem;
+}
+.hamburger::after {
+  top: 0.28rem;
+}
+
+/* Mobile layout */
+@media (max-width: 720px) {
+  .site-nav {
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+  }
+
+  .nav-center {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+  }
+
+  .nav-right {
+    justify-self: end;
+    gap: 0.4rem;
+  }
+
+  .nl {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-top: 0.75rem;
+  }
+
+  .site-nav.menu-open .nl {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .dropdown {
+    position: static;
+    margin-top: 0;
+    margin-left: 0;
+    width: 100%;
+    padding-inline: 0;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .nsub {
+    display: none; /* optional on small screens */
+  }
+}
+
+/* Larger tap targets for touch */
+.nav-link,
+.ncta,
+.nsub {
+  padding-block: 0.4rem;
+}
 </style>
