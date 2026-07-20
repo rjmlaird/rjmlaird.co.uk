@@ -17,8 +17,19 @@ const safePosts = Array.isArray(posts) ? posts : [];
     <div class="grid">
       {safePosts.map((post) => {
         const { heroImage, heroAlt, title } = post.data;
-        const imageSrc = typeof heroImage === 'string' ? heroImage : heroImage?.src;
-        const imageAlt = (heroImage && typeof heroImage === 'object' && 'alt' in heroImage ? (heroImage as any).alt : null) || heroAlt || title || "Related post image";
+
+        const imageSrc =
+          typeof heroImage === 'string' ? heroImage : heroImage?.src;
+
+        const imageAlt =
+          (heroImage &&
+          typeof heroImage === 'object' &&
+          'alt' in heroImage
+            ? (heroImage as any).alt
+            : null) ||
+          heroAlt ||
+          title ||
+          'Related post image';
 
         return (
           <a href={`/blog/${post.id}`} class="card">
