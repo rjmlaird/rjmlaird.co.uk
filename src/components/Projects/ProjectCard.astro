@@ -1,6 +1,5 @@
 ---
 type Project = {
-  id: number;
   slug: string;
   title?: string;
   type?: string;
@@ -30,7 +29,6 @@ const { project, slug } = Astro.props as {
 const dateValue = project.date ? new Date(project.date) : null;
 const links = project.links ?? {};
 const liveLink = links.live || links.demo || links.github || links.docs;
-const number = project.id ? String(project.id).padStart(2, "0") : "";
 const formattedDate = dateValue
   ? dateValue.toLocaleDateString("en-GB", {
       day: "2-digit",
@@ -40,11 +38,9 @@ const formattedDate = dateValue
   : "";
 ---
 
-<article class="pr pub">
-  <p class="pn">{number}</p>
-
-  <div class="pub-main">
-    <div class="pm">
+<article class="pr pub" style="display: flex; flex-direction: column; width: 100%; max-width: none; flex: 1 1 100%;">
+  <div class="pub-main" style="flex: 1; width: 100%;">
+    <div class="pm" style="width: 100%; max-width: none;">
       <div class="pub-top">
         <h3>
           <a href={`/projects/${slug}/`} class="project-title-link">
@@ -81,7 +77,7 @@ const formattedDate = dateValue
 
   <div class="pub-links">
     {liveLink ? (
-      <a class="btn-link" href={liveLink} target="_blank" rel="noreferrer">
+      <a class="btn-link" href={`/projects/${slug}/#projects`} target="_blank" rel="noreferrer">
         View project
       </a>
     ) : null}

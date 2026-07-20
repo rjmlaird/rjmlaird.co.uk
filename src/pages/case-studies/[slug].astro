@@ -1,16 +1,20 @@
 ---
+// src/pages/case-studies/[slug].astro
 import Layout from "../../layouts/Layout.astro";
-import { getCollection, render, type CollectionEntry, getEntry } from "astro:content";
+import {
+  getCollection,
+  render,
+  type CollectionEntry,
+  getEntry,
+} from "astro:content";
 
 export async function getStaticPaths() {
   const entries = await getCollection("caseStudy", ({ data }) => data.draft !== true);
 
-  return entries
-    .filter((entry) => typeof entry.id === "string" && entry.id.trim().length > 0)
-    .map((entry) => ({
-      params: { slug: entry.id },
-      props: { entry },
-    }));
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
 }
 
 const { entry } = Astro.props as {
@@ -18,11 +22,11 @@ const { entry } = Astro.props as {
 };
 
 const slug = Astro.params.slug;
-const caseStudy = entry.data;
-const { Content } = await render(entry);
+const caseStudy = entry ? entry.data : ({} as any);
+const { Content } = entry ? await render(entry) : { Content: null };
 
-const dateLabel = caseStudy.date
-  ? new Date(caseStudy.date).toLocaleDateString("en-GB", {
+const dateLabel = caseStudy.startDate
+  ? new Date(caseStudy.startDate).toLocaleDateString("en-GB", {
       year: "numeric",
       month: "long",
     })
@@ -34,11 +38,11 @@ const tags = Array.isArray(caseStudy.tags) ? caseStudy.tags : [];
 const links = caseStudy.links || {};
 
 const relatedProjects = Array.isArray(caseStudy.relatedProjects)
-  ? (await Promise.all(caseStudy.relatedProjects.map((ref) => getEntry(ref)))).filter(Boolean)
+  ? (await Promise.all(caseStudy.relatedProjects.map((ref: any) => getEntry(ref)))).filter(Boolean)
   : [];
 ---
 
-<Layout>
+<Layout title={caseStudy.title || "Case Study"} description={caseStudy.description || ""}>
   <section class="section publications-gallery">
     <div class="container pg-shell">
       <header class="pg-head">
@@ -46,9 +50,21 @@ const relatedProjects = Array.isArray(caseStudy.relatedProjects)
         <h1 class="ch fade">{caseStudy.title || slug}</h1>
 
         <dl class="project-meta" aria-label="Case study metadata">
-          {caseStudy.type && <div><dd>{caseStudy.type}</dd></div>}
-          {caseStudy.status && <div><dd>{caseStudy.status}</dd></div>}
-          {dateLabel && <div><dd>{dateLabel}</dd></div>}
+          {caseStudy.type && (
+            <div>
+              <dd>{caseStudy.type}</dd>
+            </div>
+          )}
+          {caseStudy.status && (
+            <div>
+              <dd>{caseStudy.status}</dd>
+            </div>
+          )}
+          {dateLabel && (
+            <div>
+              <dd>{dateLabel}</dd>
+            </div>
+          )}
         </dl>
       </header>
 
@@ -86,7 +102,7 @@ const relatedProjects = Array.isArray(caseStudy.relatedProjects)
             <section class="sidebar-block">
               <h2>Tools</h2>
               <ul class="chip-list">
-                {tools.map((tool) => <li>{tool}</li>)}
+                {tools.map((tool: string) => <li>{tool}</li>)}
               </ul>
             </section>
           )}
@@ -95,7 +111,7 @@ const relatedProjects = Array.isArray(caseStudy.relatedProjects)
             <section class="sidebar-block">
               <h2>Features</h2>
               <ul class="bullet-list">
-                {features.map((feature) => <li>{feature}</li>)}
+                {features.map((feature: string) => <li>{feature}</li>)}
               </ul>
             </section>
           )}
@@ -104,7 +120,7 @@ const relatedProjects = Array.isArray(caseStudy.relatedProjects)
             <section class="sidebar-block">
               <h2>Tags</h2>
               <ul class="chip-list">
-                {tags.map((tag) => <li>{tag}</li>)}
+                {tags.map((tag: string) => <li>{tag}</li>)}
               </ul>
             </section>
           )}
@@ -113,11 +129,41 @@ const relatedProjects = Array.isArray(caseStudy.relatedProjects)
             <section class="sidebar-block">
               <h2>Links</h2>
               <ul class="link-list">
-                {links.github && <li><a href={links.github} target="_blank" rel="noreferrer">GitHub</a></li>}
-                {links.live && <li><a href={links.live} target="_blank" rel="noreferrer">Live site</a></li>}
-                {links.demo && <li><a href={links.demo} target="_blank" rel="noreferrer">Demo</a></li>}
-                {links.docs && <li><a href={links.docs} target="_blank" rel="noreferrer">Docs</a></li>}
-                {links.video && <li><a href={links.video} target="_blank" rel="noreferrer">Video</a></li>}
+                {links.github && (
+                  <li>
+                    <a href={links.github} target="_blank" rel="noreferrer">
+                      GitHub
+                    </a>
+                  </li>
+                )}
+                {links.live && (
+                  <li>
+                    <a href={links.live} target="_blank" rel="noreferrer">
+                      Live site
+                    </a>
+                  </li>
+                )}
+                {links.demo && (
+                  <li>
+                    <a href={links.demo} target="_blank" rel="noreferrer">
+                      Demo
+                    </a>
+                  </li>
+                )}
+                {links.docs && (
+                  <li>
+                    <a href={links.docs} target="_blank" rel="noreferrer">
+                      Docs
+                    </a>
+                  </li>
+                )}
+                {links.video && (
+                  <li>
+                    <a href={links.video} target="_blank" rel="noreferrer">
+                      Video
+                    </a>
+                  </li>
+                )}
               </ul>
             </section>
           )}
@@ -126,10 +172,10 @@ const relatedProjects = Array.isArray(caseStudy.relatedProjects)
             <section class="sidebar-block">
               <h2>Related projects</h2>
               <ul class="link-list">
-                {relatedProjects.map((project) =>
+                {relatedProjects.map((project: any) =>
                   project ? (
                     <li>
-                      <a href={`/projects/${project.id.split("/").pop()?.replace(/\.[^.]+$/, "")}/`}>
+                      <a href={`/projects/${project.id}/`}>
                         {project.data.title}
                       </a>
                     </li>
@@ -142,7 +188,7 @@ const relatedProjects = Array.isArray(caseStudy.relatedProjects)
 
         <article class="project-content">
           <div class="project-body">
-            <Content />
+            {Content && <Content />}
           </div>
 
           <section class="sidebar-block">

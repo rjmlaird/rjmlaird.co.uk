@@ -1,10 +1,11 @@
 ---
 interface Article {
-  id?: number;
+  id?: number | string;
   title?: string;
   excerpt?: string;
   publication?: string;
-  date?: string;
+  startDate?: string;
+  date?: string; // Added to support both naming conventions safely
   topic?: string;
   image?: string;
   url?: string;
@@ -23,7 +24,7 @@ const number = data.id ? String(data.id).padStart(2, "0") : "";
 const title = data.title ?? "Untitled";
 const excerpt = data.excerpt ?? "";
 const publication = data.publication ?? "";
-const date = data.date ?? "";
+const startDate = data.startDate ?? data.date ?? "";
 const topic = data.topic ?? "";
 const link = data.url || "#";
 
@@ -70,7 +71,7 @@ const fallbackThumb = data.image || (videoId ? `https://i.ytimg.com/vi/${videoId
   <div class="pm">
     <div class="pub-top">
       <h3>{title}</h3>
-      {date && <span class="date">{date}</span>}
+      {startDate && <span class="startDate">{startDate}</span>}
     </div>
 
     {publication && <div class="client-badge">{publication}</div>}
@@ -164,7 +165,7 @@ const fallbackThumb = data.image || (videoId ? `https://i.ytimg.com/vi/${videoId
     line-height: 1.15;
   }
 
-  .date {
+  .startDate {
     font-size: 0.9rem;
     opacity: 0.72;
   }

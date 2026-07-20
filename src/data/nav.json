@@ -1,25 +1,9 @@
 [
-  { "id": "about", "label": "About" },
-  {
-    "id": "work",
-    "label": "Work",
-    "children": [
-      { "id": "projects", "label": "Projects" },
-      { "id": "case-studies", "label": "Case Studies" },
-      { "id": "articles", "label": "Articles" },
-      { "id": "research", "label": "Research" },
-      { "id": "initiatives", "label": "Initiatives" }
-    ]
-  },
-  {
-    "id": "services",
-    "label": "Services",
-    "children": [
-      { "id": "teaching", "label": "Teaching" },
-      { "id": "coaching", "label": "Coaching" },
-      { "id": "mentoring", "label": "Mentoring" }
-    ]
-  },
-  { "id": "blog", "label": "Blog" },
-  { "id": "contact", "label": "Contact" }
+  { "id": "#projects", "label": "Projects" },
+  { "id": "#blog", "label": "Blog" },
+  { "id": "#initiatives", "label": "Initiatives" },
+  { "id": "#story", "label": "My Story" },
+  { "id": "#services", "label": "Services" },
+  { "id": "#about", "label": "About" },
+  { "id": "#contact", "label": "Contact" }
 ]

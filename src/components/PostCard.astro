@@ -1,0 +1,109 @@
+---
+// src/components/PostCard.astro
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import CategoryBadge from './CategoryBadge.astro';
+import { getReadingTime } from '../utils/readingTime';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  featured?: boolean;
+}
+const { post, featured = false } = Astro.props;
+const { title, description, pubDate, category, heroImage, heroAlt } = post.data;
+const readingTime = getReadingTime(post.body || '');
+const safeCategory = Array.isArray(category) ? category[0] || '' : category;
+
+const imageSrc = typeof heroImage === 'string' ? heroImage : heroImage?.src;
+const imageAlt = (heroImage && typeof heroImage === 'object' && 'alt' in heroImage ? (heroImage as any).alt : null) || heroAlt || title || "Post thumbnail";
+---
+
+<a href={`/blog/${post.id}`} class:list={['post-card', { featured }]}>
+  {imageSrc && (
+    <Image
+      src={imageSrc}
+      alt={imageAlt}
+      width={featured ? 800 : 400}
+      height={featured ? 450 : 225}
+      class="thumb"
+    />
+  )}
+  <div class="body">
+    {safeCategory && <CategoryBadge category={safeCategory} as="span" />}
+    <h3>{title}</h3>
+    {description && <p class="description">{description}</p>}
+    <div class="footer">
+      <time datetime={pubDate.toISOString()}>
+        {pubDate.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}
+      </time>
+      {readingTime && <span>· {readingTime}</span>}
+    </div>
+  </div>
+</a>
+
+<style>
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .post-card:hover {
+    border-color: var(--color-accent, #3949ab);
+    transform: translateY(-2px);
+  }
+  .thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+  .body {
+    padding: 1.1rem 1.2rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+  .featured h3 {
+    font-size: 1.5rem;
+  }
+  .description {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-muted, #666);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .footer {
+    font-size: 0.78rem;
+    color: var(--color-text-muted, #666);
+    margin-top: 0.3rem;
+  }
+
+  .featured {
+    grid-column: 1 / -1;
+  }
+  @media (min-width: 700px) {
+    .featured {
+      flex-direction: row;
+    }
+    .featured .thumb {
+      width: 55%;
+      aspect-ratio: auto;
+    }
+    .featured .body {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+</style>

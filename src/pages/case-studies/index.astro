@@ -2,8 +2,13 @@
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
-const caseStudy = (await getCollection("caseStudy", ({ data }) => data.draft !== true))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const caseStudies = (
+  await getCollection("caseStudy", ({ data }) => data.draft !== true)
+).sort((a, b) => {
+  const aDate = a.data.startDate?.valueOf() ?? 0;
+  const bDate = b.data.startDate?.valueOf() ?? 0;
+  return bDate - aDate;
+});
 ---
 
 <Layout>
@@ -27,8 +32,9 @@ const caseStudy = (await getCollection("caseStudy", ({ data }) => data.draft !==
       </header>
 
       <div class="pg-grid">
-        {caseStudy.map((entry) => {
-          const slug = entry.id.split("/").pop()?.replace(/\.[^.]+$/, "") ?? entry.id;
+        {caseStudies.map((entry) => {
+          const slug =
+            entry.id.split("/").pop()?.replace(/\.[^.]+$/, "") ?? entry.id;
 
           return (
             <article class="publication-item">

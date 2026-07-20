@@ -5,7 +5,7 @@ description: "A short summary of the project."
 excerpt: "A slightly longer excerpt for cards and previews."
 date: 2026-07-07
 featured: true
-category: "Space"
+category: ["Space"]
 tags:
   - Space
   - Science policy

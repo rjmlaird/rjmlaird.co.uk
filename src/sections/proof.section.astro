@@ -1,0 +1,92 @@
+---
+const proofPoints = [
+  { label: "Strategy", value: "Commercial thinking", tone: "teal" },
+  { label: "Neurodiversity", value: "Inclusive communication", tone: "violet" },
+  { label: "Space sector", value: "Science-led storytelling", tone: "amber" },
+  { label: "Sustainability", value: "ESG and purpose-led work", tone: "sky" },
+];
+---
+
+<section class="proof-strip" aria-labelledby="proof-strip-title">
+  <div class="proof-strip__inner">
+    <h2 id="proof-strip-title" class="sr-only">Key areas</h2>
+
+    <ul class="proof-strip__row">
+      {proofPoints.map((point) => (
+        <li class={`proof-pill proof-pill--${point.tone}`}>
+          <span class="proof-pill__label">{point.label}</span>
+          <span class="proof-pill__value">{point.value}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+
+<style>
+.proof-strip {
+  padding: 0.75rem 0 1rem;
+}
+
+.proof-strip__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.proof-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--bd);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+    var(--card);
+  white-space: nowrap;
+}
+
+.proof-pill::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: var(--teal);
+  box-shadow: 0 0 0 2px rgba(0, 194, 168, 0.12);
+}
+
+.proof-pill--violet::before { background: var(--violet); box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.12); }
+.proof-pill--amber::before { background: var(--amber); box-shadow: 0 0 0 2px rgba(245, 166, 35, 0.12); }
+.proof-pill--sky::before { background: var(--sky); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.12); }
+
+.proof-pill__label {
+  font-family: var(--D);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--w);
+}
+
+.proof-pill__value {
+  font-family: var(--B);
+  font-size: 0.8rem;
+  color: var(--mb);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+</style>

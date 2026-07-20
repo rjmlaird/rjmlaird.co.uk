@@ -1,22 +1,32 @@
 ---
 import socials from "../data/socials.json";
 import { Icon } from "astro-icon/components";
+
+interface SocialItem {
+  key?: string;
+  url: string;
+  label?: string;
+  name?: string;
+  icon?: string;
+}
+
+const safeSocials: SocialItem[] = Array.isArray(socials) ? socials : [];
 ---
 
 <section class="socials">
   <ul class="socials__list" role="list">
-    {socials.map((item) => (
+    {safeSocials.map((item) => (
       <li class="socials__item">
         <a
-          class={`socials__link socials__link--${item.key}`}
+          class={`socials__link ${item.key ? `socials__link--${item.key}` : ''}`}
           href={item.url}
-          aria-label={item.label}
+          aria-label={item.label || item.name || "Social link"}
           target="_blank"
           rel="noreferrer noopener"
-          title={item.name}
+          title={item.name || ""}
         >
           <span class="socials__icon" aria-hidden="true">
-            <Icon name={item.icon} class="socials__svg" />
+            {item.icon && <Icon name={item.icon} class="socials__svg" />}
           </span>
         </a>
       </li>

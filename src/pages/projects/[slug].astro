@@ -19,12 +19,13 @@ const slug = Astro.params.slug;
 const project = entry.data;
 const { Content } = await render(entry);
 
-const dateLabel = project.date
-  ? new Date(project.date).toLocaleDateString("en-GB", {
+const dateLabel = project.startDate
+  ? new Date(project.startDate).toLocaleDateString("en-GB", {
       year: "numeric",
       month: "long",
     })
   : "";
+
 
 const tools = Array.isArray(project.tools_tech) ? project.tools_tech : [];
 const features = Array.isArray(project.features) ? project.features : [];

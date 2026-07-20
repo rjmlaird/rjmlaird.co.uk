@@ -4,7 +4,10 @@ import { getCollection } from "astro:content";
 import ProjectCard from "../../components/Projects/ProjectCard.astro";
 
 const entries = (await getCollection("projects", ({ data }) => data.draft !== true))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort(
+    (a, b) =>
+      (b.data.startDate?.valueOf() ?? 0) - (a.data.startDate?.valueOf() ?? 0)
+  );
 
 const typeList = [...new Set(entries.map((entry) => entry.data.type).filter(Boolean))].sort();
 const statusList = [...new Set(entries.map((entry) => entry.data.status).filter(Boolean))].sort();

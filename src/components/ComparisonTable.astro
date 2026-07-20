@@ -1,0 +1,32 @@
+---
+export interface Props {
+  leftTitle?: string;
+  rightTitle?: string;
+  rows: { left: string; right: string }[];
+}
+
+const {
+  leftTitle = "Old approach",
+  rightTitle = "2026 approach",
+  rows,
+} = Astro.props as Props;
+---
+
+<div class="not-prose my-8 overflow-hidden rounded-2xl border border-slate-200">
+  <table class="w-full border-collapse text-left text-sm">
+    <thead class="bg-slate-100">
+      <tr>
+        <th class="border-b border-slate-200 px-4 py-3 font-semibold">{leftTitle}</th>
+        <th class="border-b border-slate-200 px-4 py-3 font-semibold">{rightTitle}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row, i) => (
+        <tr class={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+          <td class="border-b border-slate-200 px-4 py-3 align-top">{row.left}</td>
+          <td class="border-b border-slate-200 px-4 py-3 align-top">{row.right}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

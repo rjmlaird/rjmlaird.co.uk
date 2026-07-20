@@ -1,0 +1,244 @@
+---
+// src/pages/analytics/index.astro
+// SSR page — runs on Cloudflare Pages, behind the Basic Auth middleware in
+// functions/_middleware.ts. The Plausible API key stays server-side; it is
+// never sent to the browser.
+export const prerender = false;
+
+const PLAUSIBLE_API_KEY = import.meta.env.PLAUSIBLE_API_KEY as string | undefined;
+const SITE_ID = "rjmlaird.co.uk";
+
+type Stats = {
+  visitors: number;
+  pageviews: number;
+  bounceRate: number;
+  visitDuration: number;
+  topPages: { page: string; visitors: number }[];
+  topSources: { source: string; visitors: number }[];
+};
+
+// Mock fallback so the page renders sensibly before PLAUSIBLE_API_KEY is set.
+const MOCK_STATS: Stats = {
+  visitors: 4218,
+  pageviews: 11940,
+  bounceRate: 41,
+  visitDuration: 132,
+  topPages: [
+    { page: "/", visitors: 1820 },
+    { page: "/labs", visitors: 640 },
+    { page: "/cv", visitors: 512 },
+    { page: "/dashboards/green-hosting", visitors: 398 },
+    { page: "/blog", visitors: 301 },
+  ],
+  topSources: [
+    { source: "Direct", visitors: 1690 },
+    { source: "Google", visitors: 1240 },
+    { source: "LinkedIn", visitors: 610 },
+    { source: "GitHub", visitors: 340 },
+    { source: "Bluesky", visitors: 180 },
+  ],
+};
+
+async function fetchPlausibleStats(): Promise<Stats> {
+  if (!PLAUSIBLE_API_KEY) return MOCK_STATS;
+
+  try {
+    // Aggregate summary — visitors, pageviews, bounce rate, visit duration
+    const aggregateRes = await fetch("https://plausible.io/api/v2/query", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${PLAUSIBLE_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        site_id: SITE_ID,
+        metrics: ["visitors", "pageviews", "bounce_rate", "visit_duration"],
+        date_range: "30d",
+      }),
+    });
+    if (!aggregateRes.ok) throw new Error(`Plausible API error: ${aggregateRes.status}`);
+    const aggregate = await aggregateRes.json();
+    const [visitors, pageviews, bounceRate, visitDuration] = aggregate.results[0].metrics;
+
+    // Top pages
+    const pagesRes = await fetch("https://plausible.io/api/v2/query", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${PLAUSIBLE_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        site_id: SITE_ID,
+        metrics: ["visitors"],
+        date_range: "30d",
+        dimensions: ["event:page"],
+        order_by: [["visitors", "desc"]],
+        pagination: { limit: 5 },
+      }),
+    });
+    const pagesJson = await pagesRes.json();
+    const topPages = pagesJson.results.map((r: any) => ({ page: r.dimensions[0], visitors: r.metrics[0] }));
+
+    // Top sources
+    const sourcesRes = await fetch("https://plausible.io/api/v2/query", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${PLAUSIBLE_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        site_id: SITE_ID,
+        metrics: ["visitors"],
+        date_range: "30d",
+        dimensions: ["visit:source"],
+        order_by: [["visitors", "desc"]],
+        pagination: { limit: 5 },
+      }),
+    });
+    const sourcesJson = await sourcesRes.json();
+    const topSources = sourcesJson.results.map((r: any) => ({ source: r.dimensions[0] || "Direct", visitors: r.metrics[0] }));
+
+    return { visitors, pageviews, bounceRate, visitDuration, topPages, topSources };
+  } catch (err) {
+    console.error("Plausible fetch failed, falling back to mock data:", err);
+    return MOCK_STATS;
+  }
+}
+
+const stats = await fetchPlausibleStats();
+const usingMock = !PLAUSIBLE_API_KEY;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analytics — rjmlaird.co.uk</title>
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div>
+          <div class="eyebrow">RJMLAIRD · TRAFFIC</div>
+          <h1>Site analytics</h1>
+        </div>
+        <div class="updated">Last 30 days{usingMock ? " · mock data (set PLAUSIBLE_API_KEY)" : ""}</div>
+      </header>
+
+      <section class="stat-rail">
+        <div class="stat-card">
+          <div class="stat-label">Visitors</div>
+          <div class="stat-value">{stats.visitors.toLocaleString()}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pageviews</div>
+          <div class="stat-value">{stats.pageviews.toLocaleString()}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Bounce rate</div>
+          <div class="stat-value">{stats.bounceRate}%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg. visit duration</div>
+          <div class="stat-value">{Math.floor(stats.visitDuration / 60)}m {stats.visitDuration % 60}s</div>
+        </div>
+      </section>
+
+      <section class="columns">
+        <div>
+          <h2>Top pages</h2>
+          <div class="list">
+            {stats.topPages.map((p) => (
+              <div class="row">
+                <span class="row-label">{p.page}</span>
+                <span class="row-value">{p.visitors.toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h2>Top sources</h2>
+          <div class="list">
+            {stats.topSources.map((s) => (
+              <div class="row">
+                <span class="row-label">{s.source}</span>
+                <span class="row-value">{s.visitors.toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <footer>Password-protected via Cloudflare Pages Functions Basic Auth · data via Plausible Stats API</footer>
+    </div>
+
+    <style>
+      :root {
+        --bg: #0b1524;
+        --surface: #131f33;
+        --border: #1e2d44;
+        --text: #e8edf4;
+        --muted: #8b99ad;
+        --accent: #4fd1ae;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        font-family: 'Inter', system-ui, sans-serif;
+        color: var(--text);
+      }
+      .page { max-width: 960px; margin: 0 auto; padding: 40px 24px; }
+      .header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 24px;
+        margin-bottom: 40px;
+      }
+      .eyebrow {
+        color: var(--accent);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        margin-bottom: 4px;
+      }
+      h1 { font-size: 28px; margin: 0; letter-spacing: -0.01em; }
+      .updated { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+      .stat-rail {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 16px;
+        margin-bottom: 48px;
+      }
+      .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 14px 16px;
+      }
+      .stat-label { color: var(--muted); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; }
+      .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; }
+      .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
+      @media (max-width: 640px) { .columns { grid-template-columns: 1fr; } }
+      h2 { font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+      .list { display: flex; flex-direction: column; gap: 8px; }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+      .row-label { color: var(--text); }
+      .row-value { color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+      footer { color: var(--muted); font-size: 11px; border-top: 1px solid var(--border); padding-top: 20px; }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,75 @@
+---
+// src/components/RelatedPosts.astro
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts?: CollectionEntry<'blog'>[];
+}
+
+const { posts = [] } = Astro.props;
+const safePosts = Array.isArray(posts) ? posts : [];
+---
+
+{safePosts.length > 0 && (
+  <section class="related" aria-labelledby="related-heading">
+    <h2 id="related-heading">Related posts</h2>
+    <div class="grid">
+      {safePosts.map((post) => {
+        const { heroImage, heroAlt, title } = post.data;
+        const imageSrc = typeof heroImage === 'string' ? heroImage : heroImage?.src;
+        const imageAlt = (heroImage && typeof heroImage === 'object' && 'alt' in heroImage ? (heroImage as any).alt : null) || heroAlt || title || "Related post image";
+
+        return (
+          <a href={`/blog/${post.id}`} class="card">
+            {imageSrc && (
+              <Image 
+                src={imageSrc} 
+                alt={imageAlt} 
+                width={320} 
+                height={180} 
+              />
+            )}
+            <span class="title">{title}</span>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+)}
+
+<style>
+  .related {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border, #e5e5e5);
+  }
+  h2 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+  .card {
+    text-decoration: none;
+    color: inherit;
+  }
+  .card :global(img) {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+  }
+  .title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text, #1a1a1a);
+  }
+  .card:hover .title {
+    color: var(--color-accent, #3949ab);
+  }
+</style>

@@ -5,9 +5,6 @@
     "name": {
       "type": "string"
     },
-    "author": {
-      "type": "string"
-    },
     "bio": {
       "type": "string"
     },

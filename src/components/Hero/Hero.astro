@@ -1,16 +1,38 @@
 ---
+// src/components/Hero/Hero.astro
 import OrbitGraphic from "./OrbitGraphic.astro";
-import Credentials from "./Credentials.astro";
 
-interface Props {
-  title: string;
-  surname: string;
-  tagline: string;
-  description: string;
-  credentials: string[];
+interface Profile {
+  name?: string;
+  biography?: string;
+  summary?: string;
+  tags?: string[];
+  portfolioLinks?: string[];
+  headline?: string;
+  location?: string;
+  email?: string;
+  role?: string;
+  credentials?: string[];
 }
 
-const { title, surname, tagline, description, credentials } = Astro.props;
+interface Props {
+  profile?: Profile | null;
+  title?: string;
+  surname?: string;
+  tagline?: string;
+  description?: string;
+}
+
+const { 
+  profile, 
+  title = "Ryan", 
+  surname = "Laird", 
+  tagline = "Senior Business Development & Commercial Partnerships", 
+  description = "Specializing in space technology ecosystems, sustainability policy mapping, and commercial open-source infrastructure." 
+} = Astro.props;
+
+// Ensure we have access to the data
+const credentials: string[] = profile?.credentials ?? [];
 ---
 
 <section id="hero">
@@ -25,9 +47,16 @@ const { title, surname, tagline, description, credentials } = Astro.props;
     <span class="d">{surname}</span>
   </h1>
 
-  <p class="creds">
-    <Credentials credentials={credentials} />
-  </p>
+  {credentials.length > 0 && (
+    <p class="credentials">
+      {credentials.map((cred: string, index: number) => (
+        <>
+          <span>{cred}</span>
+          {index < credentials.length - 1 && " · "}
+        </>
+      ))}
+    </p>
+  )}
 
   <p class="hp">{description}</p>
 
@@ -37,3 +66,13 @@ const { title, surname, tagline, description, credentials } = Astro.props;
     <a href="#journalism" class="bo">Writing</a>
   </div>
 </section>
+
+<style>
+.credentials {
+  margin-top: 0.5em;
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+</style>

@@ -1,4 +1,5 @@
 ---
+// src/pages/authors/[author].astro
 import Layout from "../../layouts/Layout.astro";
 import { getCollection, render, type CollectionEntry } from "astro:content";
 
@@ -20,20 +21,27 @@ const { Content } = await render(author);
 const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .filter((post) => {
-    const postAuthor = post.data.author;
-    return typeof postAuthor === "string"
-      ? postAuthor.toLowerCase() === author.data.name.toLowerCase() ||
-          postAuthor.toLowerCase() === author.id.toLowerCase()
-      : false;
+    const postAuthor: any = post.data.author;
+    if (!postAuthor) return false;
+    if (typeof postAuthor === "string") {
+      return (
+        postAuthor.toLowerCase() === author.data.name.toLowerCase() ||
+        postAuthor.toLowerCase() === author.id.toLowerCase()
+      );
+    }
+    if (typeof postAuthor === "object" && postAuthor !== null && "id" in postAuthor) {
+      return (postAuthor as { id: string }).id.toLowerCase() === author.id.toLowerCase();
+    }
+    return false;
   })
   .sort((a, b) => {
-    const aDate = a.data.date instanceof Date ? a.data.date.getTime() : 0;
-    const bDate = b.data.date instanceof Date ? b.data.date.getTime() : 0;
+    const aDate = a.data.pubDate instanceof Date ? a.data.pubDate.getTime() : 0;
+    const bDate = b.data.pubDate instanceof Date ? b.data.pubDate.getTime() : 0;
     return bDate - aDate;
   });
 ---
 
-<Layout>
+<Layout title={author.data.name} description={author.data.bio ?? ''}>
   <article class="author-page">
     <header class="container author-head">
       <p class="eyebrow">Author</p>
@@ -53,7 +61,7 @@ const posts = (await getCollection("blog"))
           {posts.map((post) => (
             <li>
               <a href={`/blog/${post.id}`}>{post.data.title ?? post.id}</a>
-              {post.data.excerpt ? <p>{post.data.excerpt}</p> : null}
+              {post.data.description ? <p>{post.data.description}</p> : null}
             </li>
           ))}
         </ul>

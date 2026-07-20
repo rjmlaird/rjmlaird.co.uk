@@ -33,8 +33,7 @@ const profile = profileData as ProfileData;
 
 const headline = profile.headline?.trim() ?? "";
 const biography = Array.isArray(profile.biography) ? profile.biography : [];
-const credentials = profile.credentials?.trim() ? [profile.credentials.trim()] : [];
-const tags = Array.isArray(profile.interests) ? profile.interests : [];
+const credentials = profile.credentials?.trim() ?? "";
 const links = Array.isArray(profile.portfolioLinks)
   ? profile.portfolioLinks
   : Array.isArray(profile.socials)
@@ -48,36 +47,26 @@ const contact = Array.isArray(profile.contact) ? profile.contact : [];
 
   <div class="about-grid">
     <div>
-      <h2 id="about-title" class="ah fade">
+      <h2 id="about-title" class="ah fade in">
         {profile.name ?? ""}
         <br />
         <em>{headline}</em>
       </h2>
 
       {biography.length > 0 && (
-        <div class="ab fade">
+        <div class="ab fade in">
           {biography.map((paragraph: string) => <p>{paragraph}</p>)}
         </div>
       )}
 
-      {credentials.length > 0 && (
-        <div class="cred-row fade" aria-label="Credentials">
-          {credentials.map((c: string) => (
-            <span class="cred-badge cb-m">{c}</span>
-          ))}
-        </div>
-      )}
-
-      {tags.length > 0 && (
-        <div class="cred-row fade" aria-label="Topics">
-          {tags.map((tag: string) => (
-            <span class="cred-badge cb-m">{tag}</span>
-          ))}
+      {credentials && (
+        <div class="cred-row fade in" aria-label="Credentials">
+          <span class="cred-badge cb-m">{credentials}</span>
         </div>
       )}
     </div>
 
-    <aside class="sp fade" aria-label="Find me elsewhere">
+    <aside class="sp fade in" aria-label="Find me elsewhere">
       <div class="sp-h">Find me elsewhere</div>
 
       {links.map((link: ProfileLink) => (

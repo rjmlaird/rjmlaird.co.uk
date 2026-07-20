@@ -1,0 +1,138 @@
+---
+const items = [
+  {
+    title: "Research",
+    description: "Exploring space, science communication, and sustainability through data, writing, and curated insight.",
+    href: "/research",
+    accent: "teal",
+    icon: "◌",
+  },
+  {
+    title: "Initiatives",
+    description: "Building and supporting mission-led projects that connect community, creativity, and impact.",
+    href: "/initiatives",
+    accent: "violet",
+    icon: "◐",
+  },
+  {
+    title: "Teaching",
+    description: "Sharing knowledge through workshops, talks, and practical guidance across digital and science topics.",
+    href: "/teaching",
+    accent: "sky",
+    icon: "✦",
+  },
+  {
+    title: "Mentoring",
+    description: "Helping people and teams grow with clearer thinking, better systems, and useful feedback.",
+    href: "/mentoring",
+    accent: "green",
+    icon: "↗",
+  },
+];
+---
+
+<section id="initiatives">
+  <div class="container pg-shell">
+    <p class="sl">Research & Initiatives</p>
+
+    <div class="ri-grid">
+      {items.map((item) => (
+        <a class={`ri-card ri-card--${item.accent}`} href={item.href}>
+          <span class="ri-card__icon" aria-hidden="true">{item.icon}</span>
+          <span class="ri-card__title">{item.title}</span>
+          <span class="ri-card__desc">{item.description}</span>
+          <span class="ri-card__link">Explore</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+.ri-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.ri-card {
+  position: relative;
+  display: grid;
+  gap: 0.55rem;
+  padding: 1.15rem;
+  border: 1px solid var(--bd);
+  border-radius: 0.9rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+    var(--card);
+  text-decoration: none;
+  color: inherit;
+  min-height: 11rem;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.ri-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--teal);
+}
+
+.ri-card--violet::before { background: var(--violet); }
+.ri-card--sky::before { background: var(--sky); }
+.ri-card--green::before { background: var(--green); }
+
+.ri-card:hover,
+.ri-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--bm);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18);
+}
+
+.ri-card__icon {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--bm);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 1rem;
+}
+
+.ri-card__title {
+  font-family: var(--D);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ri-card__desc {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--mb);
+}
+
+.ri-card__link {
+  margin-top: auto;
+  font-family: var(--D);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--m);
+}
+
+@media (max-width: 960px) {
+  .ri-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .ri-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>

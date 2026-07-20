@@ -5,7 +5,7 @@ title: Build4Space
 type: featured
 status: completed
 description: A short summary of what this project does.
-date: 2026-07-01
+startDate: 2026-07-01
 tools_tech:
   - TypeScript
   - Astro

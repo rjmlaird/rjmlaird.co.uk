@@ -1,0 +1,15 @@
+---
+export interface Props {
+  quote?: string;
+  cite?: string;
+}
+
+const { quote = "", cite } = Astro.props as Props;
+---
+
+<figure class="not-prose my-8 border-l-4 border-sky-500 bg-slate-50 px-5 py-4">
+  <blockquote class="text-lg leading-8 text-slate-900">
+    “{quote}”
+  </blockquote>
+  {cite && <figcaption class="mt-3 text-sm text-slate-500">— {cite}</figcaption>}
+</figure>

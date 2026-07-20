@@ -1,10 +1,11 @@
 ---
+// src/sections/blog.section.astro
 import { getCollection } from "astro:content";
 import BlogCard from "../components/Publications/BlogCard.astro";
 
 const entries = (await getCollection("blog"))
   .filter((entry) => !entry.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <section id="blog">
@@ -17,7 +18,7 @@ const entries = (await getCollection("blog"))
     <div class="pg-grid" id="blogGrid">
       {entries.slice(0, 3).map((entry) => (
         <div class="publication-item">
-          <BlogCard post={entry} />
+          <BlogCard post={entry as any} />
         </div>
       ))}
     </div>

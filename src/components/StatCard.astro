@@ -1,0 +1,15 @@
+---
+export interface Props {
+  label: string;
+  value: string | number;
+  note?: string;
+}
+
+const { label, value, note } = Astro.props as Props;
+---
+
+<div class="not-prose rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+  <p class="text-sm font-medium text-slate-500">{label}</p>
+  <p class="mt-2 text-3xl font-bold tracking-tight text-slate-950">{value}</p>
+  {note && <p class="mt-2 text-sm leading-6 text-slate-600">{note}</p>}
+</div>

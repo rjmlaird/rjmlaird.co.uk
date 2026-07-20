@@ -1,44 +1,65 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import { getCollection, render, type CollectionEntry } from "astro:content";
+// src/pages/blog/[slug].astro
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+
+import FactBox from '../../components/FactBox.astro';
+import Callout from '../../components/Callout.astro';
+import QuoteBlock from '../../components/QuoteBlock.astro';
+import Figure from '../../components/Figure.astro';
+import ComparisonTable from '../../components/ComparisonTable.astro';
+import Checklist from '../../components/Checklist.astro';
+import StatCard from '../../components/StatCard.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-
+  const posts = await getCollection('blog');
   return posts
-    .filter((post) => !post.data.draft)
+    .filter((post) => post.id) 
     .map((post) => ({
-      params: { slug: String(post.id) },
+      params: { slug: post.id },
       props: { post },
     }));
 }
 
 const { post } = Astro.props as {
-  post: CollectionEntry<"blog">;
+  post: CollectionEntry<'blog'>;
 };
+if (!post) return Astro.redirect('/404');
 
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 
-const title = post.data.title ?? "Untitled";
-const excerpt = post.data.excerpt ?? "";
-const date = post.data.date ? new Date(post.data.date) : null;
+const relatedPosts = allPosts
+  .filter((p) => p.id !== post.id)
+  .map((p) => {
+    const pTags = p.data.tags || [];
+    const postTags = post.data.tags || [];
+    
+    const sharedTags = pTags.filter((t) => postTags.includes(t)).length;
+    const pCat = p.data.category || [];
+    const postCat = post.data.category || [];
+    const sameCategory = pCat.some((c) => postCat.includes(c)) ? 1 : 0;
+
+    return { post: p, score: sharedTags * 2 + sameCategory };
+  })
+  .filter((p) => p.score > 0)
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 3)
+  .map((p) => p.post);
+
+const components = { 
+  Image,
+  FactBox, 
+  Callout, 
+  QuoteBlock, 
+  Figure, 
+  ComparisonTable, 
+  Checklist, 
+  StatCard 
+};
 ---
 
-<Layout>
-  <article class="blog-post">
-    <header class="post-head container">
-      <p class="eyebrow">Blog</p>
-      <h1>{title}</h1>
-      {excerpt ? <p class="lede">{excerpt}</p> : null}
-      {date && !Number.isNaN(date.getTime()) ? (
-        <time datetime={date.toISOString()}>
-          {date.toLocaleDateString("en-GB")}
-        </time>
-      ) : null}
-    </header>
-
-    <div class="container post-body">
-      <Content />
-    </div>
-  </article>
+<Layout {...{ post, headings, relatedPosts }}>
+  <Content components={components} />
 </Layout>
