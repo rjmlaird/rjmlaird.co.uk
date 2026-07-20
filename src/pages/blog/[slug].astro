@@ -51,6 +51,7 @@ const relatedPosts = allPosts
   .map((p) => p.post);
 
 const components = { 
+  image: Image,
   Image,
   FactBox, 
   Callout, 
@@ -63,5 +64,10 @@ const components = {
 ---
 
 <Layout {...{ post, headings, relatedPosts }}>
+  {post.data.heroImage && (
+    <div class="hero-image">
+      <Image src={post.data.heroImage} alt={post.data.heroAlt ?? post.data.title ?? ""} />
+    </div>
+  )}
   <Content components={components} />
 </Layout>
