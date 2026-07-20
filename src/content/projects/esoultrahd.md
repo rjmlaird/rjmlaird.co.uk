@@ -18,11 +18,11 @@ tags:
   - web
   - example
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  live: https://www.hq.eso.org/public/announcements/ann14035/
 impact: {}
 draft: false
 caseStudy: ESO Ultra HD
 client: European Southern Observatory
+heroImage: "https://cdn.eso.org/images/screen/uhd_vixen_babak_2_cc.jpg"
+heroAlt: "High on the Chajnantor Plateau, some 5000 metres above sea level it can get extremely cold at the site of the Atacama Large Millimeter/submillimeter Array (ALMA). Babak Tafreshi, one of ESO's Photo Ambassadors and part of the ESO Ultra HD Expedition team is shown here capturing the cool cosmos. ESO/B. Tafreshi (twanight.org)"
 ---
-
