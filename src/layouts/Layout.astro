@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   title?: string;
@@ -9,6 +10,9 @@ interface Props {
   image?: string;
   noindex?: boolean;
   canonical?: string;
+  post?: CollectionEntry<'blog'> | CollectionEntry<'projects'> | CollectionEntry<'caseStudy'>;
+  headings?: { depth: number; slug: string; text: string }[];
+  relatedPosts?: CollectionEntry<'blog'>[];
 }
 
 const {
@@ -17,16 +21,23 @@ const {
   image = "/images/og-default.jpg",
   noindex = false,
   canonical,
+  post,
 } = Astro.props as Props;
 
+const resolvedTitle = post?.data.title ?? title;
+const resolvedDescription = post?.data.description ?? description;
+const postData = post?.data as any;
+const resolvedImage = postData?.heroImage?.src ?? postData?.image ?? image;
+const resolvedNoindex = postData?.noindex ?? noindex;
+
 const siteTitle = "Ryan Laird — CMktr MInstP";
-const fullTitle = title === siteTitle ? title : `${title} · ${siteTitle}`;
+const fullTitle = resolvedTitle === siteTitle ? resolvedTitle : `${resolvedTitle} · ${siteTitle}`;
 
 const baseUrl = Astro.site?.href;
 const canonicalUrl =
-  canonical ?? (baseUrl ? new URL(Astro.url.pathname, baseUrl).href : Astro.url.href);
+  canonical ?? postData?.canonical ?? (baseUrl ? new URL(Astro.url.pathname, baseUrl).href : Astro.url.href);
 
-const ogImage = baseUrl ? new URL(image, baseUrl).href : image;
+const ogImage = baseUrl ? new URL(resolvedImage, baseUrl).href : resolvedImage;
 ---
 
 <!doctype html>
@@ -36,19 +47,19 @@ const ogImage = baseUrl ? new URL(image, baseUrl).href : image;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>{fullTitle}</title>
-    <meta name="description" content={description} />
-    {noindex ? <meta name="robots" content="noindex, nofollow" /> : null}
+    <meta name="description" content={resolvedDescription} />
+    {resolvedNoindex ? <meta name="robots" content="noindex, nofollow" /> : null}
     <link rel="canonical" href={canonicalUrl} />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={resolvedDescription} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImage} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:description" content={resolvedDescription} />
     <meta name="twitter:image" content={ogImage} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
