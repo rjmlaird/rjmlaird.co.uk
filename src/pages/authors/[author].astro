@@ -1,8 +1,10 @@
 ---
-export const prerender = true;
 // src/pages/authors/[author].astro
+export const prerender = true;
+
 import Layout from "../../layouts/Layout.astro";
 import { getCollection, render, type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
   const authors = await getCollection("authors");
@@ -22,17 +24,20 @@ const { Content } = await render(author);
 const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .filter((post) => {
-    const postAuthor: any = post.data.author;
+    const postAuthor: unknown = post.data.author;
     if (!postAuthor) return false;
+
     if (typeof postAuthor === "string") {
       return (
         postAuthor.toLowerCase() === author.data.name.toLowerCase() ||
         postAuthor.toLowerCase() === author.id.toLowerCase()
       );
     }
+
     if (typeof postAuthor === "object" && postAuthor !== null && "id" in postAuthor) {
       return (postAuthor as { id: string }).id.toLowerCase() === author.id.toLowerCase();
     }
+
     return false;
   })
   .sort((a, b) => {
@@ -40,11 +45,32 @@ const posts = (await getCollection("blog"))
     const bDate = b.data.pubDate instanceof Date ? b.data.pubDate.getTime() : 0;
     return bDate - aDate;
   });
+
+// Resolve avatar as a local import from src/assets/img/person/
+let AvatarImage: any = null;
+const avatarPath = (author.data as Record<string, unknown>).avatar as string | undefined;
+
+if (avatarPath) {
+  try {
+    // Assumes avatar is just the filename, e.g. "ryan-laird.jpg"
+    AvatarImage = await import(`../../assets/img/person/${avatarPath.split("/").pop()}`);
+  } catch {
+    AvatarImage = null;
+  }
+}
 ---
 
-<Layout title={author.data.name} description={author.data.bio ?? ''}>
+<Layout title={author.data.name} description={author.data.bio ?? ""}>
   <article class="author-page">
     <header class="container author-head">
+      {AvatarImage && (
+        <div class="author-avatar">
+          <Image
+            src={AvatarImage.default ?? AvatarImage}
+            alt={(author.data as Record<string, unknown>).avatarAlt as string ?? author.data.name}
+          />
+        </div>
+      )}
       <p class="eyebrow">Author</p>
       <h1>{author.data.name}</h1>
       {author.data.role ? <p class="lede">{author.data.role}</p> : null}
