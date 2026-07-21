@@ -1,6 +1,5 @@
 ---
 // src/components/RelatedPosts.astro
-import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -17,8 +16,6 @@ const safePosts = Array.isArray(posts) ? posts : [];
     <div class="grid">
       {safePosts.map((post) => {
         const { heroImage, heroAlt, title } = post.data;
-
-        // heroImage is a string path in your schema
         const imageSrc = heroImage;
         const imageAlt = heroAlt || title || 'Related post image';
 
