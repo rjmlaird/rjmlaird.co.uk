@@ -18,21 +18,24 @@ interface Props {
 }
 
 const { post, headings = [], relatedPosts = [], body = '' } = Astro.props;
-const { 
-  title: postTitle = '', 
-  description: postDescription = '', 
-  pubDate = new Date(), 
-  updatedDate, 
-  category = '', 
-  tags = [], 
-  heroImage, 
+const {
+  title: postTitle = '',
+  description: postDescription = '',
+  excerpt,
+  pubDate = new Date(),
+  updatedDate,
+  category = '',
+  tags = [],
+  heroImage,
   heroAlt,
-  imageCredit, 
-  author: authorRef 
+  imageCredit,
+  author: authorRef,
+  canonical,
+  noindex = false,
 } = post ? post.data : ({} as any);
 
 const title = Astro.props.title || postTitle;
-const description = Astro.props.description || postDescription;
+const description = Astro.props.description || postDescription || excerpt;
 
 let authorEntry = null;
 if (authorRef && typeof authorRef === 'string') {
@@ -55,14 +58,45 @@ const safeRelatedPosts = Array.isArray(relatedPosts) ? relatedPosts : [];
 const safeCategory = Array.isArray(category) ? category[0] || '' : category;
 const safeTags = Array.isArray(tags) ? tags : [];
 
-const resolvedHeroSrc = heroImage; // string path
-const resolvedHeroAlt = heroAlt || title || "Hero image";
+const resolvedHeroSrc = heroImage;
+const resolvedHeroAlt = heroAlt || title || 'Hero image';
 const resolvedHeroCredit = imageCredit;
 ---
 
-<Layout title={title} description={description} image={typeof resolvedHeroSrc === 'string' ? resolvedHeroSrc : undefined}>
+<Layout
+  title={title}
+  description={description}
+  image={typeof resolvedHeroSrc === 'string' ? resolvedHeroSrc : undefined}
+  canonical={canonical}
+  noindex={noindex}
+>
+  <Fragment slot="head">
+    {post && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: title,
+        description,
+        image: resolvedHeroSrc ? [resolvedHeroSrc] : undefined,
+        datePublished: pubDate?.toISOString?.(),
+        dateModified: (updatedDate ?? pubDate)?.toISOString?.(),
+        author: { '@type': 'Person', name: author.name || 'Ryan Laird' },
+        mainEntityOfPage: { '@type': 'WebPage', '@id': post.id ? `/blog/${post.id}/` : undefined },
+        keywords: Array.isArray(safeTags) ? safeTags.join(', ') : undefined,
+      })} is:inline />
+    )}
+  </Fragment>
+
   <main id="content">
     <article class="post">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li aria-current="page">{title}</li>
+        </ol>
+      </nav>
+
       <header class="post-header">
         <div class="title-wrap">
           <h1>{title}</h1>
@@ -81,13 +115,13 @@ const resolvedHeroCredit = imageCredit;
         </figure>
       )}
 
-      <PostMeta 
-        author={author} 
-        pubDate={pubDate} 
-        updatedDate={updatedDate} 
-        readingTime={readingTime} 
-        category={safeCategory} 
-        tags={safeTags} 
+      <PostMeta
+        author={author}
+        pubDate={pubDate}
+        updatedDate={updatedDate}
+        readingTime={readingTime}
+        category={safeCategory}
+        tags={safeTags}
       />
 
       <div class="post-grid">
@@ -101,20 +135,53 @@ const resolvedHeroCredit = imageCredit;
       </div>
 
       <footer class="post-footer">
-        {authorEntry && <AuthorCard name={author.name} role={author.role} avatar={author.avatar} bio={authorEntry.data.bio ?? ''} compact={false} />}
+        {authorEntry && <AuthorCard name={author.name} role={author.role} avatar={authorEntry.data.avatar ?? ''} bio={authorEntry.data.bio ?? ''} compact={false} />}
         <RelatedPosts posts={safeRelatedPosts} />
       </footer>
     </article>
   </main>
 </Layout>
 
-
-
 <style>
   .post {
     max-width: 1100px;
     margin-inline: auto;
     padding-inline: 1.5rem;
+  }
+  .breadcrumb {
+    max-width: 70ch;
+    margin: 2rem auto 0;
+  }
+  .breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    color: var(--color-text-muted, #666);
+  }
+  .breadcrumb li:not(:last-child)::after {
+    content: "/";
+    margin-left: 0.35rem;
+    color: var(--color-border, #ccc);
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted, #666);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover,
+  .breadcrumb a:focus-visible {
+    color: var(--color-accent, #3949ab);
+    text-decoration: underline;
+  }
+  .breadcrumb li[aria-current="page"] {
+    color: var(--color-text, #1a1a1a);
+    max-width: 40ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .post-header {
     max-width: 70ch;
@@ -148,7 +215,6 @@ const resolvedHeroCredit = imageCredit;
     text-align: center;
     color: var(--color-text-muted, #666);
   }
-
   .post-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -175,14 +241,12 @@ const resolvedHeroCredit = imageCredit;
   .prose :global(img) {
     border-radius: 6px;
   }
-
   .post-footer {
     max-width: 70ch;
     margin: 3rem auto 4rem;
     padding-top: 2rem;
     border-top: 1px solid var(--color-border, #e5e5e5);
   }
-
   @media (min-width: 900px) {
     .post-grid {
       grid-template-columns: 200px 1fr;

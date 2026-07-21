@@ -11,19 +11,22 @@ const caseStudies = (
 });
 ---
 
-<Layout>
+<Layout
+  title="Case Studies"
+  description="In-depth case studies covering space, sustainability and science-communication work — client, outcomes, and tools used for each."
+>
   <section class="section cs-gallery">
     <div class="container pg-shell">
       <header class="pg-head">
         <p class="eyebrow">Case Studies</p>
 
         <h1 class="ch fade">
-          Writing across <em>space, sustainability &amp; science policy</em>
+          Results across <em>space, sustainability &amp; science policy</em>
         </h1>
 
         <div class="pg-intro">
           <p class="pg-lead">
-            Selected articles, reports, and commentary across space systems, climate intelligence, and innovation ecosystems.
+            In-depth looks at completed projects — the brief, the approach, and what changed as a result.
           </p>
           <p class="pg-note">
             Browse the full set of published case studies below.
@@ -35,17 +38,87 @@ const caseStudies = (
         {caseStudies.map((entry) => {
           const slug =
             entry.id.split("/").pop()?.replace(/\.[^.]+$/, "") ?? entry.id;
+          const dateLabel = entry.data.startDate
+            ? new Date(entry.data.startDate).toLocaleDateString("en-GB", {
+                month: "short",
+                year: "numeric",
+              })
+            : "";
+          const badges = [entry.data.status].filter(Boolean) as string[];
 
           return (
             <article class="publication-item">
               <a href={`/case-studies/${slug}/`}>
-                <h2>{entry.data.title}</h2>
+                <div class="cs-top">
+                  <h2>{entry.data.title}</h2>
+                  {dateLabel && <time datetime={new Date(entry.data.startDate!).toISOString()}>{dateLabel}</time>}
+                </div>
+                {badges.length > 0 && (
+                  <div class="cs-badges" aria-label="Type and status">
+                    {badges.map((b) => <span class="cs-badge">{b}</span>)}
+                  </div>
+                )}
                 {entry.data.description && <p>{entry.data.description}</p>}
+                {entry.data.tags?.length ? (
+                  <div class="cs-tags" aria-label="Tags">
+                    {entry.data.tags.slice(0, 4).map((tag) => <span class="cs-tag">#{tag}</span>)}
+                  </div>
+                ) : null}
               </a>
             </article>
           );
         })}
       </div>
+
+      {caseStudies.length === 0 && (
+        <p class="empty">No case studies published yet.</p>
+      )}
     </div>
   </section>
 </Layout>
+
+<style>
+  .cs-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .cs-top time {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--m);
+    white-space: nowrap;
+  }
+  .cs-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
+  }
+  .cs-badge {
+    font-family: var(--font-display);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: capitalize;
+    padding: 0.22rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid var(--bm);
+    color: var(--m);
+  }
+  .cs-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+  }
+  .cs-tag {
+    font-size: 0.72rem;
+    color: var(--m);
+  }
+  .empty {
+    color: var(--m);
+  }
+</style>

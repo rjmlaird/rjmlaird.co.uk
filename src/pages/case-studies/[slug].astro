@@ -7,6 +7,9 @@ import {
   type CollectionEntry,
   getEntry,
 } from "astro:content";
+import MetaList from "../../components/MetaList.astro";
+import ImpactStats from "../../components/ImpactStats.astro";
+import { slugify } from "../../utils/slugify";
 
 export async function getStaticPaths() {
   const entries = await getCollection("caseStudy", ({ data }) => data.draft !== true);
@@ -40,32 +43,49 @@ const links = caseStudy.links || {};
 const relatedProjects = Array.isArray(caseStudy.relatedProjects)
   ? (await Promise.all(caseStudy.relatedProjects.map((ref: any) => getEntry(ref)))).filter(Boolean)
   : [];
+
+const metaItems = [
+  { label: "Type", value: caseStudy.type ?? "" },
+  { label: "Status", value: caseStudy.status ?? "" },
+  { label: "Date", value: dateLabel },
+];
+
+const pageTitle = caseStudy.title || slug || "Case study";
+const pageDescription = caseStudy.description || caseStudy.excerpt || `Case study details for ${pageTitle}.`;
+
+const baseUrl = Astro.site?.href;
+const pageUrl = baseUrl ? new URL(`/case-studies/${slug}/`, baseUrl).href : undefined;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CaseStudy",
+  name: pageTitle,
+  description: pageDescription,
+  url: pageUrl,
+  keywords: tags.length > 0 ? tags.join(", ") : undefined,
+  creator: { "@type": "Person", name: "Ryan Laird" },
+};
 ---
 
-<Layout title={caseStudy.title || "Case Study"} description={caseStudy.description || ""}>
+<Layout title={pageTitle} description={pageDescription} image={caseStudy.image}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </Fragment>
   <section class="section publications-gallery">
     <div class="container pg-shell">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li><a href="/case-studies/">Case studies</a></li>
+          <li aria-current="page">{pageTitle}</li>
+        </ol>
+      </nav>
+
       <header class="pg-head">
         <p class="eyebrow">Case Studies</p>
-        <h1 class="ch fade">{caseStudy.title || slug}</h1>
+        <h1 class="ch fade">{pageTitle}</h1>
 
-        <dl class="project-meta" aria-label="Case study metadata">
-          {caseStudy.type && (
-            <div>
-              <dd>{caseStudy.type}</dd>
-            </div>
-          )}
-          {caseStudy.status && (
-            <div>
-              <dd>{caseStudy.status}</dd>
-            </div>
-          )}
-          {dateLabel && (
-            <div>
-              <dd>{dateLabel}</dd>
-            </div>
-          )}
-        </dl>
+        <MetaList items={metaItems} ariaLabel="Case study metadata" />
       </header>
 
       <div class="project-layout">
@@ -120,7 +140,9 @@ const relatedProjects = Array.isArray(caseStudy.relatedProjects)
             <section class="sidebar-block">
               <h2>Tags</h2>
               <ul class="chip-list">
-                {tags.map((tag: string) => <li>{tag}</li>)}
+                {tags.map((tag: string) => (
+                  <li><a href={`/tags/${slugify(tag)}/`}>{tag}</a></li>
+                ))}
               </ul>
             </section>
           )}
@@ -132,35 +154,35 @@ const relatedProjects = Array.isArray(caseStudy.relatedProjects)
                 {links.github && (
                   <li>
                     <a href={links.github} target="_blank" rel="noreferrer">
-                      GitHub
+                      GitHub <span class="sr-only">(opens in new tab)</span>
                     </a>
                   </li>
                 )}
                 {links.live && (
                   <li>
                     <a href={links.live} target="_blank" rel="noreferrer">
-                      Live site
+                      Live site <span class="sr-only">(opens in new tab)</span>
                     </a>
                   </li>
                 )}
                 {links.demo && (
                   <li>
                     <a href={links.demo} target="_blank" rel="noreferrer">
-                      Demo
+                      Demo <span class="sr-only">(opens in new tab)</span>
                     </a>
                   </li>
                 )}
                 {links.docs && (
                   <li>
                     <a href={links.docs} target="_blank" rel="noreferrer">
-                      Docs
+                      Docs <span class="sr-only">(opens in new tab)</span>
                     </a>
                   </li>
                 )}
                 {links.video && (
                   <li>
                     <a href={links.video} target="_blank" rel="noreferrer">
-                      Video
+                      Video <span class="sr-only">(opens in new tab)</span>
                     </a>
                   </li>
                 )}
@@ -191,14 +213,12 @@ const relatedProjects = Array.isArray(caseStudy.relatedProjects)
             {Content && <Content />}
           </div>
 
-          <section class="sidebar-block">
-            <h2>Impact</h2>
-            {caseStudy.impact && Object.keys(caseStudy.impact).length > 0 ? (
-              <pre>{JSON.stringify(caseStudy.impact, null, 2)}</pre>
-            ) : (
-              <p>No impact data provided yet.</p>
-            )}
-          </section>
+          {caseStudy.impact && Object.keys(caseStudy.impact).length > 0 && (
+            <section class="sidebar-block">
+              <h2>Impact</h2>
+              <ImpactStats impact={caseStudy.impact} />
+            </section>
+          )}
         </article>
       </div>
     </div>

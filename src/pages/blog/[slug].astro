@@ -2,7 +2,6 @@
 // src/pages/blog/[slug].astro
 
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import { Image } from 'astro:assets';
 import BlogLayout from '../../layouts/BlogLayout.astro';
 
 import FactBox from '../../components/FactBox.astro';
@@ -16,7 +15,7 @@ import StatCard from '../../components/StatCard.astro';
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts
-    .filter((post) => post.id) 
+    .filter((post) => post.id)
     .map((post) => ({
       params: { slug: post.id },
       props: { post },
@@ -36,7 +35,7 @@ const relatedPosts = allPosts
   .map((p) => {
     const pTags = p.data.tags || [];
     const postTags = post.data.tags || [];
-    
+
     const sharedTags = pTags.filter((t) => postTags.includes(t)).length;
     const pCat = p.data.category || [];
     const postCat = post.data.category || [];
@@ -49,20 +48,17 @@ const relatedPosts = allPosts
   .slice(0, 3)
   .map((p) => p.post);
 
-const components = { 
-  Image,
-  img: Image,
-  FactBox, 
-  Callout, 
-  QuoteBlock, 
-  Figure, 
-  ComparisonTable, 
-  Checklist, 
-  StatCard 
+const components = {
+  FactBox,
+  Callout,
+  QuoteBlock,
+  Figure,
+  ComparisonTable,
+  Checklist,
+  StatCard,
 };
 ---
 
 <BlogLayout {...{ post, headings, relatedPosts }}>
-
   <Content components={components} />
 </BlogLayout>

@@ -1,11 +1,13 @@
 ---
+import { slugify } from '../../utils/slugify';
+
 type Project = {
   slug: string;
   title?: string;
   type?: string;
   status?: string;
   description?: string;
-  date?: Date | string;
+  startDate?: Date | string;
   tools_tech?: string[];
   features?: string[];
   tags?: string[];
@@ -26,60 +28,150 @@ const { project, slug } = Astro.props as {
   slug: string;
 };
 
-const dateValue = project.date ? new Date(project.date) : null;
-const links = project.links ?? {};
-const liveLink = links.live || links.demo || links.github || links.docs;
+// NOTE: the content schema field is `startDate`, not `date` — using the
+// wrong key here meant every card silently rendered an empty date.
+const dateValue = project.startDate ? new Date(project.startDate) : null;
 const formattedDate = dateValue
-  ? dateValue.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    })
+  ? dateValue.toLocaleDateString("en-GB", { month: "short", year: "numeric" })
   : "";
+
+const tags = Array.isArray(project.tags) ? project.tags : [];
+const badges = [project.type, project.status].filter(Boolean) as string[];
 ---
 
-<article class="pr pub" style="display: flex; flex-direction: column; width: 100%; max-width: none; flex: 1 1 100%;">
-  <div class="pub-main" style="flex: 1; width: 100%;">
-    <div class="pm" style="width: 100%; max-width: none;">
-      <div class="pub-top">
-        <h3>
-          <a href={`/projects/${slug}/`} class="project-title-link">
-            {project.title}
-          </a>
-        </h3>
-        <time class="date" datetime={dateValue?.toISOString()}>
-          {formattedDate}
-        </time>
-      </div>
+<article class="project-card">
+  <div class="card-top">
+    <h3>
+      <a href={`/projects/${slug}/`}>{project.title}</a>
+    </h3>
+    {formattedDate && (
+      <time class="date" datetime={dateValue?.toISOString()}>{formattedDate}</time>
+    )}
+  </div>
 
-      <div class="client-badge">{project.type}</div>
-      <div class="client-badge">{project.status}</div>
-
-      <p>{project.description}</p>
-
-      {project.features?.length ? (
-        <div class="pt">
-          {project.features.slice(0, 3).map((feature) => (
-            <span class="tag">{feature}</span>
-          ))}
-        </div>
-      ) : null}
-
-      {project.tools_tech?.length ? (
-        <div class="pt">
-          {project.tools_tech.slice(0, 4).map((tool) => (
-            <span class="tag">{tool}</span>
-          ))}
-        </div>
-      ) : null}
+  {badges.length > 0 && (
+    <div class="badges" aria-label="Project type and status">
+      {badges.map((label) => <span class="badge">{label}</span>)}
     </div>
-  </div>
+  )}
 
-  <div class="pub-links">
-    {liveLink ? (
-      <a class="btn-link" href={`/projects/${slug}/#projects`} target="_blank" rel="noreferrer">
-        View project
-      </a>
-    ) : null}
-  </div>
+  {project.description && <p class="description">{project.description}</p>}
+
+  {tags.length > 0 && (
+    <ul class="tag-row" aria-label="Tags">
+      {tags.slice(0, 4).map((tag) => (
+        <li><a href={`/tags/${slugify(tag)}/`}>#{tag}</a></li>
+      ))}
+    </ul>
+  )}
+
+  <a class="view-link" href={`/projects/${slug}/`}>
+    View project <span aria-hidden="true">→</span>
+  </a>
 </article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.4rem 1.5rem;
+    border: 1px solid var(--bd);
+    border-radius: 1rem;
+    background: var(--card);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .project-card:hover,
+  .project-card:focus-within {
+    border-color: var(--bm);
+    transform: translateY(-2px);
+  }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+  }
+  h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    line-height: 1.3;
+  }
+  h3 a {
+    color: var(--w);
+    text-decoration: none;
+  }
+  h3 a:hover,
+  h3 a:focus-visible {
+    color: var(--teal);
+  }
+  .date {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--m);
+    white-space: nowrap;
+  }
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+  .badge {
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: capitalize;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--bm);
+    color: var(--m);
+  }
+  .description {
+    margin: 0 0 0.85rem;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--mb);
+    flex-grow: 1;
+  }
+  .tag-row {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 1rem;
+    padding: 0;
+  }
+  .tag-row a {
+    font-size: 0.72rem;
+    color: var(--m);
+    text-decoration: none;
+    border: 1px solid var(--bd);
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+  }
+  .tag-row a:hover,
+  .tag-row a:focus-visible {
+    color: var(--teal);
+    border-color: var(--teal);
+  }
+  .view-link {
+    align-self: flex-start;
+    margin-top: auto;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--teal);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .view-link:hover,
+  .view-link:focus-visible {
+    text-decoration: underline;
+  }
+</style>

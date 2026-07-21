@@ -14,22 +14,25 @@ const statusList = [...new Set(entries.map((entry) => entry.data.status).filter(
 const tagList = [...new Set(entries.flatMap((entry) => entry.data.tags))].sort();
 ---
 
-<Layout>
+<Layout
+  title="Projects"
+  description="Space, sustainability and science-communication projects — with tools, tags, status and outcomes for each."
+>
   <section class="section projects-gallery">
     <div class="container pg-shell">
       <header class="pg-head">
         <p class="eyebrow">Projects</p>
 
         <h1 class="ch fade">
-          Writing across <em>space, sustainability &amp; science policy</em>
+          Building for <em>space, sustainability &amp; science communication</em>
         </h1>
 
         <div class="pg-intro">
           <p class="pg-lead">
-            Selected articles, reports, and commentary across space systems, climate intelligence, and innovation ecosystems.
+            Tools, platforms, and campaigns built across space systems, climate intelligence, and innovation ecosystems.
           </p>
           <p class="pg-note">
-            Browse the full set of published case studies below.
+            Filter by type, status, or tag — browse the full set of projects below.
           </p>
         </div>
       </header>

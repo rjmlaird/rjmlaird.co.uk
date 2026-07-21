@@ -1,25 +1,25 @@
 ---
+import { slugify } from '../utils/slugify';
+
 interface Props {
   tags: string[];
-  limit?: number; // truncate long lists on cards; omit on the full post page
+  limit?: number;
 }
 
 const { tags = [], limit } = Astro.props;
 const safeTags = Array.isArray(tags) ? tags : [];
 const visible = limit ? safeTags.slice(0, limit) : safeTags;
 const overflow = limit && safeTags.length > limit ? safeTags.length - limit : 0;
-
-const slugify = (t: string) => (t ? t.toLowerCase().replace(/\s+/g, '-') : '');
 ---
 
 {visible.length > 0 && (
-  <ul class="tag-list">
+  <ul class="tag-list" aria-label="Tags">
     {visible.map((tag) => (
       <li>
-        <a href={`/tags/${slugify(tag)}`} class="tag">#{tag}</a>
+        <a href={`/tags/${slugify(tag)}/`} class="tag">#{tag}</a>
       </li>
     ))}
-    {overflow > 0 && <li class="overflow">+{overflow}</li>}
+    {overflow > 0 && <li class="overflow" aria-label={`and ${overflow} more tags`}>+{overflow}</li>}
   </ul>
 )}
 

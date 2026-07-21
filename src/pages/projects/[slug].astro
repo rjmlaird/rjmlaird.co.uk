@@ -1,6 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection, render, type CollectionEntry } from "astro:content";
+import MetaList from "../../components/MetaList.astro";
+import ImpactStats from "../../components/ImpactStats.astro";
+import { slugify } from "../../utils/slugify";
 
 export async function getStaticPaths() {
   const entries = await getCollection("projects", ({ data }) => data.draft !== true);
@@ -26,37 +29,53 @@ const dateLabel = project.startDate
     })
   : "";
 
-
 const tools = Array.isArray(project.tools_tech) ? project.tools_tech : [];
 const features = Array.isArray(project.features) ? project.features : [];
 const tags = Array.isArray(project.tags) ? project.tags : [];
 const links = project.links || {};
+
+const metaItems = [
+  { label: "Type", value: project.type ?? "" },
+  { label: "Status", value: project.status ?? "" },
+  { label: "Date", value: dateLabel },
+];
+
+const pageTitle = project.title || slug || "Project";
+const pageDescription = project.description || project.excerpt || `Project details for ${pageTitle}.`;
+
+const baseUrl = Astro.site?.href;
+const pageUrl = baseUrl ? new URL(`/projects/${slug}/`, baseUrl).href : undefined;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: pageTitle,
+  description: pageDescription,
+  url: pageUrl,
+  keywords: tags.length > 0 ? tags.join(", ") : undefined,
+  creator: { "@type": "Person", name: "Ryan Laird" },
+};
 ---
 
-<Layout>
+<Layout title={pageTitle} description={pageDescription}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </Fragment>
   <section class="section publications-gallery">
     <div class="container pg-shell">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li><a href="/projects/">Projects</a></li>
+          <li aria-current="page">{pageTitle}</li>
+        </ol>
+      </nav>
+
       <header class="pg-head">
         <p class="eyebrow">Projects</p>
-        <h1 class="ch fade">{project.title || slug}</h1>
+        <h1 class="ch fade">{pageTitle}</h1>
 
-        <dl class="project-meta" aria-label="Project metadata">
-          {project.type && (
-            <div>
-              <dd>{project.type}</dd>
-            </div>
-          )}
-          {project.status && (
-            <div>
-              <dd>{project.status}</dd>
-            </div>
-          )}
-          {dateLabel && (
-            <div>
-              <dd>{dateLabel}</dd>
-            </div>
-          )}
-        </dl>
+        <MetaList items={metaItems} ariaLabel="Project metadata" />
       </header>
 
       <div class="project-layout">
@@ -90,7 +109,9 @@ const links = project.links || {};
             <section class="sidebar-block">
               <h2>Tags</h2>
               <ul class="chip-list">
-                {tags.map((tag: string) => <li>{tag}</li>)}
+                {tags.map((tag: string) => (
+                  <li><a href={`/tags/${slugify(tag)}/`}>{tag}</a></li>
+                ))}
               </ul>
             </section>
           )}
@@ -102,14 +123,14 @@ const links = project.links || {};
                 {links.github && (
                   <li>
                     <a href={links.github} target="_blank" rel="noreferrer">
-                      GitHub
+                      GitHub <span class="sr-only">(opens in new tab)</span>
                     </a>
                   </li>
                 )}
                 {links.live && (
                   <li>
                     <a href={links.live} target="_blank" rel="noreferrer">
-                      Live site
+                      Live site <span class="sr-only">(opens in new tab)</span>
                     </a>
                   </li>
                 )}
@@ -123,14 +144,12 @@ const links = project.links || {};
             <Content />
           </div>
 
-          <section class="sidebar-block">
-            <h2>Impact</h2>
-            {project.impact && Object.keys(project.impact).length > 0 ? (
-              <pre>{JSON.stringify(project.impact, null, 2)}</pre>
-            ) : (
-              <p>No impact data provided yet.</p>
-            )}
-          </section>
+          {project.impact && Object.keys(project.impact).length > 0 && (
+            <section class="sidebar-block">
+              <h2>Impact</h2>
+              <ImpactStats impact={project.impact} />
+            </section>
+          )}
         </article>
       </div>
     </div>

@@ -25,6 +25,19 @@
   --font-body: "Inter", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
   color-scheme: dark;
+
+  /* Bridge tokens: blog/project/case-study components (PostCard, PostMeta,
+     FactBox, StatCard, MetaList, etc.) are authored against this generic
+     --color-* palette. Map them onto the site's real dark theme so those
+     components don't silently fall back to their light-theme defaults. */
+  --color-text: var(--w);
+  --color-text-muted: var(--mb);
+  --color-text-subtle: var(--m);
+  --color-surface: var(--card);
+  --color-border: var(--bd);
+  --color-border-subtle: var(--bd);
+  --color-accent: var(--teal);
+  --color-accent-subtle: var(--td);
 }
 
 html{scroll-behavior:smooth}
@@ -517,3 +530,58 @@ footer a:hover,footer a:focus-visible{color:var(--w)}
 @media(max-width:640px){
   .pub-media{aspect-ratio:4/3;margin-bottom:.85rem}
 }
+/* ==========================================================================
+   PROJECT / CASE STUDY DETAIL PAGES
+   Layout classes referenced from src/pages/projects/[slug].astro and
+   src/pages/case-studies/[slug].astro — previously unstyled.
+   ========================================================================== */
+
+.breadcrumb{max-width:78rem;margin:0 auto 0.5rem}
+.breadcrumb ol{display:flex;flex-wrap:wrap;list-style:none;gap:.35rem;font-size:.8rem;color:var(--m)}
+.breadcrumb li:not(:last-child)::after{content:"/";margin-left:.35rem;color:var(--bm)}
+.breadcrumb a{color:var(--m);text-decoration:none}
+.breadcrumb a:hover,.breadcrumb a:focus-visible{color:var(--teal);text-decoration:underline}
+.breadcrumb li[aria-current="page"]{color:var(--w);max-width:32ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.project-layout{display:grid;gap:2.5rem;grid-template-columns:1fr;align-items:start}
+.project-sidebar{display:grid;gap:1.5rem;order:2}
+.project-content{order:1;min-width:0}
+.project-body{font-size:1rem;line-height:1.75;color:var(--w)}
+.project-body h2{font-family:var(--font-display);margin-top:2.25rem;margin-bottom:.75rem}
+.project-body p{margin-bottom:1.1rem;color:var(--mb)}
+.project-body img{max-width:100%;border-radius:.9rem}
+
+.sidebar-block{padding:1.25rem 1.4rem;border:1px solid var(--bd);border-radius:1rem;background:var(--card)}
+.sidebar-block h2{font-family:var(--font-display);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--m);margin-bottom:.85rem}
+.sidebar-block p{font-size:.9rem;color:var(--w);line-height:1.6}
+
+.chip-list,.bullet-list,.link-list{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;margin:0;padding:0}
+.bullet-list{flex-direction:column;gap:.5rem}
+.bullet-list li{font-size:.88rem;color:var(--mb);padding-left:1rem;position:relative}
+.bullet-list li::before{content:"–";position:absolute;left:0;color:var(--teal)}
+.chip-list li a,.chip-list li{font-family:var(--font-display);font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:capitalize;border:1px solid var(--bm);color:var(--mb);padding:.28rem .65rem;border-radius:999px;text-decoration:none;display:inline-block;transition:color .15s,border-color .15s}
+.chip-list li a:hover,.chip-list li a:focus-visible{color:var(--teal);border-color:var(--teal)}
+.link-list{flex-direction:column;gap:.6rem}
+.link-list a{font-size:.9rem;color:var(--w);text-decoration:none;border-bottom:1px solid var(--bm);padding-bottom:2px;transition:color .15s,border-color .15s}
+.link-list a:hover,.link-list a:focus-visible{color:var(--teal);border-color:var(--teal)}
+
+@media(min-width:960px){
+  .project-layout{grid-template-columns:260px 1fr}
+  .project-sidebar{order:1}
+  .project-content{order:2}
+}
+
+/* Case study / project index grids */
+.cs-gallery .pg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+.publication-item{border:1px solid var(--bd);border-radius:1rem;background:var(--card);padding:1.4rem 1.5rem;transition:border-color .15s,transform .15s}
+.publication-item:hover,.publication-item:focus-within{border-color:var(--bm);transform:translateY(-2px)}
+.publication-item a{text-decoration:none;color:inherit;display:block}
+.publication-item h2{font-family:var(--font-display);font-size:1.05rem;margin-bottom:.5rem}
+.publication-item p{font-size:.88rem;color:var(--m);line-height:1.6}
+
+.rp-filters{display:flex;flex-wrap:wrap;gap:1.25rem;margin-bottom:.5rem}
+.filter-field{display:flex;flex-direction:column;gap:.35rem;font-size:.75rem;color:var(--m);text-transform:uppercase;letter-spacing:.06em}
+.filter-field select{font:inherit;font-size:.85rem;text-transform:none;letter-spacing:normal;color:var(--w);background:var(--card);border:1px solid var(--bd);border-radius:.5rem;padding:.5rem .7rem;min-width:160px}
+.filter-field select:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.rp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
+.research-item{display:flex}
