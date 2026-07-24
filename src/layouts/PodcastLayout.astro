@@ -21,14 +21,15 @@ const sourceTitle = data.title ?? "";
 const sourceDescription = data.description ?? "";
 const excerpt = data.excerpt;
 const updatedDate = data.updatedDate;
-const categories = data.categories ?? [];
+const categories = data.category ?? [];
 const tags = data.tags ?? [];
 const canonical = data.canonical;
 const noindex = data.noindex ?? false;
 
+const heroImage = data.heroImage;
 const podcastCoverImage = data.podcastCoverImage;
-const podcastTitle = data.podcastTitle;
-const podcastDescription = data.podcastDescription;
+const podcastTitle = data.podcastTitle ?? sourceTitle;
+const podcastDescription = data.podcastDescription ?? sourceDescription;
 const podcastWebsite = data.podcastWebsite;
 const podcastFeedUrl = data.podcastFeedUrl;
 const podcastPublisher = data.podcastPublisher;
@@ -40,22 +41,28 @@ const transcriptUrl = data.transcriptUrl;
 const shareUrl = data.shareUrl;
 const audioUrl = data.audioUrl;
 
-const title = propTitle || sourceTitle;
-const description = propDescription || sourceDescription || excerpt;
-const safeTags = Array.isArray(tags) ? tags : [];
-const safeCategories = Array.isArray(categories) ? categories : [];
+const host = data.host;
+const guest = data.guest;
+const season = data.season;
+const episodeNumber = data.episodeNumber;
+const publishedDate = data.publishedDate;
+const duration = data.duration;
 
+const safeCategories = Array.isArray(categories) ? categories : [];
+const safeTags = Array.isArray(tags) ? tags : [];
+
+const resolvedHeroImage = heroImage || "";
 const resolvedPodcastCoverImage = podcastCoverImage || "";
 const resolvedEmbedSrc = shareUrl || audioUrl || "";
 
-const pageTitle = title || Astro.params.id || "Podcast";
-const pageDescription = description || `Details for ${pageTitle}.`;
+const pageTitle = propTitle || podcastTitle || sourceTitle || Astro.params.id || "Podcast";
+const pageDescription = propDescription || podcastDescription || sourceDescription || excerpt || `Details for ${pageTitle}.`;
 ---
 
 <Layout
   title={pageTitle}
   description={pageDescription}
-  image={resolvedPodcastCoverImage || undefined}
+  image={resolvedHeroImage || resolvedPodcastCoverImage || undefined}
   canonical={canonical}
   noindex={noindex}
 >
@@ -75,39 +82,32 @@ const pageDescription = description || `Details for ${pageTitle}.`;
         </div>
       </header>
 
-      {resolvedPodcastCoverImage && (
-        <Figure
-          src={resolvedPodcastCoverImage}
-          alt={podcastTitle || pageTitle}
-          wide
-        />
-      )}
+      {resolvedHeroImage && <Figure src={resolvedHeroImage} alt={pageTitle} wide />}
 
       <PodcastMeta
         podcastPublisher={podcastPublisher}
-        podcastLanguage={podcastLanguage}
-        podcastWebsite={podcastWebsite}
-        podcastFeedUrl={podcastFeedUrl}
+        podcastTitle={podcastTitle}
+        episodeNumber={episodeNumber}
+        season={season}
+        publishedDate={publishedDate}
+        duration={duration}
+        host={host}
+        guest={guest}
         podcastCategories={safeCategories}
         tags={safeTags}
-        podcastApplePodcasts={podcastApplePodcasts}
-        podcastSpotify={podcastSpotify}
-        podcastYouTube={podcastYouTube}
-        podcastTitle={podcastTitle || pageTitle}
-        podcastDescription={podcastDescription}
         updatedDate={updatedDate}
       />
 
       <section class="podcast-layout">
         <aside class="podcast-layout__sidebar">
           <PodcastSidebar
-            podcastTitle={podcastTitle || pageTitle}
+            podcastTitle={podcastTitle}
             podcastDescription={podcastDescription}
             podcastWebsite={podcastWebsite}
             podcastFeedUrl={podcastFeedUrl}
             podcastPublisher={podcastPublisher}
             podcastLanguage={podcastLanguage}
-            podcastCoverImage={resolvedPodcastCoverImage}
+            podcastCoverImage={resolvedPodcastCoverImage || resolvedHeroImage}
             podcastCategories={safeCategories}
             podcastApplePodcasts={podcastApplePodcasts}
             podcastSpotify={podcastSpotify}
@@ -123,7 +123,7 @@ const pageDescription = description || `Details for ${pageTitle}.`;
         <div class="podcast-layout__content">
           {resolvedEmbedSrc && (
             <div class="podcast-embed">
-              <PodcastEmbed src={resolvedEmbedSrc} title={podcastTitle || pageTitle} />
+              <PodcastEmbed src={resolvedEmbedSrc} title={podcastTitle} />
             </div>
           )}
           <slot />
@@ -132,7 +132,6 @@ const pageDescription = description || `Details for ${pageTitle}.`;
     </article>
   </main>
 </Layout>
-
 
 <style>
   .podcast-layout {
@@ -161,4 +160,5 @@ const pageDescription = description || `Details for ${pageTitle}.`;
       top: 2rem;
     }
   }
+
 </style>

@@ -27,11 +27,15 @@ const description =
   data.podcastDescription ??
   "";
 
-const image = episode.artwork ?? data.podcastCoverImage ?? "";
+const image = episode.artwork ?? data.heroImage ?? "";
 const href =
   episode.shareUrl || episode.audioUrl || `/podcasts/${entry?.id ?? ""}/`;
 
-const publishedDate = episode.publishedDate ? new Date(episode.publishedDate) : null;
+const publishedDate =
+  episode.publishedDate ??
+  data.publishedDate ??
+  data.updatedDate ??
+  null;
 ---
 
 <article class:list={["podcast-card", { featured }]}>
@@ -61,7 +65,7 @@ const publishedDate = episode.publishedDate ? new Date(episode.publishedDate) : 
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    gap: 1rem;
+    gap: 0;
     border: 1px solid var(--color-border, #e5e7eb);
     border-radius: 16px;
     overflow: hidden;
@@ -78,11 +82,13 @@ const publishedDate = episode.publishedDate ? new Date(episode.publishedDate) : 
   .podcast-card-image-link {
     flex: 0 0 280px;
     display: block;
+    align-self: stretch;
   }
 
   .podcast-card-image {
     width: 100%;
     height: 100%;
+    min-height: 100%;
     object-fit: cover;
     display: block;
   }
@@ -93,8 +99,8 @@ const publishedDate = episode.publishedDate ? new Date(episode.publishedDate) : 
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 0.75rem;
-    padding: 1rem 1rem 1rem 0;
+    gap: 0.6rem;
+    padding: 1rem 1.1rem;
   }
 
   h2 {
@@ -115,7 +121,7 @@ const publishedDate = episode.publishedDate ? new Date(episode.publishedDate) : 
   .description {
     margin: 0;
     color: var(--color-text-muted, #64748b);
-    line-height: 1.6;
+    line-height: 1.55;
   }
 
   @media (max-width: 720px) {
@@ -128,8 +134,13 @@ const publishedDate = episode.publishedDate ? new Date(episode.publishedDate) : 
       width: 100%;
     }
 
+    .podcast-card-image {
+      aspect-ratio: 16 / 9;
+      height: auto;
+    }
+
     .body {
-      padding: 0 1rem 1rem;
+      padding: 0.9rem 1rem 1rem;
     }
   }
 </style>

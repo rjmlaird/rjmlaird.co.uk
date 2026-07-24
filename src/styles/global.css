@@ -813,3 +813,38 @@ footer a:hover,footer a:focus-visible{color:var(--w)}
 .filter-field select:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .rp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
 .research-item{display:flex}
+
+.podcast-body {
+  max-width: 70ch;
+  line-height: 1.7;
+}
+
+.podcast-body > * + * {
+  margin-top: 1rem;
+}
+
+.podcast-body h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.podcast-body p {
+  margin: 0;
+}
+
+.podcast-body ul,
+.podcast-body ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.podcast-body li + li {
+  margin-top: 0.5rem;
+}
+
+.podcast-body a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+

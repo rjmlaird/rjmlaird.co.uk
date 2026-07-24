@@ -42,28 +42,23 @@ const baseSchema = seoSchema.extend({
   tags: z.array(z.string()).default([]),
   sectors: z.array(z.string()).default([]),
   youtubeId: z.string().optional(),
-  category: z
-    .preprocess(
-      (val) => {
-        if (val == null) return [];
-        if (Array.isArray(val)) return val;
-        return [val];
-      },
-      z.array(z.string())
-    )
-    .default([]),
-  links: z
-    .object({
-      github: z.url().optional(),
-      web: z.url().optional(),
-      demo: z.url().optional(),
-      docs: z.url().optional(),
-      youtube: z.url().optional(),
-      store: z.url().optional(),
-      api: z.url().optional(),
-    })
-    .optional()
-    .default({}),
+  category: z.preprocess(
+    (val) => {
+      if (val == null) return [];
+      if (Array.isArray(val)) return val;
+      return [val];
+    },
+    z.array(z.string())
+  ).default([]),
+  links: z.object({
+    github: z.url().optional(),
+    web: z.url().optional(),
+    demo: z.url().optional(),
+    docs: z.url().optional(),
+    youtube: z.url().optional(),
+    store: z.url().optional(),
+    api: z.url().optional(),
+  }).optional().default({}),
   heroImage: z.string().optional(),
   heroAlt: z.string().optional(),
   relatedOrg: z.array(z.string()).default([]),
@@ -82,14 +77,7 @@ const baseSchema = seoSchema.extend({
   institution: z.string().optional(),
 });
 
-const podcastSchema = seoSchema.extend({
-  slug: z.string().optional(),
-  updatedDate: z.coerce.date().optional(),
-  draft: z.boolean().default(false),
-  featured: z.boolean().default(false),
-  tags: z.array(z.string()).default([]),
-  categories: z.array(z.string()).default([]),
-
+const podcastSchema = baseSchema.extend({
   podcastTitle: z.string().optional(),
   podcastDescription: z.string().optional(),
   podcastWebsite: z.url().optional(),
@@ -115,26 +103,24 @@ const podcastSchema = seoSchema.extend({
   summary: z.string().optional(),
 
   relatedEpisodes: z.array(relatedItemSchema).default([]),
-  relatedPodcasts: z
-    .array(
-      z.object({
-        id: z.union([z.string(), z.number()]).optional(),
-        title: z.string().optional(),
-        description: z.string().optional(),
-        podcastTitle: z.string().optional(),
-        podcastDescription: z.string().optional(),
-        podcastWebsite: z.url().optional(),
-        podcastFeedUrl: z.url().optional(),
-        podcastPublisher: z.string().optional(),
-        podcastLanguage: z.string().optional(),
-        podcastCoverImage: z.string().optional(),
-        podcastCategories: z.array(z.string()).default([]),
-        podcastApplePodcasts: z.url().optional(),
-        podcastSpotify: z.url().optional(),
-        podcastYouTube: z.url().optional(),
-      })
-    )
-    .default([]),
+  relatedPodcasts: z.array(
+    z.object({
+      id: z.union([z.string(), z.number()]).optional(),
+      title: z.string().optional(),
+      description: z.string().optional(),
+      podcastTitle: z.string().optional(),
+      podcastDescription: z.string().optional(),
+      podcastWebsite: z.url().optional(),
+      podcastFeedUrl: z.url().optional(),
+      podcastPublisher: z.string().optional(),
+      podcastLanguage: z.string().optional(),
+      podcastCoverImage: z.string().optional(),
+      podcastCategories: z.array(z.string()).default([]),
+      podcastApplePodcasts: z.url().optional(),
+      podcastSpotify: z.url().optional(),
+      podcastYouTube: z.url().optional(),
+    })
+  ).default([]),
 });
 
 export const collections = {
