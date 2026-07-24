@@ -1,5 +1,4 @@
 ---
-// src/components/PodcastEmbed.astro
 interface Props {
   src?: string;
   title?: string;
@@ -52,8 +51,8 @@ const resolvedHeight = height ?? (mode === "playlist" ? 390 : 180);
   src={resolvedSrc}
   width={fullWidth ? "100%" : undefined}
   height={resolvedHeight}
-  frameborder="0"
-  scrolling="no"
-  seamless
   title={title}
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade"
+  style="border: 0; display: block;"
 />

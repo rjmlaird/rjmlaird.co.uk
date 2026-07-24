@@ -1,7 +1,6 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import PodcastLayout from "../../layouts/PodcastLayout.astro";
-import PodcastMeta from "../../components/PodcastMeta.astro";
 
 export async function getStaticPaths() {
   const entries = await getCollection("podcasts");

@@ -2,6 +2,8 @@
 import type { CollectionEntry } from "astro:content";
 import PodcastMeta from "./PodcastMeta.astro";
 
+type PodcastData = CollectionEntry<"podcasts">["data"];
+
 interface Props {
   entry?: CollectionEntry<"podcasts">;
   episodeIndex?: number;
@@ -9,7 +11,7 @@ interface Props {
 }
 
 const { entry, episodeIndex = 0, featured = false } = Astro.props as Props;
-const data = entry?.data ?? {};
+const data = (entry?.data ?? {}) as Partial<PodcastData>;
 const episode = data.relatedEpisodes?.[episodeIndex] ?? {};
 
 const title =
@@ -25,8 +27,9 @@ const description =
   data.podcastDescription ??
   "";
 
-const image = episode.artwork ?? episode.image ?? data.podcastCoverImage ?? "";
-const href = episode.shareUrl || episode.audioUrl || `/podcasts/${entry?.id ?? ""}/`;
+const image = episode.artwork ?? data.podcastCoverImage ?? "";
+const href =
+  episode.shareUrl || episode.audioUrl || `/podcasts/${entry?.id ?? ""}/`;
 
 const publishedDate = episode.publishedDate ? new Date(episode.publishedDate) : null;
 ---
@@ -92,6 +95,12 @@ const publishedDate = episode.publishedDate ? new Date(episode.publishedDate) : 
     justify-content: center;
     gap: 0.75rem;
     padding: 1rem 1rem 1rem 0;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.25;
   }
 
   .title-link {

@@ -6,6 +6,8 @@ import PodcastSidebar from "../components/PodcastSidebar.astro";
 import Figure from "../components/Figure.astro";
 import PodcastEmbed from "../components/PodcastEmbed.astro";
 
+type PodcastData = CollectionEntry<"podcasts">["data"];
+
 interface Props {
   podcast?: CollectionEntry<"podcasts">;
   title?: string;
@@ -13,7 +15,7 @@ interface Props {
 }
 
 const { podcast, title: propTitle, description: propDescription } = Astro.props as Props;
-const data = podcast?.data ?? {};
+const data = (podcast?.data ?? {}) as Partial<PodcastData>;
 
 const sourceTitle = data.title ?? "";
 const sourceDescription = data.description ?? "";
@@ -21,9 +23,6 @@ const excerpt = data.excerpt;
 const updatedDate = data.updatedDate;
 const categories = data.categories ?? [];
 const tags = data.tags ?? [];
-const heroImage = data.heroImage;
-const heroAlt = data.heroAlt;
-const imageCredit = data.imageCredit;
 const canonical = data.canonical;
 const noindex = data.noindex ?? false;
 
@@ -37,12 +36,6 @@ const podcastLanguage = data.podcastLanguage;
 const podcastApplePodcasts = data.podcastApplePodcasts;
 const podcastSpotify = data.podcastSpotify;
 const podcastYouTube = data.podcastYouTube;
-const host = data.host;
-const guest = data.guest;
-const season = data.season;
-const episodeNumber = data.episodeNumber;
-const publishedDate = data.publishedDate;
-const duration = data.duration;
 const transcriptUrl = data.transcriptUrl;
 const shareUrl = data.shareUrl;
 const audioUrl = data.audioUrl;
@@ -52,8 +45,6 @@ const description = propDescription || sourceDescription || excerpt;
 const safeTags = Array.isArray(tags) ? tags : [];
 const safeCategories = Array.isArray(categories) ? categories : [];
 
-const resolvedHeroSrc = heroImage || "";
-const resolvedHeroAlt = heroAlt || title || "Hero image";
 const resolvedPodcastCoverImage = podcastCoverImage || "";
 const resolvedEmbedSrc = shareUrl || audioUrl || "";
 
@@ -64,7 +55,7 @@ const pageDescription = description || `Details for ${pageTitle}.`;
 <Layout
   title={pageTitle}
   description={pageDescription}
-  image={resolvedHeroSrc || undefined}
+  image={resolvedPodcastCoverImage || undefined}
   canonical={canonical}
   noindex={noindex}
 >
@@ -84,26 +75,26 @@ const pageDescription = description || `Details for ${pageTitle}.`;
         </div>
       </header>
 
-      {resolvedHeroSrc && (
+      {resolvedPodcastCoverImage && (
         <Figure
-          src={resolvedHeroSrc}
-          alt={resolvedHeroAlt}
-          credit={imageCredit ? `${imageCredit}` : undefined}
+          src={resolvedPodcastCoverImage}
+          alt={podcastTitle || pageTitle}
           wide
         />
       )}
 
       <PodcastMeta
         podcastPublisher={podcastPublisher}
+        podcastLanguage={podcastLanguage}
+        podcastWebsite={podcastWebsite}
+        podcastFeedUrl={podcastFeedUrl}
         podcastCategories={safeCategories}
         tags={safeTags}
+        podcastApplePodcasts={podcastApplePodcasts}
+        podcastSpotify={podcastSpotify}
+        podcastYouTube={podcastYouTube}
         podcastTitle={podcastTitle || pageTitle}
-        episodeNumber={episodeNumber}
-        season={season}
-        publishedDate={publishedDate}
-        duration={duration}
-        host={host}
-        guest={guest}
+        podcastDescription={podcastDescription}
         updatedDate={updatedDate}
       />
 
@@ -116,17 +107,11 @@ const pageDescription = description || `Details for ${pageTitle}.`;
             podcastFeedUrl={podcastFeedUrl}
             podcastPublisher={podcastPublisher}
             podcastLanguage={podcastLanguage}
-            podcastCoverImage={resolvedPodcastCoverImage || resolvedHeroSrc}
+            podcastCoverImage={resolvedPodcastCoverImage}
             podcastCategories={safeCategories}
             podcastApplePodcasts={podcastApplePodcasts}
             podcastSpotify={podcastSpotify}
             podcastYouTube={podcastYouTube}
-            host={host}
-            guest={guest}
-            season={season}
-            episodeNumber={episodeNumber}
-            publishedDate={publishedDate}
-            duration={duration}
             transcriptUrl={transcriptUrl}
             shareUrl={shareUrl}
             audioUrl={audioUrl}
@@ -147,6 +132,7 @@ const pageDescription = description || `Details for ${pageTitle}.`;
     </article>
   </main>
 </Layout>
+
 
 <style>
   .podcast-layout {
