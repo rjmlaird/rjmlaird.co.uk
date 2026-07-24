@@ -5,24 +5,13 @@ title: UKSEDS charity status
 type: featured
 status: completed
 description: A short summary of what this project does.
-startDate: 2026-07-01
-tools_tech:
-  - TypeScript
-  - Astro
-  - Zod
-features:
-  - Feature one
-  - Feature two
+startDate: 2015-07-01
 tags:
-  - portfolio
-  - web
-  - example
+  - charity
+  - trustee
+  - ukseds
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://ukseds.org
 impact: {}
+relatedVolunteering: ["vol-ukseds-trustee", "vol-ukseds-vc", "vol-ukseds-secretary"]
 ---
-
-
-
-Experience: Vice Chair (https://app.notion.com/p/Vice-Chair-3813a96540ad80da9db6c3c7b9d45d93?pvs=21)

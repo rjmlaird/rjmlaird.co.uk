@@ -42,8 +42,8 @@ export const membershipRoleSchema = z.union([
 ]);
 
 export const membershipLinkSchema = z.object({
-  website: z.string().trim().pipe(z.url()).optional(),
-  profile: z.string().trim().pipe(z.url()).optional(),
+  website: z.url().optional(),
+  profile: z.url().optional(),
 });
 
 export const membershipItemSchema = z.object({

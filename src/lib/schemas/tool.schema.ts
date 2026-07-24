@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const toolItemSchema = z.object({
   name: z.string().trim(),
-  url: z.string().trim().pipe(z.url()),
+  url: z.url().optional(),
   logo: z.string().trim(),
   color: z.string().trim(),
   logoColor: z.string().trim().optional(),

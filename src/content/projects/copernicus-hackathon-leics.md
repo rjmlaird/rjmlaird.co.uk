@@ -1,28 +1,23 @@
 ---
 id: 41
 slug: copernicus-hackathon-leics
-title: Copernicus Hackathon
+title: Food Security and Resilience Copernicus Hackathon
 type: featured
 status: completed
-description: A short summary of what this project does.
-startDate: 2026-07-01
-tools_tech:
-  - TypeScript
-  - Astro
-  - Zod
-features:
-  - Feature one
-  - Feature two
+description: Over an exciting 48 hours, teams worked collaboratively using Copernicus data and their coding experience to practically develop solutions addressing one of the proposed themes.
+startDate: 2019-09-19
+endDate: 2019-09-20
 tags:
-  - portfolio
-  - web
-  - example
+  - Copernicus
+  - hackathon
+  - leicester
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://copernicus-hackathon.le.ac.uk
 impact: {}
+client: "University of Leicester"
+relatedExperience: ["exp-freelance"]
+heroImage: /images/projects/cophack.jpg
+heroAlt: "Attendees from Aegean (Greece) attending the Copernicus Hackathon in Leicester."
+imageCredit: Aegean
 ---
 # 
-
-Client: University of Leicester (https://app.notion.com/p/University-of-Leicester-37b3a96540ad80a6b28df9b193fce1c6?pvs=21)
-Organisations: Freelance (https://app.notion.com/p/Freelance-3813a96540ad80549866f8665fe238aa?pvs=21)

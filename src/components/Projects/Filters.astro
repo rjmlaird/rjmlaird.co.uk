@@ -1,0 +1,239 @@
+---
+// src/components/Projects/Filters.astro
+import type { CollectionEntry } from "astro:content";
+
+type AnyEntry = CollectionEntry<"projects" | "initiatives" | "caseStudies">;
+
+interface Props {
+  projects: AnyEntry[];
+}
+
+const { projects } = Astro.props as Props;
+
+const flattenStrings = (val: unknown): string[] =>
+  Array.isArray(val) ? val.filter(Boolean).map(String) : val ? [String(val)] : [];
+
+const allClients = Array.from(
+  new Set(
+    projects
+      .map((p) => (p.data as any).client || (p.data as any).organisation || (p.data as any).institution)
+      .filter(Boolean) as string[]
+  )
+).sort();
+
+const allTags = Array.from(new Set(projects.flatMap((p) => flattenStrings((p.data as any).tags)))).sort();
+
+const allCategories = Array.from(
+  new Set(projects.flatMap((p) => flattenStrings((p.data as any).category)))
+).sort();
+
+const allTypes = Array.from(
+  new Set(projects.map((p) => (p.data as any).type).filter(Boolean) as string[])
+).sort();
+
+const allStatuses = Array.from(
+  new Set(projects.map((p) => (p.data as any).status).filter(Boolean) as string[])
+).sort();
+---
+
+<div class="filters" aria-label="Project filters">
+  <div class="filter-field">
+    <label for="search">Search</label>
+    <input id="search" type="text" placeholder="Search title or description" />
+  </div>
+
+  <div class="filter-field">
+    <label for="client">Client</label>
+    <select id="client">
+      <option value="">All</option>
+      {allClients.map((c) => <option value={c}>{c}</option>)}
+    </select>
+  </div>
+
+  <div class="filter-field">
+    <label for="tag">Tag</label>
+    <select id="tag">
+      <option value="">All</option>
+      {allTags.map((t) => <option value={t}>{t}</option>)}
+    </select>
+  </div>
+
+  <div class="filter-field">
+    <label for="category">Category</label>
+    <select id="category">
+      <option value="">All</option>
+      {allCategories.map((c) => <option value={c}>{c}</option>)}
+    </select>
+  </div>
+
+  <div class="filter-field">
+    <label for="type">Type</label>
+    <select id="type">
+      <option value="">All</option>
+      {allTypes.map((t) => <option value={t}>{t}</option>)}
+    </select>
+  </div>
+
+  <div class="filter-field">
+    <label for="status">Status</label>
+    <select id="status">
+      <option value="">All</option>
+      {allStatuses.map((s) => <option value={s}>{s}</option>)}
+    </select>
+  </div>
+
+  <div class="filter-field">
+    <label for="fromDate">From</label>
+    <input id="fromDate" type="date" />
+  </div>
+
+  <div class="filter-field">
+    <label for="toDate">To</label>
+    <input id="toDate" type="date" />
+  </div>
+
+  <div class="filter-actions">
+    <button id="clearFilters" type="button">Clear</button>
+  </div>
+
+  <script is:inline define:vars={{ projects }}>
+    (() => {
+      const grid = document.getElementById("projectGrid");
+      const searchInput = document.getElementById("search");
+      const clientSelect = document.getElementById("client");
+      const tagSelect = document.getElementById("tag");
+      const categorySelect = document.getElementById("category");
+      const typeSelect = document.getElementById("type");
+      const statusSelect = document.getElementById("status");
+      const fromDateInput = document.getElementById("fromDate");
+      const toDateInput = document.getElementById("toDate");
+      const clearBtn = document.getElementById("clearFilters");
+
+      const getValue = (el) => (el && "value" in el ? el.value : "");
+      const setValue = (el, value) => {
+        if (el && "value" in el) el.value = value;
+      };
+
+      function applyFilters() {
+        const q = getValue(searchInput).toLowerCase().trim();
+        const client = getValue(clientSelect);
+        const tag = getValue(tagSelect);
+        const category = getValue(categorySelect);
+        const type = getValue(typeSelect);
+        const status = getValue(statusSelect);
+        const from = getValue(fromDateInput) ? new Date(getValue(fromDateInput)).getTime() : null;
+        const to = getValue(toDateInput) ? new Date(getValue(toDateInput)).getTime() : null;
+
+        const cards = Array.from(grid?.children || []);
+
+        cards.forEach((card, idx) => {
+          const p = projects[idx];
+          if (!p) return;
+
+          let ok = true;
+
+          if (q) {
+            const hay = `${p.title} ${p.description || ""}`.toLowerCase();
+            if (!hay.includes(q)) ok = false;
+          }
+          if (client && p.client !== client) ok = false;
+          if (tag && !p.tags.includes(tag)) ok = false;
+          if (category && !p.category.includes(category)) ok = false;
+          if (type && p.type !== type) ok = false;
+          if (status && p.status !== status) ok = false;
+
+          if (from) {
+            const start = new Date(p.startDate).getTime();
+            if (start < from) ok = false;
+          }
+          if (to) {
+            const start = new Date(p.startDate).getTime();
+            if (start > to) ok = false;
+          }
+
+          card.style.display = ok ? "" : "none";
+        });
+      }
+
+      [searchInput, clientSelect, tagSelect, categorySelect, typeSelect, statusSelect, fromDateInput, toDateInput].forEach(
+        (el) => el?.addEventListener("input", applyFilters)
+      );
+      [clientSelect, tagSelect, categorySelect, typeSelect, statusSelect, fromDateInput, toDateInput].forEach(
+        (el) => el?.addEventListener("change", applyFilters)
+      );
+
+      clearBtn?.addEventListener("click", () => {
+        setValue(searchInput, "");
+        setValue(clientSelect, "");
+        setValue(tagSelect, "");
+        setValue(categorySelect, "");
+        setValue(typeSelect, "");
+        setValue(statusSelect, "");
+        setValue(fromDateInput, "");
+        setValue(toDateInput, "");
+        applyFilters();
+      });
+
+      applyFilters();
+    })();
+  </script>
+</div>
+
+<style>
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .filters {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .filters {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .filter-field label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted, #666);
+  }
+
+  .filter-field input,
+  .filter-field select {
+    padding: 0.4rem 0.5rem;
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+
+  .filter-actions {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .filter-actions button {
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--color-border, #e5e5e5);
+    background: #f7f7f7;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: var(--color-text-muted, #666);
+  }
+
+  .filter-actions button:hover {
+    background: #eee;
+  }
+</style>

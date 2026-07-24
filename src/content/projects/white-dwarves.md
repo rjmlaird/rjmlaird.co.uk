@@ -2,25 +2,19 @@
 id: 41
 slug: white-dwarves
 title: White dwarves
-featured: true
-type: featured
+type: research
 status: completed
 description: A short summary of what this project does.
 startDate: 2026-07-01
-tools_tech:
-  - TypeScript
-  - Astro
-  - Zod
-features:
-  - Feature one
-  - Feature two
 tags:
-  - portfolio
-  - web
-  - example
+  - research
+  - astrophysics
+  - white-dwarves
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://le.ac.uk/physics
 impact: {}
 institution: University of Leicester 
+relatedExperience: ["exp-uol-research-2008"]
 ---
+
+publication

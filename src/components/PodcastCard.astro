@@ -1,0 +1,126 @@
+---
+import type { CollectionEntry } from "astro:content";
+import PodcastMeta from "./PodcastMeta.astro";
+
+interface Props {
+  entry?: CollectionEntry<"podcasts">;
+  episodeIndex?: number;
+  featured?: boolean;
+}
+
+const { entry, episodeIndex = 0, featured = false } = Astro.props as Props;
+const data = entry?.data ?? {};
+const episode = data.relatedEpisodes?.[episodeIndex] ?? {};
+
+const title =
+  episode.title ??
+  data.title ??
+  data.podcastTitle ??
+  "Untitled Episode";
+
+const description =
+  episode.description ??
+  episode.summary ??
+  data.description ??
+  data.podcastDescription ??
+  "";
+
+const image = episode.artwork ?? episode.image ?? data.podcastCoverImage ?? "";
+const href = episode.shareUrl || episode.audioUrl || `/podcasts/${entry?.id ?? ""}/`;
+
+const publishedDate = episode.publishedDate ? new Date(episode.publishedDate) : null;
+---
+
+<article class:list={["podcast-card", { featured }]}>
+  {image && (
+    <a href={href} class="podcast-card-image-link" aria-label={title}>
+      <img class="podcast-card-image" src={image} alt={title} loading="lazy" />
+    </a>
+  )}
+
+  <div class="body">
+    <h2>
+      <a href={href} class="title-link">{title}</a>
+    </h2>
+
+    {description && <p class="description">{description}</p>}
+
+    <PodcastMeta
+      podcastCategories={data.podcastCategories}
+      tags={data.tags}
+      publishedDate={publishedDate ?? undefined}
+    />
+  </div>
+</article>
+
+<style>
+  .podcast-card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 1rem;
+    border: 1px solid var(--color-border, #e5e7eb);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--color-surface, #fff);
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .podcast-card:hover {
+    border-color: var(--color-accent, #3949ab);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .podcast-card-image-link {
+    flex: 0 0 280px;
+    display: block;
+  }
+
+  .podcast-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 1rem 1rem 0;
+  }
+
+  .title-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .title-link:hover {
+    color: var(--color-accent, #3949ab);
+  }
+
+  .description {
+    margin: 0;
+    color: var(--color-text-muted, #64748b);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 720px) {
+    .podcast-card {
+      flex-direction: column;
+    }
+
+    .podcast-card-image-link {
+      flex-basis: auto;
+      width: 100%;
+    }
+
+    .body {
+      padding: 0 1rem 1rem;
+    }
+  }
+</style>

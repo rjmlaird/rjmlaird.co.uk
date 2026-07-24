@@ -1,0 +1,301 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "imageCredit": {
+      "type": "string"
+    },
+    "canonical": {
+      "type": "string",
+      "format": "uri"
+    },
+    "noindex": {
+      "default": false,
+      "type": "boolean"
+    },
+    "nofollow": {
+      "default": false,
+      "type": "boolean"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "updatedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "draft": {
+      "default": false,
+      "type": "boolean"
+    },
+    "featured": {
+      "default": false,
+      "type": "boolean"
+    },
+    "tags": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "categories": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "podcastTitle": {
+      "type": "string"
+    },
+    "podcastDescription": {
+      "type": "string"
+    },
+    "podcastWebsite": {
+      "type": "string",
+      "format": "uri"
+    },
+    "podcastFeedUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "podcastPublisher": {
+      "type": "string"
+    },
+    "podcastLanguage": {
+      "type": "string"
+    },
+    "podcastCoverImage": {
+      "type": "string"
+    },
+    "podcastCategories": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "podcastApplePodcasts": {
+      "type": "string",
+      "format": "uri"
+    },
+    "podcastSpotify": {
+      "type": "string",
+      "format": "uri"
+    },
+    "podcastYouTube": {
+      "type": "string",
+      "format": "uri"
+    },
+    "host": {
+      "type": "string"
+    },
+    "guest": {
+      "type": "string"
+    },
+    "season": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "episodeNumber": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "publishedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration": {
+      "type": "string"
+    },
+    "transcriptUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "shareUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "audioUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "artwork": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "relatedEpisodes": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "guest": {
+            "type": "string"
+          },
+          "host": {
+            "type": "string"
+          },
+          "season": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "episodeNumber": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "publishedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "duration": {
+            "type": "string"
+          },
+          "audioUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "shareUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "transcriptUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "artwork": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "relatedPodcasts": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "podcastTitle": {
+            "type": "string"
+          },
+          "podcastDescription": {
+            "type": "string"
+          },
+          "podcastWebsite": {
+            "type": "string",
+            "format": "uri"
+          },
+          "podcastFeedUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "podcastPublisher": {
+            "type": "string"
+          },
+          "podcastLanguage": {
+            "type": "string"
+          },
+          "podcastCoverImage": {
+            "type": "string"
+          },
+          "podcastCategories": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "podcastApplePodcasts": {
+            "type": "string",
+            "format": "uri"
+          },
+          "podcastSpotify": {
+            "type": "string",
+            "format": "uri"
+          },
+          "podcastYouTube": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "$schema": {
+      "type": "string"
+    }
+  }
+}

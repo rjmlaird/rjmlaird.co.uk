@@ -2,9 +2,7 @@
 id: 4
 slug: windy
 title: Windy
-featured: true
 draft: false
-type: featured
 status: completed
 description: A short summary of what this project does.
 startDate: 2026-07-01
@@ -12,17 +10,19 @@ tools_tech:
   - TypeScript
   - Astro
   - Zod
-features:
-  - Feature one
-  - Feature two
 tags:
-  - portfolio
-  - web
-  - example
+  - CAMS
+  - C3S
+  - Copernicus
+youtubeId: RCWH-Z14Uts
 links:
-  github: https://github.com/yourname/example-project
+  youtube: https://youtu.be/RCWH-Z14Uts?si=oYkWpKhRhBg159Dt
 impact: {}
-caseStudy: European State of the Climate
 client: ECMWF
-organisation: Design & Data GmbH
+relatedExperience: ["exp-design-and-data"]
+relatedCaseStudies: ["esotc2017"]
+heroImage: https://img.youtube.com/vi/RCWH-Z14Uts/maxresdefault.jpg
+heroAlt: "Windy Thumbnail"
+imageCredit: ECMWF/Design & Data
+
 ---

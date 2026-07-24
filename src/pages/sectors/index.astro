@@ -1,0 +1,115 @@
+---
+// src/pages/sectors/index.astro
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { slugify } from "../../utils/slugify";
+
+// Only collections that have `sectors` and `draft`
+const [posts, projects, caseStudies, initiatives] = await Promise.all([
+  getCollection("blog", ({ data }) => !data.draft),
+  getCollection("projects", ({ data }) => data.draft !== true),
+  getCollection("caseStudies", ({ data }) => data.draft !== true),
+  getCollection("initiatives", ({ data }) => data.draft !== true),
+]);
+
+const allEntries = [...posts, ...projects, ...caseStudies, ...initiatives];
+
+const sectorMap = new Map<string, { label: string; count: number }>();
+
+for (const entry of allEntries) {
+  // Narrow type manually
+  const data = entry.data as { sectors?: unknown };
+  if (!Array.isArray(data.sectors)) continue;
+
+  for (const sector of data.sectors) {
+    if (typeof sector !== "string") continue;
+    const slug = slugify(sector);
+    const existing = sectorMap.get(slug);
+    if (existing) {
+      existing.count += 1;
+    } else {
+      sectorMap.set(slug, { label: sector, count: 1 });
+    }
+  }
+}
+
+const allSectors = Array.from(sectorMap.entries())
+  .map(([slug, { label, count }]) => ({ slug, label, count }))
+  .sort((a, b) => a.label.localeCompare(b.label));
+---
+
+<Layout
+  title="Sectors"
+  description="Browse every sector across blog posts, projects, initiatives and case studies."
+>
+  <section class="sectors-index">
+    <p class="eyebrow">Browse by sector</p>
+    <h1>Sectors</h1>
+    <p class="intro">
+      All {allSectors.length} sectors used across blog posts, projects, initiatives and case studies.
+    </p>
+
+    <ul class="sector-list" aria-label="All sectors">
+      {allSectors.map(({ slug, label, count }) => (
+        <li>
+          <a href={`/sectors/${slug}/`}>
+            <span class="sector-label">{label}</span>
+            <span class="sector-count">{count}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Layout>
+
+<style>
+  .sectors-index {
+    max-width: 1100px;
+    margin-inline: auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent, #3949ab);
+    margin: 0 0 0.3rem;
+  }
+  h1 {
+    margin: 0 0 0.5rem;
+  }
+  .intro {
+    margin: 0 0 2rem;
+    color: var(--color-text-muted, #666);
+  }
+  .sector-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .sector-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--color-text, #1a1a1a);
+    font-size: 0.85rem;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .sector-list a:hover,
+  .sector-list a:focus-visible {
+    border-color: var(--color-accent, #3949ab);
+    color: var(--color-accent, #3949ab);
+  }
+  .sector-count {
+    color: var(--color-text-muted, #999);
+    font-size: 0.75rem;
+  }
+</style>

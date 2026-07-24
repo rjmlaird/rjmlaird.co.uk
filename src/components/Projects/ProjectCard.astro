@@ -1,177 +1,171 @@
 ---
-import { slugify } from '../../utils/slugify';
+import type { CollectionEntry } from "astro:content";
+import CategoryBadge from "../CategoryBadge.astro";
+import TagList from "../TagList.astro";
+import Figure from "../Figure.astro";
 
-type Project = {
-  slug: string;
-  title?: string;
-  type?: string;
-  status?: string;
-  description?: string;
-  startDate?: Date | string;
-  tools_tech?: string[];
-  features?: string[];
-  tags?: string[];
-  links?: {
-    github?: string;
-    live?: string;
-    website?: string;
-    demo?: string;
-    docs?: string;
-    repo?: string;
-    api?: string;
-  };
-  impact?: Record<string, unknown>;
-};
+interface Props {
+  project?: CollectionEntry<"projects">;
+  initiative?: CollectionEntry<"initiatives">;
+  caseStudy?: CollectionEntry<"caseStudies">;
+  featured?: boolean;
+}
 
-const { project, slug } = Astro.props as {
-  project: Project;
-  slug: string;
-};
+const { project, initiative, caseStudy, featured = false } = Astro.props as Props;
 
-// NOTE: the content schema field is `startDate`, not `date` — using the
-// wrong key here meant every card silently rendered an empty date.
-const dateValue = project.startDate ? new Date(project.startDate) : null;
+const source = project ?? initiative ?? caseStudy;
+const kind = project ? "project" : initiative ? "initiative" : "caseStudy";
+const data = source?.data;
+
+const title = data?.title ?? "";
+const description = data?.description ?? "";
+const excerpt = data?.excerpt ?? "";
+const tags = data?.tags ?? [];
+const type = data?.type ?? "";
+const status = data?.status ?? "";
+const client = data?.client ?? "";
+const organisation = data?.organisation ?? "";
+const institution = data?.institution ?? "";
+const startDate = data?.startDate;
+const heroImage = data?.heroImage ?? "";
+const heroAlt = (data?.heroAlt ?? title) || "Hero image";
+
+const safeTags = Array.isArray(tags) ? tags : [];
+const primaryType = type || status || client || organisation || institution || "";
+const dateValue = startDate ? new Date(startDate) : null;
 const formattedDate = dateValue
-  ? dateValue.toLocaleDateString("en-GB", { month: "short", year: "numeric" })
+  ? dateValue.toLocaleDateString("en-GB", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
   : "";
 
-const tags = Array.isArray(project.tags) ? project.tags : [];
-const badges = [project.type, project.status].filter(Boolean) as string[];
+const slug = source?.id ?? "";
+const basePath =
+  kind === "initiative"
+    ? "initiatives"
+    : kind === "caseStudy"
+      ? "case-studies"
+      : "projects";
+
+const href = `/${basePath}/${slug}/`;
 ---
 
-<article class="project-card">
-  <div class="card-top">
-    <h3>
-      <a href={`/projects/${slug}/`}>{project.title}</a>
-    </h3>
-    {formattedDate && (
-      <time class="date" datetime={dateValue?.toISOString()}>{formattedDate}</time>
+<article class:list={["project-card", { featured }]}>
+  {heroImage && (
+    <a href={href} class="project-card-image-link" aria-label={title}>
+      <Figure src={heroImage} alt={heroAlt} />
+    </a>
+  )}
+
+  <div class="body">
+    {primaryType && <CategoryBadge category={primaryType} as="span" />}
+
+    <h2>
+      <a href={href} class="title-link">{title}</a>
+    </h2>
+
+    {(description || excerpt) && <p class="description">{description || excerpt}</p>}
+
+    {safeTags.length > 0 && (
+      <div class="meta-block">
+        <TagList tags={safeTags} limit={3} />
+      </div>
     )}
-  </div>
 
-  {badges.length > 0 && (
-    <div class="badges" aria-label="Project type and status">
-      {badges.map((label) => <span class="badge">{label}</span>)}
+    <div class="footer">
+      {formattedDate && <time datetime={dateValue?.toISOString()}>{formattedDate}</time>}
     </div>
-  )}
-
-  {project.description && <p class="description">{project.description}</p>}
-
-  {tags.length > 0 && (
-    <ul class="tag-row" aria-label="Tags">
-      {tags.slice(0, 4).map((tag) => (
-        <li><a href={`/tags/${slugify(tag)}/`}>#{tag}</a></li>
-      ))}
-    </ul>
-  )}
-
-  <a class="view-link" href={`/projects/${slug}/`}>
-    View project <span aria-hidden="true">→</span>
-  </a>
+  </div>
 </article>
 
 <style>
   .project-card {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    padding: 1.4rem 1.5rem;
-    border: 1px solid var(--bd);
-    border-radius: 1rem;
-    background: var(--card);
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 8px;
+    overflow: hidden;
     transition: border-color 0.15s ease, transform 0.15s ease;
   }
-  .project-card:hover,
-  .project-card:focus-within {
-    border-color: var(--bm);
+
+  .project-card:hover {
+    border-color: var(--color-accent, #3949ab);
     transform: translateY(-2px);
   }
-  .card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
-    margin-bottom: 0.6rem;
+
+  .project-card-image-link {
+    display: block;
   }
-  h3 {
+
+  .body {
+    padding: 1.1rem 1.2rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  h2 {
     margin: 0;
-    font-family: var(--font-display);
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     line-height: 1.3;
   }
-  h3 a {
-    color: var(--w);
+
+  .featured h2 {
+    font-size: 1.5rem;
+  }
+
+  .title-link {
+    color: inherit;
     text-decoration: none;
   }
-  h3 a:hover,
-  h3 a:focus-visible {
-    color: var(--teal);
+
+  .title-link:hover {
+    color: var(--color-accent, #3949ab);
   }
-  .date {
-    flex-shrink: 0;
-    font-size: 0.75rem;
-    color: var(--m);
-    white-space: nowrap;
-  }
-  .badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 0.75rem;
-  }
-  .badge {
-    font-family: var(--font-display);
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: capitalize;
-    padding: 0.25rem 0.6rem;
-    border-radius: 999px;
-    border: 1px solid var(--bm);
-    color: var(--m);
-  }
+
   .description {
-    margin: 0 0 0.85rem;
-    font-size: 0.88rem;
-    line-height: 1.6;
-    color: var(--mb);
-    flex-grow: 1;
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-muted, #666);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
-  .tag-row {
-    list-style: none;
+
+  .meta-block {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin: 0 0 1rem;
-    padding: 0;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.2rem;
   }
-  .tag-row a {
-    font-size: 0.72rem;
-    color: var(--m);
-    text-decoration: none;
-    border: 1px solid var(--bd);
-    border-radius: 999px;
-    padding: 0.15rem 0.55rem;
+
+  .footer {
+    font-size: 0.78rem;
+    color: var(--color-text-muted, #666);
+    margin-top: 0.3rem;
   }
-  .tag-row a:hover,
-  .tag-row a:focus-visible {
-    color: var(--teal);
-    border-color: var(--teal);
+
+  .featured {
+    grid-column: 1 / -1;
   }
-  .view-link {
-    align-self: flex-start;
-    margin-top: auto;
-    font-family: var(--font-display);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--teal);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-  .view-link:hover,
-  .view-link:focus-visible {
-    text-decoration: underline;
+
+  @media (min-width: 800px) {
+    .featured {
+      flex-direction: row;
+    }
+
+    .featured .project-card-image-link {
+      width: 65%;
+    }
+
+    .featured .body {
+      flex: 1;
+      justify-content: center;
+    }
   }
 </style>

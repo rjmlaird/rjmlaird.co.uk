@@ -6,7 +6,7 @@ export const publicationSchema = baseSchema.extend({
   type: z.enum(["Article", "Podcast", "Interview", "Paper", "Press Release"]),
   author: z.string().trim(),
   published: z.string().trim(),
-  url: z.string().trim().pipe(z.url()),
+  url: z.url().optional(),
 });
 
 export type Publication = z.infer<typeof publicationSchema>;

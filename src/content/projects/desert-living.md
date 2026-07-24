@@ -18,10 +18,8 @@ tags:
   - web
   - example
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://bloodhoundssc.com
 impact: {}
+relatedExperience: ["exp-bloodhound-ssc"]
 ---
 # 
-
-Organisations: Bloodhound SSC (https://app.notion.com/p/Bloodhound-SSC-37b3a96540ad807bbbe8cead8c8737d3?pvs=21)

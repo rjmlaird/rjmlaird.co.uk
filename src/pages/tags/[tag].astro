@@ -1,21 +1,28 @@
 ---
+// src/pages/tags/[tag].astro
 import Layout from '../../layouts/Layout.astro';
 import PostCard from '../../components/PostCard.astro';
 import { getCollection } from 'astro:content';
 import { slugify } from '../../utils/slugify';
 
 export async function getStaticPaths() {
-  const [posts, projects, caseStudies] = await Promise.all([
+  const [posts, projects, caseStudies, initiatives] = await Promise.all([
     getCollection('blog', (p) => !p.data.draft),
     getCollection('projects', (p) => p.data.draft !== true),
-    getCollection('caseStudy', (p) => p.data.draft !== true),
+    getCollection('caseStudies', (p) => p.data.draft !== true),
+    getCollection('initiatives', (p) => p.data.draft !== true),
   ]);
 
   const tagMap = new Map<string, string>(); // slug -> display label
-  for (const entry of [...posts, ...projects, ...caseStudies]) {
-    if (Array.isArray(entry.data.tags)) {
-      for (const tag of entry.data.tags) {
-        tagMap.set(slugify(tag), tag);
+
+  for (const entry of [...posts, ...projects, ...caseStudies, ...initiatives]) {
+    // Narrow tags safely
+    const data = entry.data as { tags?: unknown };
+    if (Array.isArray(data.tags)) {
+      for (const tag of data.tags) {
+        if (typeof tag === 'string') {
+          tagMap.set(slugify(tag), tag);
+        }
       }
     }
   }
@@ -33,27 +40,39 @@ const matchesTag = (entryTags: unknown) =>
   Array.isArray(entryTags) && entryTags.some((t) => slugify(t) === tag);
 
 const posts = (
-  await getCollection('blog', (p) => !p.data.draft && matchesTag(p.data.tags))
+  await getCollection('blog', (p) =>
+    !p.data.draft && matchesTag((p.data as { tags?: unknown }).tags)
+  )
 ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const projects = await getCollection(
   'projects',
-  (p) => p.data.draft !== true && matchesTag(p.data.tags)
+  (p) => p.data.draft !== true && matchesTag((p.data as { tags?: unknown }).tags)
 );
 
 const caseStudies = await getCollection(
-  'caseStudy',
-  (p) => p.data.draft !== true && matchesTag(p.data.tags)
+  'caseStudies',
+  (p) => p.data.draft !== true && matchesTag((p.data as { tags?: unknown }).tags)
 );
 
-const totalCount = posts.length + projects.length + caseStudies.length;
+const initiatives = await getCollection(
+  'initiatives',
+  (p) => p.data.draft !== true && matchesTag((p.data as { tags?: unknown }).tags)
+);
+
+const totalCount = posts.length + projects.length + caseStudies.length + initiatives.length;
 ---
 
-<Layout title={`#${label} — Tagged content`} description={`Blog posts, projects and case studies tagged ${label}.`}>
+<Layout
+  title={`#${label} — Tagged content`}
+  description={`Blog posts, projects, initiatives and case studies tagged ${label}.`}
+>
   <section class="archive">
     <p class="eyebrow">Tag</p>
     <h1>#{label}</h1>
-    <p class="count">{totalCount} {totalCount === 1 ? 'item' : 'items'} tagged "{label}"</p>
+    <p class="count">
+      {totalCount} {totalCount === 1 ? 'item' : 'items'} tagged "{label}"
+    </p>
 
     {posts.length > 0 && (
       <>
@@ -68,14 +87,19 @@ const totalCount = posts.length + projects.length + caseStudies.length;
       <>
         <h2 class="group-title">Projects</h2>
         <ul class="simple-list">
-          {projects.map((entry) => (
-            <li>
-              <a href={`/projects/${entry.id}/`}>
-                <span class="item-title">{entry.data.title}</span>
-                {entry.data.description && <span class="item-desc">{entry.data.description}</span>}
-              </a>
-            </li>
-          ))}
+          {projects.map((entry) => {
+            const data = entry.data as { title?: string; description?: string };
+            return (
+              <li>
+                <a href={`/projects/${entry.id}/`}>
+                  <span class="item-title">{data.title}</span>
+                  {data.description && (
+                    <span class="item-desc">{data.description}</span>
+                  )}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </>
     )}
@@ -84,14 +108,40 @@ const totalCount = posts.length + projects.length + caseStudies.length;
       <>
         <h2 class="group-title">Case studies</h2>
         <ul class="simple-list">
-          {caseStudies.map((entry) => (
-            <li>
-              <a href={`/case-studies/${entry.id}/`}>
-                <span class="item-title">{entry.data.title}</span>
-                {entry.data.description && <span class="item-desc">{entry.data.description}</span>}
-              </a>
-            </li>
-          ))}
+          {caseStudies.map((entry) => {
+            const data = entry.data as { title?: string; description?: string };
+            return (
+              <li>
+                <a href={`/case-studies/${entry.id}/`}>
+                  <span class="item-title">{data.title}</span>
+                  {data.description && (
+                    <span class="item-desc">{data.description}</span>
+                  )}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </>
+    )}
+
+    {initiatives.length > 0 && (
+      <>
+        <h2 class="group-title">Initiatives</h2>
+        <ul class="simple-list">
+          {initiatives.map((entry) => {
+            const data = entry.data as { title?: string; description?: string };
+            return (
+              <li>
+                <a href={`/initiatives/${entry.id}/`}>
+                  <span class="item-title">{data.title}</span>
+                  {data.description && (
+                    <span class="item-desc">{data.description}</span>
+                  )}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </>
     )}
@@ -131,8 +181,6 @@ const totalCount = posts.length + projects.length + caseStudies.length;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.75rem;
   }
-<<<<<<< ours
-=======
   .simple-list {
     list-style: none;
     margin: 0;
@@ -166,5 +214,4 @@ const totalCount = posts.length + projects.length + caseStudies.length;
   .empty {
     color: var(--color-text-muted, #666);
   }
->>>>>>> theirs
 </style>

@@ -9,6 +9,7 @@
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": [
     "dist",
-    "assets/vendor"
+    "assets/vendor",
+    "public/vendor"
   ]
 }

@@ -1,0 +1,85 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import ProjectCard from "../../components/Projects/ProjectCard.astro";
+import Filters from "../../components/Projects/Filters.astro";
+
+const initiatives = await getCollection("initiatives", ({ data }) => data.draft !== true);
+
+const sortByTitle = (a: CollectionEntry<"initiatives">, b: CollectionEntry<"initiatives">) =>
+  (a.data.title ?? "").localeCompare(b.data.title ?? "");
+
+const sortedInitiatives = initiatives.sort(sortByTitle);
+---
+
+<Layout
+  title="Initiatives"
+  description="Space, sustainability and science-communication initiatives — filter by date, client, tags, type and status."
+>
+  <section class="project-index">
+    <div class="container pg-shell">
+      <header class="pg-head">
+        <p class="eyebrow">Initiatives</p>
+
+        <h1 class="ch fade">
+          Initiatives across <em>space, sustainability &amp; science policy</em>
+        </h1>
+      </header>
+
+      <Filters projects={sortedInitiatives} />
+
+      <div class="grid" id="projectGrid">
+        {sortedInitiatives.map((initiative) => (
+          <ProjectCard initiative={initiative} />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .project-index {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .pg-head {
+    margin-bottom: 1.5rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #666);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .ch {
+    margin: 0;
+    line-height: 1.15;
+  }
+
+  .ch em {
+    font-style: normal;
+    color: var(--color-accent, #3949ab);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

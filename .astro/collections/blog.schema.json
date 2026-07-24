@@ -30,7 +30,17 @@
       "type": "boolean"
     },
     "id": {
-      "type": "number"
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "slug": {
+      "type": "string"
     },
     "updatedDate": {
       "type": "string",
@@ -62,24 +72,146 @@
         "type": "string"
       }
     },
-    "category": {
+    "sectors": {
       "default": [],
-      "anyOf": [
-        {
-          "type": "string"
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "youtubeId": {
+      "type": "string"
+    },
+    "category": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "links": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "github": {
+          "type": "string",
+          "format": "uri"
         },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+        "web": {
+          "type": "string",
+          "format": "uri"
+        },
+        "demo": {
+          "type": "string",
+          "format": "uri"
+        },
+        "docs": {
+          "type": "string",
+          "format": "uri"
+        },
+        "youtube": {
+          "type": "string",
+          "format": "uri"
+        },
+        "store": {
+          "type": "string",
+          "format": "uri"
+        },
+        "api": {
+          "type": "string",
+          "format": "uri"
         }
-      ]
+      }
     },
     "heroImage": {
       "type": "string"
     },
     "heroAlt": {
+      "type": "string"
+    },
+    "relatedOrg": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedExperience": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedEducation": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedVolunteering": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedAwards": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedTools": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedSkills": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedVideos": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedCaseStudies": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedInitiatives": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedProjects": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "client": {
+      "type": "string"
+    },
+    "organisation": {
+      "type": "string"
+    },
+    "institution": {
       "type": "string"
     },
     "pubDate": {

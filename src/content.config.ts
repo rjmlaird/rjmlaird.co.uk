@@ -1,17 +1,6 @@
-import { defineCollection, reference } from "astro:content";
-import { z } from "zod";
+import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
-
-// 1. Single source of truth for categories
-export const CATEGORIES = [
-  "space-data",
-  "earth-observation",
-  "sustainability",
-  "technology",
-  "marketing"
-] as const;
-
-// --- Reusable Schemas ---
+import { z } from "zod";
 
 const seoSchema = z.object({
   title: z.string().optional(),
@@ -24,8 +13,26 @@ const seoSchema = z.object({
   nofollow: z.boolean().default(false),
 });
 
+const relatedItemSchema = z.object({
+  id: z.union([z.string(), z.number()]).optional(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  guest: z.string().optional(),
+  host: z.string().optional(),
+  season: z.union([z.string(), z.number()]).optional(),
+  episodeNumber: z.union([z.string(), z.number()]).optional(),
+  publishedDate: z.coerce.date().optional(),
+  duration: z.string().optional(),
+  audioUrl: z.url().optional(),
+  shareUrl: z.url().optional(),
+  transcriptUrl: z.url().optional(),
+  artwork: z.string().optional(),
+  summary: z.string().optional(),
+});
+
 const baseSchema = seoSchema.extend({
-  id: z.number().optional(),
+  id: z.union([z.string(), z.number()]).optional(),
+  slug: z.string().optional(),
   updatedDate: z.coerce.date().optional(),
   startDate: z.coerce.date().optional(),
   endDate: z.coerce.date().optional(),
@@ -33,25 +40,109 @@ const baseSchema = seoSchema.extend({
   featured: z.boolean().default(false),
   author: z.string().optional(),
   tags: z.array(z.string()).default([]),
+  sectors: z.array(z.string()).default([]),
+  youtubeId: z.string().optional(),
   category: z
-    .union([z.string(), z.array(z.string())])
-    .default([])
-    .transform((val) => (Array.isArray(val) ? val : [val])),
-  // Hero image as a string path to match your front matter
+    .preprocess(
+      (val) => {
+        if (val == null) return [];
+        if (Array.isArray(val)) return val;
+        return [val];
+      },
+      z.array(z.string())
+    )
+    .default([]),
+  links: z
+    .object({
+      github: z.url().optional(),
+      web: z.url().optional(),
+      demo: z.url().optional(),
+      docs: z.url().optional(),
+      youtube: z.url().optional(),
+      store: z.url().optional(),
+      api: z.url().optional(),
+    })
+    .optional()
+    .default({}),
   heroImage: z.string().optional(),
   heroAlt: z.string().optional(),
+  relatedOrg: z.array(z.string()).default([]),
+  relatedExperience: z.array(z.string()).default([]),
+  relatedEducation: z.array(z.string()).default([]),
+  relatedVolunteering: z.array(z.string()).default([]),
+  relatedAwards: z.array(z.string()).default([]),
+  relatedTools: z.array(z.string()).default([]),
+  relatedSkills: z.array(z.string()).default([]),
+  relatedVideos: z.array(z.string()).default([]),
+  relatedCaseStudies: z.array(z.string()).default([]),
+  relatedInitiatives: z.array(z.string()).default([]),
+  relatedProjects: z.array(z.string()).default([]),
+  client: z.string().optional(),
+  organisation: z.string().optional(),
+  institution: z.string().optional(),
 });
 
-// --- Collections Definition ---
+const podcastSchema = seoSchema.extend({
+  slug: z.string().optional(),
+  updatedDate: z.coerce.date().optional(),
+  draft: z.boolean().default(false),
+  featured: z.boolean().default(false),
+  tags: z.array(z.string()).default([]),
+  categories: z.array(z.string()).default([]),
+
+  podcastTitle: z.string().optional(),
+  podcastDescription: z.string().optional(),
+  podcastWebsite: z.url().optional(),
+  podcastFeedUrl: z.url().optional(),
+  podcastPublisher: z.string().optional(),
+  podcastLanguage: z.string().optional(),
+  podcastCoverImage: z.string().optional(),
+  podcastCategories: z.array(z.string()).default([]),
+  podcastApplePodcasts: z.url().optional(),
+  podcastSpotify: z.url().optional(),
+  podcastYouTube: z.url().optional(),
+
+  host: z.string().optional(),
+  guest: z.string().optional(),
+  season: z.union([z.string(), z.number()]).optional(),
+  episodeNumber: z.union([z.string(), z.number()]).optional(),
+  publishedDate: z.coerce.date().optional(),
+  duration: z.string().optional(),
+  transcriptUrl: z.url().optional(),
+  shareUrl: z.url().optional(),
+  audioUrl: z.url().optional(),
+  artwork: z.string().optional(),
+  summary: z.string().optional(),
+
+  relatedEpisodes: z.array(relatedItemSchema).default([]),
+  relatedPodcasts: z
+    .array(
+      z.object({
+        id: z.union([z.string(), z.number()]).optional(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+        podcastTitle: z.string().optional(),
+        podcastDescription: z.string().optional(),
+        podcastWebsite: z.url().optional(),
+        podcastFeedUrl: z.url().optional(),
+        podcastPublisher: z.string().optional(),
+        podcastLanguage: z.string().optional(),
+        podcastCoverImage: z.string().optional(),
+        podcastCategories: z.array(z.string()).default([]),
+        podcastApplePodcasts: z.url().optional(),
+        podcastSpotify: z.url().optional(),
+        podcastYouTube: z.url().optional(),
+      })
+    )
+    .default([]),
+});
 
 export const collections = {
   blog: defineCollection({
     loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
-    schema: () =>
-      baseSchema.extend({
-        pubDate: z.coerce.date(),
-        // heroImage and heroAlt inherited from baseSchema
-      }),
+    schema: baseSchema.extend({
+      pubDate: z.coerce.date(),
+    }),
   }),
 
   projects: defineCollection({
@@ -61,33 +152,28 @@ export const collections = {
       status: z.string().optional(),
       tools_tech: z.array(z.string()).optional(),
       features: z.array(z.string()).optional(),
-      links: z
-        .object({
-          github: z.url().optional(),
-          live: z.url().optional(),
-          demo: z.url().optional(),
-          docs: z.url().optional(),
-          video: z.url().optional(),
-          store: z.url().optional(),
-          api: z.url().optional(),
-        })
-        .optional(),
       impact: z.record(z.string(), z.unknown()).optional(),
-      caseStudy: z.string().optional(),
-      client: z.string().optional(),
-      organisation: z.string().optional(),
-      institution: z.string().optional(),
     }),
   }),
 
-  caseStudy: defineCollection({
+  initiatives: defineCollection({
+    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/initiatives" }),
+    schema: baseSchema.extend({
+      type: z.string().optional(),
+      status: z.string().optional(),
+      tools_tech: z.array(z.string()).optional(),
+      features: z.array(z.string()).optional(),
+      impact: z.record(z.string(), z.unknown()).optional(),
+    }),
+  }),
+
+  caseStudies: defineCollection({
     loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/case-studies" }),
     schema: baseSchema.extend({
+      type: z.string().optional(),
       status: z.string().optional(),
-      client: z.string().optional(),
-      organisation: z.string().optional(),
-      institution: z.string().optional(),
-      relatedProjects: z.array(reference("projects")).default([]),
+      tools_tech: z.array(z.string()).optional(),
+      features: z.array(z.string()).optional(),
       impact: z.record(z.string(), z.unknown()).optional(),
     }),
   }),
@@ -101,5 +187,10 @@ export const collections = {
       role: z.string().optional(),
       website: z.url().optional(),
     }),
+  }),
+
+  podcasts: defineCollection({
+    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/podcasts" }),
+    schema: podcastSchema,
   }),
 };

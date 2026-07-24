@@ -6,23 +6,16 @@ type: featured
 status: completed
 description: A short summary of what this project does.
 startDate: 2026-07-01
-tools_tech:
-  - TypeScript
-  - Astro
-  - Zod
-features:
-  - Feature one
-  - Feature two
+endDate: 2026-07-01
 tags:
-  - portfolio
-  - web
-  - example
+  - ukspace
+  - startups
+  - entrepreneurship
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://ukspace.org
 impact: {}
+client: UKspace
+relatedExperience: ["vol-ukspace-startup"]
 ---
 
 # 
-
-Organisations: UK Space (https://app.notion.com/p/UK-Space-37b3a96540ad80438299eef08319f4fb?pvs=21)

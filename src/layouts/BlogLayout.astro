@@ -15,6 +15,12 @@ interface Props {
   headings?: { depth: number; slug: string; text: string }[];
   relatedPosts?: CollectionEntry<'blog'>[];
   body?: string;
+  pubDate?: Date;
+  updatedDate?: Date;
+  readingTime?: string;
+  category?: string;
+  tags?: string[];
+  author?: { name: string; role: string; avatar: any };
 }
 
 const { post, headings = [], relatedPosts = [], body = '' } = Astro.props;
@@ -46,21 +52,28 @@ if (authorRef && typeof authorRef === 'string') {
   }
 }
 
-const author = {
+const author = Astro.props.author || {
   name: authorEntry?.data.name ?? 'Unknown Author',
   role: authorEntry?.data.role ?? '',
   avatar: authorEntry?.data.avatar as any,
 };
 
-const readingTime = getReadingTime(body || post?.body || '');
+const readingTime = Astro.props.readingTime || getReadingTime(body || post?.body || '');
 const safeHeadings = Array.isArray(headings) ? headings : [];
 const safeRelatedPosts = Array.isArray(relatedPosts) ? relatedPosts : [];
-const safeCategory = Array.isArray(category) ? category[0] || '' : category;
-const safeTags = Array.isArray(tags) ? tags : [];
+const rawCategory = Astro.props.category ?? category;
+const safeCategory = Array.isArray(rawCategory) ? rawCategory[0] || '' : rawCategory;
+const safeTags = Array.isArray(Astro.props.tags) ? Astro.props.tags : Array.isArray(tags) ? tags : [];
 
 const resolvedHeroSrc = heroImage;
 const resolvedHeroAlt = heroAlt || title || 'Hero image';
 const resolvedHeroCredit = imageCredit;
+
+const rawPubDate = Astro.props.pubDate ?? pubDate;
+const parsedPubDate = rawPubDate instanceof Date ? rawPubDate : new Date(rawPubDate);
+
+const rawUpdatedDate = Astro.props.updatedDate ?? updatedDate;
+const parsedUpdatedDate = rawUpdatedDate ? (rawUpdatedDate instanceof Date ? rawUpdatedDate : new Date(rawUpdatedDate)) : undefined;
 ---
 
 <Layout
@@ -78,8 +91,8 @@ const resolvedHeroCredit = imageCredit;
         headline: title,
         description,
         image: resolvedHeroSrc ? [resolvedHeroSrc] : undefined,
-        datePublished: pubDate?.toISOString?.(),
-        dateModified: (updatedDate ?? pubDate)?.toISOString?.(),
+        datePublished: parsedPubDate?.toISOString?.(),
+        dateModified: (parsedUpdatedDate ?? parsedPubDate)?.toISOString?.(),
         author: { '@type': 'Person', name: author.name || 'Ryan Laird' },
         mainEntityOfPage: { '@type': 'WebPage', '@id': post.id ? `/blog/${post.id}/` : undefined },
         keywords: Array.isArray(safeTags) ? safeTags.join(', ') : undefined,
@@ -101,11 +114,7 @@ const resolvedHeroCredit = imageCredit;
         <div class="title-wrap">
           <h1>{title}</h1>
         </div>
-        {description && (
-          <div class="description-wrap">
-            <p class="dek">{description}</p>
-          </div>
-        )}
+        
       </header>
 
       {resolvedHeroSrc && (
@@ -117,8 +126,8 @@ const resolvedHeroCredit = imageCredit;
 
       <PostMeta
         author={author}
-        pubDate={pubDate}
-        updatedDate={updatedDate}
+        pubDate={parsedPubDate}
+        updatedDate={parsedUpdatedDate}
         readingTime={readingTime}
         category={safeCategory}
         tags={safeTags}
@@ -141,122 +150,3 @@ const resolvedHeroCredit = imageCredit;
     </article>
   </main>
 </Layout>
-
-<style>
-  .post {
-    max-width: 1100px;
-    margin-inline: auto;
-    padding-inline: 1.5rem;
-  }
-  .breadcrumb {
-    max-width: 70ch;
-    margin: 2rem auto 0;
-  }
-  .breadcrumb ol {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: 0.8rem;
-    color: var(--color-text-muted, #666);
-  }
-  .breadcrumb li:not(:last-child)::after {
-    content: "/";
-    margin-left: 0.35rem;
-    color: var(--color-border, #ccc);
-  }
-  .breadcrumb a {
-    color: var(--color-text-muted, #666);
-    text-decoration: none;
-  }
-  .breadcrumb a:hover,
-  .breadcrumb a:focus-visible {
-    color: var(--color-accent, #3949ab);
-    text-decoration: underline;
-  }
-  .breadcrumb li[aria-current="page"] {
-    color: var(--color-text, #1a1a1a);
-    max-width: 40ch;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .post-header {
-    max-width: 70ch;
-    margin: 2.5rem auto 0;
-  }
-  .post-header h1 {
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
-    line-height: 1.15;
-    margin: 0 0 0.75rem;
-    display: block;
-  }
-  .post-header .dek {
-    font-size: 1.15rem;
-    color: var(--color-text-muted, #666);
-    line-height: 1.5;
-    margin: 0.5rem 0 0;
-    display: block;
-    clear: both;
-  }
-  .hero {
-    margin: 2rem 0;
-  }
-  .hero img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-  .hero figcaption {
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
-    text-align: center;
-    color: var(--color-text-muted, #666);
-  }
-  .post-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-  .prose {
-    max-width: 70ch;
-    margin-inline: auto;
-    font-size: 1.05rem;
-    line-height: 1.75;
-  }
-  .prose :global(h2) {
-    font-size: 1.5rem;
-    margin-top: 2.5rem;
-  }
-  .prose :global(h3) {
-    font-size: 1.2rem;
-    margin-top: 2rem;
-  }
-  .prose :global(p) {
-    margin-bottom: 1.3rem;
-  }
-  .prose :global(img) {
-    border-radius: 6px;
-  }
-  .post-footer {
-    max-width: 70ch;
-    margin: 3rem auto 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--color-border, #e5e5e5);
-  }
-  @media (min-width: 900px) {
-    .post-grid {
-      grid-template-columns: 200px 1fr;
-    }
-    .sidebar {
-      order: 1;
-    }
-    .prose {
-      order: 2;
-      margin-inline: 0;
-    }
-  }
-</style>

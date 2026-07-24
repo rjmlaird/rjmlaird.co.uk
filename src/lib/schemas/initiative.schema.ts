@@ -5,7 +5,7 @@ export const initiativeSchema = z.object({
   description: z.string().trim(),
   status: z.enum(["Active", "Planning", "Completed"]),
   organisation: z.string().trim(),
-  website: z.string().trim().pipe(z.url()).optional(),
+  website: z.url().optional(),
   impacts: z.array(z.string().trim()).default([]),
 });
 

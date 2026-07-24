@@ -32,6 +32,9 @@
     "id": {
       "type": "number"
     },
+    "slug": {
+      "type": "string"
+    },
     "updatedDate": {
       "type": "string",
       "format": "date-time"
@@ -62,19 +65,55 @@
         "type": "string"
       }
     },
-    "category": {
+    "sectors": {
       "default": [],
-      "anyOf": [
-        {
-          "type": "string"
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "youtubeId": {
+      "type": "string"
+    },
+    "category": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "links": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "github": {
+          "type": "string",
+          "format": "uri"
         },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+        "web": {
+          "type": "string",
+          "format": "uri"
+        },
+        "demo": {
+          "type": "string",
+          "format": "uri"
+        },
+        "docs": {
+          "type": "string",
+          "format": "uri"
+        },
+        "youtube": {
+          "type": "string",
+          "format": "uri"
+        },
+        "store": {
+          "type": "string",
+          "format": "uri"
+        },
+        "api": {
+          "type": "string",
+          "format": "uri"
         }
-      ]
+      }
     },
     "heroImage": {
       "type": "string"
@@ -82,8 +121,79 @@
     "heroAlt": {
       "type": "string"
     },
+    "relatedOrg": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedExperience": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedEducation": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedVolunteering": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedAwards": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedTools": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedSkills": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedVideos": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "type": {
+      "type": "string"
+    },
     "status": {
       "type": "string"
+    },
+    "tools_tech": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "client": {
       "type": "string"

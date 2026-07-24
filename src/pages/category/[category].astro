@@ -2,12 +2,25 @@
 import Layout from '../../layouts/Layout.astro';
 import PostCard from '../../components/PostCard.astro';
 import { getCollection } from 'astro:content';
-import { CATEGORIES } from '../../content.config';
 import { slugify } from '../../utils/slugify';
 
 export async function getStaticPaths() {
-  const safeCategories = Array.isArray(CATEGORIES) ? CATEGORIES : [];
-  return safeCategories.map((category) => ({ params: { category: slugify(category) }, props: { category } }));
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+  
+  // Dynamically derive unique categories from the collection instead of importing from content.config
+  const categories = Array.from(
+    new Set(
+      allPosts.flatMap((p) => {
+        const cat = p.data.category;
+        return Array.isArray(cat) ? cat : [cat];
+      }).filter(Boolean)
+    )
+  ) as string[];
+
+  return categories.map((category) => ({
+    params: { category: slugify(category) },
+    props: { category }
+  }));
 }
 
 const { category } = Astro.params;

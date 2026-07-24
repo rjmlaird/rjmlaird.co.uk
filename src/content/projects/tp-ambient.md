@@ -1,27 +1,18 @@
 ---
 id: 41
 slug: tp-ambient
-title: TP Ambient
+title: Affordable Microsatellite-Based Internet Access and Environmental Monitoring (AMBIEnt)
 type: featured
 status: completed
 description: A short summary of what this project does.
-startDate: 2026-07-01
-tools_tech:
-  - TypeScript
-  - Astro
-  - Zod
-features:
-  - Feature one
-  - Feature two
+startDate: 2013-07-01
 tags:
-  - portfolio
-  - web
-  - example
+  - isunet
+  - team-project
+  - space
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://isunet.edu
 impact: {}
+relatedEducation: ["edu-isu-ssp"]
 ---
 # Ambient
-
-Organisations: International Space University (https://app.notion.com/p/International-Space-University-37b3a96540ad80c99f7dd9e615ab18c7?pvs=21)

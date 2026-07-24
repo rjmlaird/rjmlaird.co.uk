@@ -7,8 +7,8 @@ export const reviewerSchema = z.object({
   position: z.string().trim().optional(),
   company: z.string().trim().optional(),
   companySlug: z.string().trim().optional(),
-  linkedin: z.string().trim().pipe(z.url()).optional(),
-  website: z.string().trim().pipe(z.url()).optional(),
+  linkedin: z.url().optional(),
+  website: z.url().optional(),
 });
 
 export const reviewContextSchema = z.enum([
@@ -31,7 +31,7 @@ export const reviewOrganisationSchema = z.object({
   name: z.string().trim(),
   slug: z.string().trim().optional(),
   industry: z.string().trim().optional(),
-  url: z.string().trim().pipe(z.url()).optional(),
+  url: z.url().optional(),
 });
 
 export const reviewSchema = z.object({

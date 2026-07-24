@@ -1,9 +1,10 @@
 ---
-// src/components/RelatedPosts.astro
 import type { CollectionEntry } from 'astro:content';
 
+type RelatedItem = CollectionEntry<'blog'> | CollectionEntry<'projects'>;
+
 interface Props {
-  posts?: CollectionEntry<'blog'>[];
+  posts?: RelatedItem[];
 }
 
 const { posts = [] } = Astro.props;
@@ -12,15 +13,22 @@ const safePosts = Array.isArray(posts) ? posts : [];
 
 {safePosts.length > 0 && (
   <section class="related" aria-labelledby="related-heading">
-    <h2 id="related-heading">Related posts</h2>
+    <h2 id="related-heading">
+      {safePosts[0]?.collection === 'blog' ? 'Related posts' : 'Related projects'}
+    </h2>
     <div class="grid">
       {safePosts.map((post) => {
         const { heroImage, heroAlt, title } = post.data;
         const imageSrc = heroImage;
-        const imageAlt = heroAlt || title || 'Related post image';
+        const imageAlt = heroAlt || title || 'Related item image';
+
+        const href =
+          post.collection === 'blog'
+            ? `/blog/${post.id}`
+            : `/projects/${post.id}`;
 
         return (
-          <a href={`/blog/${post.id}`} class="card">
+          <a href={href} class="card">
             {imageSrc && (
               <img
                 src={imageSrc}

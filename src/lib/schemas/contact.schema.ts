@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const contactSchema = z.object({
-  email: z.string().trim().pipe(z.email()),
+  email: z.email().optional(),
   phone: z.string().trim().optional(),
   location: z.string().trim().optional(),
   timezone: z.string().trim().optional(),

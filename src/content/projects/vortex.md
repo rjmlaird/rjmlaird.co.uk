@@ -2,7 +2,6 @@
 id: 41
 slug: vortex
 title: Vortex
-type: featured
 status: completed
 description: A short summary of what this project does.
 startDate: 2026-07-01
@@ -17,13 +16,16 @@ tags:
   - portfolio
   - web
   - example
+youtubeId: czHlge1hJ7o
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://github.com/yourname/example-project
+  youtube: https://youtu.be/czHlge1hJ7o?si=XrHuk36_ajopdURg
 impact: {}
+client: ECMWF
+relatedExperience: ["exp-design-and-data"]
+relatedCaseStudies: ["esotc2017"]
+heroImage: https://img.youtube.com/vi/czHlge1hJ7o/maxresdefault.jpg
+heroAlt: "Vortex Thumbnail"
+imageCredit: ECMWF/Design & Data
+
 ---
-
-
-
-Case studies: European State of the Climate  (https://app.notion.com/p/European-State-of-the-Climate-3813a96540ad80b9b474e68a4ee37de5?pvs=21)
-Organisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)

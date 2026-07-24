@@ -10,13 +10,13 @@ export const seoSchema = z.object({
 
 export const linkSchema = z.object({
   label: z.string().trim(),
-  url: z.string().trim().pipe(z.url()),
+  url: z.url().optional(),
 });
 
 export const socialSchema = z.object({
   platform: z.string().trim(),
   username: z.string().trim().optional(),
-  url: z.string().trim().pipe(z.url()),
+  url: z.url().optional(),
   icon: z.string().trim().optional(),
 });
 

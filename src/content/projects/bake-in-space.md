@@ -4,25 +4,21 @@ slug: bake-in-space
 title: Bake In Space
 type: featured
 status: completed
-description: A short summary of what this project does.
-startDate: 2026-07-01
-tools_tech:
-  - TypeScript
-  - Astro
-  - Zod
-features:
-  - Feature one
-  - Feature two
+description: The objective of Bake in Space was to make fresh bread – in this case, common German rolls – aboard the International Space Station (ISS). To that end, the project built a space-ready oven that was be capable of baking a dough mixture designed for this unique weightless environment. The idea was to use this endeavour as a stepping-stone to providing fresh food that will benefit the wellbeing and general quality of life of those living and working in space.
+startDate: 2017-07-01
 tags:
-  - portfolio
-  - web
-  - example
+  - bakeinspace
+  - innovation
+  - designdatagmbh
+youtubeId: JrsFaQ5Gof4
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://bakein.space
+  youtube: https://youtu.be/JrsFaQ5Gof4?si=sINdDZ6FQn1RfCmh
 impact: {}
+caseStudy: "bake-in-space"
+relatedExperience: ["exp-design-and-data"]
+heroImage: /images/projects/bakeinspace.jpg
+heroAlt: "Bake In Space hero image"
+imageCredit: NASA/Bake In Space
+relatedAward: ["awards-innospace-masters-2017"]
 ---
-
-Awards : INNOspace Masters 2017 (https://app.notion.com/p/INNOspace-Masters-2017-3803a96540ad80da8cc7f62c94dc0eda?pvs=21)
-Case studies: Bake In space (https://app.notion.com/p/Bake-In-space-3813a96540ad803793e9c822a1f6403c?pvs=21)
-Organisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)

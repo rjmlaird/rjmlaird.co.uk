@@ -19,7 +19,8 @@ const imgSrc = typeof src === 'string' ? src : src?.src;
     {(caption || credit) && (
       <figcaption>
         {caption}
-        {credit && <span class="credit"> — {credit}</span>}
+        {caption && credit && <span> — </span>}
+        {credit && <span class="credit">Credit: {credit}</span>}
       </figcaption>
     )}
   </figure>

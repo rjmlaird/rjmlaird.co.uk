@@ -1,18 +1,13 @@
 ---
-// src/pages/case-studies/[slug].astro
-import Layout from "../../layouts/Layout.astro";
-import {
-  getCollection,
-  render,
-  type CollectionEntry,
-  getEntry,
-} from "astro:content";
-import MetaList from "../../components/MetaList.astro";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import ProjectSidebar from "../../components/ProjectSidebar.astro";
+import { getCollection, render, type CollectionEntry } from "astro:content";
 import ImpactStats from "../../components/ImpactStats.astro";
-import { slugify } from "../../utils/slugify";
+import { getExperience, getEducation, getVolunteering, getAwards } from "@/lib/api";
+import YouTubeEmbed from "../../components/YouTubeEmbed.astro";
 
 export async function getStaticPaths() {
-  const entries = await getCollection("caseStudy", ({ data }) => data.draft !== true);
+  const entries = await getCollection("caseStudies", ({ data }) => data.draft !== true);
 
   return entries.map((entry) => ({
     params: { slug: entry.id },
@@ -21,206 +16,103 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props as {
-  entry: CollectionEntry<"caseStudy">;
+  entry: CollectionEntry<"caseStudies">;
 };
 
 const slug = Astro.params.slug;
-const caseStudy = entry ? entry.data : ({} as any);
-const { Content } = entry ? await render(entry) : { Content: null };
+const caseStudy = entry.data;
+const { Content } = await render(entry);
 
-const dateLabel = caseStudy.startDate
-  ? new Date(caseStudy.startDate).toLocaleDateString("en-GB", {
-      year: "numeric",
-      month: "long",
-    })
-  : "";
-
+const sectors = Array.isArray(caseStudy.sectors) ? caseStudy.sectors : [];
 const tools = Array.isArray(caseStudy.tools_tech) ? caseStudy.tools_tech : [];
 const features = Array.isArray(caseStudy.features) ? caseStudy.features : [];
-const tags = Array.isArray(caseStudy.tags) ? caseStudy.tags : [];
 const links = caseStudy.links || {};
 
-const relatedProjects = Array.isArray(caseStudy.relatedProjects)
-  ? (await Promise.all(caseStudy.relatedProjects.map((ref: any) => getEntry(ref)))).filter(Boolean)
-  : [];
+const youtubeUrl = (caseStudy as any).youtubeUrl || links.youtube;
+const youtubeId = caseStudy.youtubeId;
 
-const metaItems = [
-  { label: "Type", value: caseStudy.type ?? "" },
-  { label: "Status", value: caseStudy.status ?? "" },
-  { label: "Date", value: dateLabel },
-];
+const [experienceItems, educationItems, volunteeringItems, awardsItems, projectItems] =
+  await Promise.all([
+    getExperience(),
+    getEducation(),
+    getVolunteering(),
+    getAwards(),
+    getCollection("projects"),
+  ]);
 
-const pageTitle = caseStudy.title || slug || "Case study";
-const pageDescription = caseStudy.description || caseStudy.excerpt || `Case study details for ${pageTitle}.`;
+const relatedExperienceIds = Array.isArray(caseStudy.relatedExperience) ? caseStudy.relatedExperience : [];
+const relatedEducationIds = Array.isArray(caseStudy.relatedEducation) ? caseStudy.relatedEducation : [];
+const relatedOrgIds = Array.isArray(caseStudy.relatedOrg) ? caseStudy.relatedOrg : [];
+const relatedVolunteeringIds = Array.isArray(caseStudy.relatedVolunteering) ? caseStudy.relatedVolunteering : [];
+const relatedAwardIds = Array.isArray(caseStudy.relatedAwards) ? caseStudy.relatedAwards : [];
+const relatedProjectIds = Array.isArray(caseStudy.relatedProjects) ? caseStudy.relatedProjects : [];
 
-const baseUrl = Astro.site?.href;
-const pageUrl = baseUrl ? new URL(`/case-studies/${slug}/`, baseUrl).href : undefined;
+const relatedExperience = experienceItems.filter((item: any) =>
+  relatedExperienceIds.includes(item.id ?? item.slug)
+);
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "CaseStudy",
-  name: pageTitle,
-  description: pageDescription,
-  url: pageUrl,
-  keywords: tags.length > 0 ? tags.join(", ") : undefined,
-  creator: { "@type": "Person", name: "Ryan Laird" },
-};
+const relatedEducation = educationItems.filter((item: any) =>
+  relatedEducationIds.includes(item.id ?? item.slug)
+);
+
+const relatedOrganisations = volunteeringItems.filter((item: any) =>
+  relatedOrgIds.includes(item.id ?? item.slug)
+);
+
+const relatedVolunteering = volunteeringItems.filter((item: any) =>
+  relatedVolunteeringIds.includes(item.id ?? item.slug)
+);
+
+const relatedAwards = awardsItems.filter((item: any) =>
+  relatedAwardIds.includes(item.id ?? item.slug)
+);
+
+const relatedProjects = projectItems.filter((item: any) =>
+  relatedProjectIds.includes(item.id ?? item.slug)
+);
+
+const pageTitle = caseStudy.title || slug || "Case Study";
+const pageDescription = caseStudy.description || caseStudy.excerpt || `Project details for ${pageTitle}.`;
 ---
 
-<Layout title={pageTitle} description={pageDescription} image={caseStudy.image}>
-  <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
-  </Fragment>
+<ProjectLayout
+  caseStudy={entry}
+  title={pageTitle}
+  description={pageDescription}
+>
   <section class="section publications-gallery">
-    <div class="container pg-shell">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <ol>
-          <li><a href="/">Home</a></li>
-          <li><a href="/case-studies/">Case studies</a></li>
-          <li aria-current="page">{pageTitle}</li>
-        </ol>
-      </nav>
+    <div class="project-layout">
+      <ProjectSidebar
+        sectors={sectors}
+        tools={tools}
+        features={features}
+        relatedExperience={relatedExperience}
+        relatedEducation={relatedEducation}
+        relatedOrganisations={relatedOrganisations}
+        relatedVolunteering={relatedVolunteering}
+        relatedAwards={relatedAwards}
+        relatedProjects={relatedProjects}
+        links={links}
+      />
 
-      <header class="pg-head">
-        <p class="eyebrow">Case Studies</p>
-        <h1 class="ch fade">{pageTitle}</h1>
-
-        <MetaList items={metaItems} ariaLabel="Case study metadata" />
-      </header>
-
-      <div class="project-layout">
-        <aside class="project-sidebar" aria-label="Case study details">
+      <article class="project-content">
+        <div class="project-body">
           <div class="pg-intro">
             {caseStudy.description && <p class="pg-lead">{caseStudy.description}</p>}
-            <p class="pg-note">
-              A full case study with metadata, links, related projects, and supporting detail.
-            </p>
           </div>
 
-          {caseStudy.client && (
-            <section class="sidebar-block">
-              <h2>Client</h2>
-              <p>{caseStudy.client}</p>
-            </section>
-          )}
+          <YouTubeEmbed id={youtubeId} url={youtubeUrl} />
 
-          {caseStudy.organisation && (
-            <section class="sidebar-block">
-              <h2>Organisation</h2>
-              <p>{caseStudy.organisation}</p>
-            </section>
-          )}
+          <Content />
+        </div>
 
-          {caseStudy.institution && (
-            <section class="sidebar-block">
-              <h2>Institution</h2>
-              <p>{caseStudy.institution}</p>
-            </section>
-          )}
-
-          {tools.length > 0 && (
-            <section class="sidebar-block">
-              <h2>Tools</h2>
-              <ul class="chip-list">
-                {tools.map((tool: string) => <li>{tool}</li>)}
-              </ul>
-            </section>
-          )}
-
-          {features.length > 0 && (
-            <section class="sidebar-block">
-              <h2>Features</h2>
-              <ul class="bullet-list">
-                {features.map((feature: string) => <li>{feature}</li>)}
-              </ul>
-            </section>
-          )}
-
-          {tags.length > 0 && (
-            <section class="sidebar-block">
-              <h2>Tags</h2>
-              <ul class="chip-list">
-                {tags.map((tag: string) => (
-                  <li><a href={`/tags/${slugify(tag)}/`}>{tag}</a></li>
-                ))}
-              </ul>
-            </section>
-          )}
-
-          {(links.github || links.live || links.demo || links.docs || links.video) && (
-            <section class="sidebar-block">
-              <h2>Links</h2>
-              <ul class="link-list">
-                {links.github && (
-                  <li>
-                    <a href={links.github} target="_blank" rel="noreferrer">
-                      GitHub <span class="sr-only">(opens in new tab)</span>
-                    </a>
-                  </li>
-                )}
-                {links.live && (
-                  <li>
-                    <a href={links.live} target="_blank" rel="noreferrer">
-                      Live site <span class="sr-only">(opens in new tab)</span>
-                    </a>
-                  </li>
-                )}
-                {links.demo && (
-                  <li>
-                    <a href={links.demo} target="_blank" rel="noreferrer">
-                      Demo <span class="sr-only">(opens in new tab)</span>
-                    </a>
-                  </li>
-                )}
-                {links.docs && (
-                  <li>
-                    <a href={links.docs} target="_blank" rel="noreferrer">
-                      Docs <span class="sr-only">(opens in new tab)</span>
-                    </a>
-                  </li>
-                )}
-                {links.video && (
-                  <li>
-                    <a href={links.video} target="_blank" rel="noreferrer">
-                      Video <span class="sr-only">(opens in new tab)</span>
-                    </a>
-                  </li>
-                )}
-              </ul>
-            </section>
-          )}
-
-          {relatedProjects.length > 0 && (
-            <section class="sidebar-block">
-              <h2>Related projects</h2>
-              <ul class="link-list">
-                {relatedProjects.map((project: any) =>
-                  project ? (
-                    <li>
-                      <a href={`/projects/${project.id}/`}>
-                        {project.data.title}
-                      </a>
-                    </li>
-                  ) : null
-                )}
-              </ul>
-            </section>
-          )}
-        </aside>
-
-        <article class="project-content">
-          <div class="project-body">
-            {Content && <Content />}
-          </div>
-
-          {caseStudy.impact && Object.keys(caseStudy.impact).length > 0 && (
-            <section class="sidebar-block">
-              <h2>Impact</h2>
-              <ImpactStats impact={caseStudy.impact} />
-            </section>
-          )}
-        </article>
-      </div>
+        {caseStudy.impact && Object.keys(caseStudy.impact).length > 0 && (
+          <section class="sidebar-block">
+            <h2>Impact</h2>
+            <ImpactStats impact={caseStudy.impact} />
+          </section>
+        )}
+      </article>
     </div>
   </section>
-</Layout>
+</ProjectLayout>

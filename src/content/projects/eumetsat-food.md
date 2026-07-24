@@ -13,18 +13,18 @@ tools_tech:
 features:
   - Feature one
   - Feature two
+youtubeId: V1qxGUTaQlI?is
 tags:
-  - portfolio
-  - web
-  - example
+  - EUMETSAT
+  - Africa
+  - food-security
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  youtube: https://youtu.be/V1qxGUTaQlI?is=--A0vkxekfABrEBc
+  web: https://example.com
 impact: {}
+caseStudy: EUMETSAT in Africa
+client: EUMETSAT
+relatedExperience: ["exp-design-and-data"]
+
 ---
 # 
-
-Case studies: Eumetsat in Africa  (https://app.notion.com/p/Eumetsat-in-Africa-3813a96540ad801c8dafc4f899b81794?pvs=21)
-Organisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)
-
-[https://youtu.be/V1qxGUTaQlI?is=--A0vkxekfABrEBc](https://youtu.be/V1qxGUTaQlI?is=--A0vkxekfABrEBc)

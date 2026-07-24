@@ -33,7 +33,19 @@ export const employmentTypeSchema = z.enum([
 
 export const workModeSchema = z.enum(["remote", "hybrid", "onsite"]);
 
-const urlField = () => z.string().trim().pipe(z.url());
+const urlField = () =>
+  z.preprocess(
+    (value) => {
+      if (value == null) return undefined;
+      if (typeof value !== "string") return value;
+
+      const trimmed = value.trim();
+      if (!trimmed) return undefined;
+
+      return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+    },
+    z.url().optional(),
+  );
 
 export const experienceLinkSchema = z.object({
   label: z.string().trim(),
@@ -48,6 +60,11 @@ export const organisationSchema = z.object({
   website: urlField().optional(),
 });
 
+export const organisationValueSchema = z.union([
+  z.string().trim(),
+  organisationSchema,
+]);
+
 export const experienceImpactSchema = z.object({
   metric: z.string().trim(),
   value: z.union([z.string(), z.number()]),
@@ -61,26 +78,26 @@ export const experienceMediaSchema = z.object({
 });
 
 export const experienceItemSchema = z.object({
-  id: z.string().trim(),
-  organisation: z.union([organisationSchema, z.string().trim()]),
-  role: z.string().trim(),
-  employmentType: employmentTypeSchema,
-  organisationType: experienceModeSchema.optional(),
-  location: z.string().trim(),
-  workMode: workModeSchema,
-  summary: z.string().trim(),
-  responsibilities: z.array(z.string().trim()).default([]),
-  skills: z.array(z.string().trim()).default([]),
-  links: z.array(experienceLinkSchema).optional(),
-  organisationSlug: z.string().trim().optional(),
-  hubspotId: z.string().trim().optional(),
-  keywords: z.array(z.string().trim()).optional(),
-  startDate: z.string().trim(),
-  endDate: z.string().trim().nullable().optional(),
-  isCurrent: z.boolean().optional(),
-  impact: z.array(experienceImpactSchema).optional(),
-  media: z.array(experienceMediaSchema).optional(),
-  order: z.number().int().optional(),
+  id: z.string(),
+  organisation: organisationValueSchema,
+  department: z.string().optional(),
+  role: z.string(),
+  employmentType: z.string().optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().nullable().optional(),
+  current: z.boolean().optional(),
+  city: z.string().optional(),
+  country: z.string().optional(),
+  workMode: z.string().optional(),
+  summary: z.string().optional(),
+  responsibilities: z.array(z.string()).default([]),
+  achievements: z.array(z.string()).default([]),
+  projects: z.array(z.string()).default([]),
+  skills: z.array(z.string()).default([]),
+  featured: z.boolean().optional(),
+  order: z.number().optional(),
+  relatedAwards: z.array(z.string()).optional().default([]),
+  relatedCertifications: z.array(z.string()).optional().default([]),
 });
 
 export const experienceResponseSchema = z.object({

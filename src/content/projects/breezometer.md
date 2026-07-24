@@ -1,29 +1,27 @@
 ---
 id: 41
 slug: breezometer
-title: Breezometer
+title: BreezoMeter - information on air quality and pollen
 type: featured
 status: completed
-description: A short summary of what this project does.
+description: BreezoMeter combines big data and machine learning technology to provide intuitive, personalised information on air quality and pollen levels to companies and consumers around the world.
 startDate: 2026-07-01
-tools_tech:
-  - TypeScript
-  - Astro
-  - Zod
-features:
-  - Feature one
-  - Feature two
 tags:
-  - portfolio
-  - web
-  - example
+  - Breezometer
+  - Copernicus
+  - atmosphere
+  - air-quality
+  - pollen
+youtubeId: VRv6sqPa2o8
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://atmosphere.copernicus.eu/breezometer-information-air-quality-and-pollen
+  youtube: https://youtu.be/VRv6sqPa2o8?is=BfBOjFiu-O0h_aiY
 impact: {}
+relatedCaseStudies: ["esotc2017"]
+client: ECMWF
+relatedExperience: ["exp-design-and-data"]
+heroImage: /images/projects/BreezoMeter_app_phone_small.png
+heroAlt: "Screenshot of BreezoMeter App"
+imageCredit: ECMWF/BreezoMeter
 ---
-# 
 
-Organisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)
-
-[https://youtu.be/VRv6sqPa2o8?is=BfBOjFiu-O0h_aiY](https://youtu.be/VRv6sqPa2o8?is=BfBOjFiu-O0h_aiY)

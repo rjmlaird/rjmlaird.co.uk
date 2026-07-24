@@ -18,10 +18,9 @@ tags:
   - web
   - example
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://powering.space
 impact: {}
+caseStudy: Impulse
+relatedExperience: ["exp-powering-space"]
 ---
 # 
-
-Organisations: Powering Space (https://app.notion.com/p/Powering-Space-3813a96540ad803aaca9c4e1f8e111df?pvs=21)

@@ -1,0 +1,32 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import PodcastLayout from "../../layouts/PodcastLayout.astro";
+import PodcastMeta from "../../components/PodcastMeta.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("podcasts");
+
+  return entries.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props as {
+  entry: CollectionEntry<"podcasts">;
+};
+
+const id = Astro.params.id;
+const podcast = entry.data;
+const { Content } = await render(entry);
+
+const pageTitle = podcast.title || id || "Podcast";
+const pageDescription =
+  podcast.description || podcast.excerpt || `Details for ${pageTitle}.`;
+---
+
+<PodcastLayout podcast={entry} title={pageTitle} description={pageDescription}>
+  <div class="podcast-body">
+    <Content />
+  </div>
+</PodcastLayout>

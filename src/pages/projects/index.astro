@@ -2,114 +2,82 @@
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import ProjectCard from "../../components/Projects/ProjectCard.astro";
+import Filters from "../../components/Projects/Filters.astro";
 
-const entries = (await getCollection("projects", ({ data }) => data.draft !== true))
-  .sort(
-    (a, b) =>
-      (b.data.startDate?.valueOf() ?? 0) - (a.data.startDate?.valueOf() ?? 0)
-  );
-
-const typeList = [...new Set(entries.map((entry) => entry.data.type).filter(Boolean))].sort();
-const statusList = [...new Set(entries.map((entry) => entry.data.status).filter(Boolean))].sort();
-const tagList = [...new Set(entries.flatMap((entry) => entry.data.tags))].sort();
+const projects = await getCollection(
+  "projects",
+  ({ data }) => data.draft !== true
+);
 ---
 
 <Layout
   title="Projects"
-  description="Space, sustainability and science-communication projects — with tools, tags, status and outcomes for each."
+  description="Space, sustainability and science-communication projects — filter by date, client, tags, type and status."
 >
-  <section class="section projects-gallery">
+  <section class="project-index">
     <div class="container pg-shell">
       <header class="pg-head">
         <p class="eyebrow">Projects</p>
 
         <h1 class="ch fade">
-          Building for <em>space, sustainability &amp; science communication</em>
+          Projects across <em>space, sustainability &amp; science policy</em>
         </h1>
-
-        <div class="pg-intro">
-          <p class="pg-lead">
-            Tools, platforms, and campaigns built across space systems, climate intelligence, and innovation ecosystems.
-          </p>
-          <p class="pg-note">
-            Filter by type, status, or tag — browse the full set of projects below.
-          </p>
-        </div>
       </header>
-<div class="rp-filters" aria-label="Project filters">
-  <label class="filter-field" for="typeSelect">
-    <span>Type</span>
-    <select id="typeSelect">
-      <option value="all">All types</option>
-      {typeList.map((type) => <option value={type}>{type}</option>)}
-    </select>
-  </label>
 
-  <label class="filter-field" for="statusSelect">
-    <span>Status</span>
-    <select id="statusSelect">
-      <option value="all">All statuses</option>
-      {statusList.map((status) => <option value={status}>{status}</option>)}
-    </select>
-  </label>
+      <Filters projects={projects} />
 
-  <label class="filter-field" for="tagSelect">
-    <span>Tag</span>
-    <select id="tagSelect">
-      <option value="all">All tags</option>
-      {tagList.map((tag) => <option value={tag}>{tag}</option>)}
-    </select>
-  </label>
-</div>
-
-      <div class="rp-grid" id="projectGrid">
-        {entries.map((entry) => {
-          const tags = entry.data.tags;
-
-          return (
-            <div
-              class="research-item"
-              data-type={entry.data.type || ""}
-              data-status={entry.data.status || ""}
-              data-tags={tags.join(",")}
-            >
-              <ProjectCard project={{ ...entry.data, slug: entry.id, id: Number(entry.data.id ?? 0) }} slug={entry.id} />
-            </div>
-          );
-        })}
+      <div class="grid" id="projectGrid">
+        {projects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
       </div>
     </div>
   </section>
-
-  <script is:inline>
-    const norm = (s) => (s ?? "").toLowerCase().trim();
-
-    const typeSelect = document.getElementById("typeSelect");
-    const statusSelect = document.getElementById("statusSelect");
-    const tagSelect = document.getElementById("tagSelect");
-    const items = document.querySelectorAll("#projectGrid .research-item");
-
-    const applyFilters = () => {
-      const activeType = norm(typeSelect?.value || "all");
-      const activeStatus = norm(statusSelect?.value || "all");
-      const activeTag = norm(tagSelect?.value || "all");
-
-      items.forEach((el) => {
-        const type = norm(el.dataset.type);
-        const status = norm(el.dataset.status);
-        const tags = (el.dataset.tags || "").split(",").map(norm).filter(Boolean);
-
-        const typeOk = activeType === "all" || type === activeType;
-        const statusOk = activeStatus === "all" || status === activeStatus;
-        const tagOk = activeTag === "all" || tags.includes(activeTag);
-
-        el.hidden = !(typeOk && statusOk && tagOk);
-      });
-    };
-
-    typeSelect?.addEventListener("change", applyFilters);
-    statusSelect?.addEventListener("change", applyFilters);
-    tagSelect?.addEventListener("change", applyFilters);
-    applyFilters();
-  </script>
 </Layout>
+
+<style>
+  .project-index {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .pg-head {
+    margin-bottom: 1.5rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #666);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .ch {
+    margin: 0;
+    line-height: 1.15;
+  }
+
+  .ch em {
+    font-style: normal;
+    color: var(--color-accent, #3949ab);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

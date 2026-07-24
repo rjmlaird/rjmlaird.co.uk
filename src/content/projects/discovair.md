@@ -1,30 +1,26 @@
 ---
 id: 41
 slug: discovair
-title: Discovair
+title: DiscovAir
 type: featured
 status: completed
-description: A short summary of what this project does.
-startDate: 2026-07-01
-tools_tech:
-  - TypeScript
-  - Astro
-  - Zod
-features:
-  - Feature one
-  - Feature two
+description: DiscovAir provides information to visitors so that they can plan ahead and organise their stay in Greece.
+startDate: 2018-07-01
 tags:
-  - portfolio
-  - web
-  - example
+  - discovair
+  - copernicus
+  - atmosphere
+youtubeId: WfQPBSG0Ujw
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://atmosphere.copernicus.eu/discovair
+  youtube: https://youtu.be/WfQPBSG0Ujw?si=NQXKppoSUZkyEsCf
 impact: {}
+client: ECMWF
+relatedCaseStudies: ["esotc2017"]
+relatedExperience: ["exp-design-and-data"]
+heroImage: /images/projects/discovair.png
+heroAlt: "Screenshots of the DiscovAir app"
+imageCredit: ECMWF/DiscovAir
+
 ---
-# 
-
-Case studies: European State of the Climate  (https://app.notion.com/p/European-State-of-the-Climate-3813a96540ad80b9b474e68a4ee37de5?pvs=21)
-Organisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)
-
-[https://youtu.be/1r3QI88w4BI?is=6elRbvBmc2HJFfKH](https://youtu.be/1r3QI88w4BI?is=6elRbvBmc2HJFfKH)
+#

@@ -1,27 +1,28 @@
 ---
 id: 41
 slug: gerb
-title: GERB
+title: Calibration of Geostationary Earth Radiation Budget (GERB)
 type: featured
 status: completed
 description: A short summary of what this project does.
-startDate: 2026-07-01
+startDate: 2008-07-01
 tools_tech:
-  - TypeScript
+  - IDL
   - Astro
   - Zod
-features:
-  - Feature one
-  - Feature two
 tags:
-  - portfolio
-  - web
-  - example
+  - MSG
+  - EUMETSAT
+  - NCEO
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://www.nceo.ac.uk/our-research/missions/gerb/
 impact: {}
+client: National Centre for Earth Observation
+heroImage: /images/projects/gerb.jpg
+heroAlt: "GERB aboard MSG"
+imageCredit: NCEO
+relatedExperience: ["exp-uol-gerb"]
 ---
-# Gerb
+## Overview
 
-Organisations: University of Leicester (https://app.notion.com/p/University-of-Leicester-37b3a96540ad80a6b28df9b193fce1c6?pvs=21)
+The Geostationary Earth Radiation Budget (GERB) instruments, originally developed using funding from ESA and NERC, and now supported by EUMETSAT, are unique in providing dedicated measurements of the Earth’s Radiation Budget (ERB) from geostationary orbit.  

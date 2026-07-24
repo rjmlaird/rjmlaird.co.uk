@@ -19,11 +19,10 @@ tags:
   - example
 links:
   github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://example.com
 impact: {}
+client: SpaceTec Partners
+relatedExperience: ["exp-design-and-data"]
 ---
 
 # 
-
-Client: SpaceTec Partners (https://app.notion.com/p/SpaceTec-Partners-3813a96540ad804a87a8cd87ed6e6a24?pvs=21)
-Organisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)

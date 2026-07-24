@@ -1,0 +1,177 @@
+---
+// src/layouts/ProjectLayout.astro
+import Layout from './Layout.astro';
+import { getExperience, getEducation, getVolunteering } from '@/lib/api';
+import type { CollectionEntry } from 'astro:content';
+import ProjectMeta from '../components/ProjectMeta.astro';
+import Figure from '../components/Figure.astro';
+import RelatedProjects from '../components/RelatedPosts.astro';
+import { getReadingTime } from '../utils/readingTime';
+
+interface Props {
+  project?: CollectionEntry<'projects'>;
+  initiative?: CollectionEntry<'initiatives'>;
+  caseStudy?: CollectionEntry<'caseStudies'>;
+  title?: string;
+  description?: string;
+  relatedProjects?: CollectionEntry<'projects'>[];
+}
+
+const {
+  project,
+  initiative,
+  caseStudy,
+  relatedProjects = [],
+  title: propTitle,
+  description: propDescription,
+} = Astro.props;
+
+// Use whichever content type is provided
+const source = project ?? initiative ?? caseStudy;
+const kind = project ? 'project' : initiative ? 'initiative' : 'caseStudy';
+
+const {
+  title: sourceTitle = '',
+  description: sourceDescription = '',
+  excerpt,
+  startDate = new Date(),
+  endDate,
+  updatedDate,
+  category = [],
+  tags = [],
+  heroImage,
+  heroAlt,
+  imageCredit,
+  canonical,
+  noindex = false,
+  type,
+  status,
+  client,
+} = source ? source.data : {};
+
+const title = propTitle || sourceTitle;
+const description = propDescription || sourceDescription || excerpt;
+
+// Fetches (keep for potential related sections)
+const [_experienceItems, _educationItems, _volunteeringItems] = await Promise.all([
+  getExperience(),
+  getEducation(),
+  getVolunteering(),
+]);
+
+const body = source?.body ?? '';
+const readingTime = getReadingTime(body);
+const safeRelatedProjects = Array.isArray(relatedProjects) ? relatedProjects : [];
+const safeTags = Array.isArray(tags) ? tags : [];
+const safeCategory = Array.isArray(category) ? category : [];
+
+const resolvedHeroSrc = typeof heroImage === 'string' ? heroImage : '';
+const resolvedHeroAlt = heroAlt || title || 'Hero image';
+const resolvedHeroCredit = imageCredit;
+
+// slug before use
+const slug = Astro.params.slug;
+const defaultLabel =
+  kind === 'initiative'
+    ? 'Initiative'
+    : kind === 'caseStudy'
+    ? 'Case Study'
+    : 'Project';
+
+const pageTitle = title || slug || defaultLabel;
+const pageDescription = description || `Details for ${pageTitle}.`;
+
+const baseUrl = Astro.site?.href;
+const basePath =
+  kind === 'initiative'
+    ? 'initiatives'
+    : kind === 'caseStudy'
+    ? 'case-studies'
+    : 'projects';
+
+const pageUrl = baseUrl
+  ? new URL(`/${basePath}/${slug}/`, baseUrl).href
+  : undefined;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  headline: pageTitle,
+  description: pageDescription,
+  image: resolvedHeroSrc ? [resolvedHeroSrc] : undefined,
+  dateCreated: startDate?.toISOString?.(),
+  dateModified: (updatedDate ?? startDate)?.toISOString?.(),
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': pageUrl,
+  },
+  keywords: safeTags.length > 0 ? safeTags.join(', ') : undefined,
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  image={resolvedHeroSrc || undefined}
+  canonical={canonical}
+  noindex={noindex}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </Fragment>
+
+  <main id="content">
+    <article class="project">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li>
+            <a href={`/${basePath}/`}>
+              {kind === 'initiative'
+                ? 'Initiatives'
+                : kind === 'caseStudy'
+                ? 'Case Studies'
+                : 'Projects'}
+            </a>
+          </li>
+          <li aria-current="page">{pageTitle}</li>
+        </ol>
+      </nav>
+
+      <header class="project-header">
+        <div class="title-wrap">
+          <h1>{pageTitle}</h1>
+        </div>
+      </header>
+
+      {resolvedHeroSrc && (
+        <Figure
+          src={resolvedHeroSrc}
+          alt={resolvedHeroAlt}
+          credit={resolvedHeroCredit ? `${resolvedHeroCredit}` : undefined}
+          wide
+        />
+      )}
+
+      <!-- Full-width metadata row -->
+      <ProjectMeta
+        type={type}
+        status={status}
+        client={client}
+        startDate={startDate}
+        endDate={endDate}
+        updatedDate={updatedDate}
+        readingTime={readingTime}
+        category={safeCategory}
+        tags={safeTags}
+      />
+
+      <!-- Page-specific content (sidebar + main body) is slotted in from the page file -->
+      <slot />
+
+      <footer class="project-footer">
+        <RelatedProjects posts={safeRelatedProjects} />
+      </footer>
+    </article>
+  </main>
+</Layout>

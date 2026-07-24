@@ -1,0 +1,175 @@
+---
+// src/components/ProjectMeta.astro
+import MetaList from './MetaList.astro';
+import CategoryBadge from './CategoryBadge.astro';
+import TagList from './TagList.astro';
+
+interface Props {
+  type?: string;
+  status?: string;
+  client?: string;
+  startDate?: Date;
+  endDate?: Date;
+  updatedDate?: Date;
+  readingTime?: string;
+  category?: string | string[];
+  tags?: string[];
+}
+
+const {
+  type,
+  status,
+  client,
+  startDate,
+  endDate,
+  updatedDate,
+  readingTime = '',
+  category = '',
+  tags = [],
+} = Astro.props as Props;
+
+const safeCategory = Array.isArray(category) ? category : category ? [category] : [];
+const safeTags = Array.isArray(tags) ? tags : [];
+
+const dateFormat: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+};
+
+const hasTaxonomy = Boolean(safeCategory.length > 0 || safeTags.length > 0);
+
+// Build left metadata items (core project data)
+const metaItems = [
+  type && { label: 'Type', value: type },
+  status && { label: 'Status', value: status },
+  client && { label: 'Client', value: client },
+  startDate && {
+    label: 'Start',
+    value: startDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }),
+  },
+  endDate && {
+    label: 'End',
+    value: endDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }),
+  },
+].filter(Boolean) as { label: string; value: string }[];
+---
+
+<div class="project-meta-row">
+  <div class="meta-row-inner">
+    <!-- LEFT: core project metadata -->
+    <MetaList items={metaItems} ariaLabel="Project metadata" />
+
+    <!-- RIGHT: updated date, reading time, categories, tags -->
+    <div class="project-meta">
+      <div class="meta-content">
+        <div class="dates-row">
+          {updatedDate && (
+            <span class="updated-item">
+              Updated{' '}
+              <time datetime={updatedDate.toISOString()}>
+                {updatedDate.toLocaleDateString('en-GB', dateFormat)}
+              </time>
+            </span>
+          )}
+
+          {readingTime && (
+            <>
+              {updatedDate && <span class="separator" aria-hidden="true">•</span>}
+              <span class="reading-item">{readingTime}</span>
+            </>
+          )}
+        </div>
+
+        {hasTaxonomy && (
+          <div class="taxonomy-row">
+            {safeCategory.map((cat) => (
+              <CategoryBadge category={cat} />
+            ))}
+            <TagList tags={safeTags} />
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .project-meta-row {
+    width: 100%;
+    padding-block: 1rem 1.5rem;
+  }
+
+  .meta-row-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  /* Right side: reuse existing .project-meta styles */
+  .project-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+  }
+
+  .meta-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .dates-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted, #64748b);
+  }
+
+  .updated-item {
+    font-size: 0.8rem;
+    color: var(--color-text-subtle, #94a3b8);
+  }
+
+  .separator {
+    color: var(--color-border-subtle, #cbd5e1);
+    font-size: 0.75rem;
+  }
+
+  .taxonomy-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  @media (min-width: 900px) {
+    .meta-row-inner {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+
+    .project-meta {
+      justify-self: end;
+    }
+
+    .meta-content {
+      align-items: flex-end;
+      text-align: right;
+      flex: 1;
+    }
+
+    .dates-row {
+      justify-content: flex-end;
+    }
+
+    .taxonomy-row {
+      justify-content: flex-end;
+    }
+  }
+</style>

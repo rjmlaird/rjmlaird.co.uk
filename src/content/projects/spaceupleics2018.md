@@ -19,11 +19,8 @@ tags:
   - example
 links:
   github: https://github.com/yourname/example-project
-  live: https://example.com
+  live: https://spaceupleicester.org.uk
 impact: {}
+relatedExperience: ["exp-rr-space"]
+relatedInitiatives: ["spaceup-leicester"]
 ---
-
-
-
-Organisations: R&R Space (https://app.notion.com/p/R-R-Space-37b3a96540ad80e490b5dbb0a32e58e0?pvs=21)
-Place: Leicester, England, United Kingdom

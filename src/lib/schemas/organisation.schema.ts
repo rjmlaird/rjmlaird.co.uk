@@ -20,11 +20,24 @@ export const organisationIndustrySchema = z.enum([
   "other",
 ]);
 
+const websiteSchema = z.preprocess(
+  (value) => {
+    if (value == null) return undefined;
+    if (typeof value !== "string") return value;
+
+    const trimmed = value.trim();
+    if (!trimmed) return undefined;
+
+    return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+  },
+  z.url().optional(),
+);
+
 export const organisationSchema = z.object({
   organisation: z.string().trim(),
   slug: z.string().trim(),
   description: z.string().trim().optional(),
-  url: z.string().trim().pipe(z.url()).optional(),
+  website: websiteSchema,
   hubspotId: z.string().trim().optional(),
   industry: organisationIndustrySchema.optional(),
   category: z.string().trim().optional(),

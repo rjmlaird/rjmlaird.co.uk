@@ -2,11 +2,10 @@
 import { getCollection } from "astro:content";
 import ProjectCard from "../components/Projects/ProjectCard.astro";
 
-const projects = (await getCollection(
+const projects = await getCollection(
   "projects",
   ({ data }) => data.draft !== true && data.featured === true
-))
-  .filter((entry) => typeof entry.data.id === "number");
+);
 ---
 
 <section id="projects">
@@ -14,7 +13,7 @@ const projects = (await getCollection(
     <p class="sl">Featured Projects</p>
 
     {projects.map((entry) => (
-      <ProjectCard project={entry.data} slug={entry.id} />
+      <ProjectCard project={entry} featured />
     ))}
   </div>
 </section>

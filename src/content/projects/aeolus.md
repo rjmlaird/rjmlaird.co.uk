@@ -1,28 +1,29 @@
 ---
 id: 43
 slug: aeolus
-title: Aeolus
-featured: true
+title: Securing Aeolus Against Atomic Oxygen
 draft: false
-type: featured
+type: video
 status: completed
 description: A short summary of what this project does.
-startDate: 2026-07-01
-tools_tech:
-  - TypeScript
-  - Astro
-  - Zod
-features:
-  - Feature one
-  - Feature two
+startDate: 2015-07-01
+endDate: 2015-07-01
+updatedDate: 2026-07-22
 tags:
-  - portfolio
-  - web
-  - example
+  - esa
+  - aeolus
+  - earth-observation
+youtubeId: OOHS8nN1Hcg
 links:
-  video: https://youtu.be/OOHS8nN1Hcg?is=FGvsLz2ULXEdDodP
+  web: http://www.esa.int/Aeolus
+  youtube: https://youtu.be/OOHS8nN1Hcg?is=FGvsLz2ULXEdDodP
 impact: {}
-caseStudy: ESA material labs
 client: European Space Agency
-organisation: Design & Data GmbH
+relatedExperience: ["exp-design-and-data"]
+relatedCaseStudies: ["esa-material-labs"]
+heroImage: https://img.youtube.com/vi/OOHS8nN1Hcg/maxresdefault.jpg
+heroAlt: "Aeolus Thumbnail"
+imageCredit: ESA/Design & Data
+
 ---
+

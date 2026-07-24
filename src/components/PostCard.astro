@@ -1,7 +1,10 @@
 ---
 // src/components/PostCard.astro
 import type { CollectionEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
 import CategoryBadge from './CategoryBadge.astro';
+import AuthorCard from './AuthorCard.astro';
+import TagList from './TagList.astro';
 import { getReadingTime } from '../utils/readingTime';
 
 interface Props {
@@ -10,33 +13,74 @@ interface Props {
 }
 
 const { post, featured = false } = Astro.props;
-const { title, description, pubDate, category, heroImage, heroAlt } = post.data;
+const { title, description, pubDate, category, heroImage, heroAlt, author: authorRef, tags } = post.data;
 const readingTime = getReadingTime(post.body || '');
 const safeCategory = Array.isArray(category) ? category[0] || '' : category;
+const safeTags = Array.isArray(tags) ? tags : [];
 
-// heroImage is a string path in your schema
 const imageSrc = heroImage;
 const imageAlt = heroAlt || title || 'Post thumbnail';
+
+let authorEntry = null;
+if (authorRef && typeof authorRef === 'string') {
+  try {
+    authorEntry = await getEntry('authors', authorRef);
+  } catch {
+    authorEntry = null;
+  }
+}
+
+const authorName =
+  authorEntry?.data.name ??
+  (typeof authorRef === 'string'
+    ? authorRef.trim().replace(/(^|-)\w/g, (m) => m.toUpperCase()).replace(/-/g, ' ')
+    : '');
+
+const authorRole = authorEntry?.data.role ?? '';
+const authorAvatar =
+  typeof authorEntry?.data.avatar === 'string'
+    ? authorEntry.data.avatar.trim()
+    : '';
+
 ---
 
-<a href={`/blog/${post.id}`} class:list={['post-card', { featured }]}>
+<article class:list={['post-card', { featured }]}>
   {imageSrc && (
-    <img
-      src={imageSrc}
-      alt={imageAlt}
-      width={featured ? 800 : 400}
-      height={featured ? 450 : 225}
-      class="thumb"
-    />
+    <a href={`/blog/${post.id}`} class="post-card-image-link" aria-label={title}>
+      <img
+        src={imageSrc}
+        alt={imageAlt}
+        width={featured ? 800 : 400}
+        height={featured ? 450 : 225}
+        class="thumb"
+      />
+    </a>
   )}
+
   <div class="body">
     {safeCategory && <CategoryBadge category={safeCategory} as="span" />}
-    <h2>{title}</h2>
-    {description && (
-      <p class="description">
-        {description}
-      </p>
+
+    <h2>
+      <a href={`/blog/${post.id}`} class="title-link">{title}</a>
+    </h2>
+
+    {description && <p class="description">{description}</p>}
+
+    {(authorName || safeTags.length > 0) && (
+      <div class="meta-block">
+        {authorName && (
+          <AuthorCard
+            name={authorName}
+            role={authorRole}
+            avatar={authorAvatar}
+            compact
+          />
+        )}
+
+        {safeTags.length > 0 && <TagList tags={safeTags} limit={3} />}
+      </div>
     )}
+
     <div class="footer">
       <time datetime={pubDate.toISOString()}>
         {pubDate.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}
@@ -44,8 +88,7 @@ const imageAlt = heroAlt || title || 'Post thumbnail';
       {readingTime && <span>· {readingTime}</span>}
     </div>
   </div>
-</a>
-
+</article>
 
 <style>
   .post-card {
@@ -62,10 +105,14 @@ const imageAlt = heroAlt || title || 'Post thumbnail';
     border-color: var(--color-accent, #3949ab);
     transform: translateY(-2px);
   }
+  .post-card-image-link {
+    display: block;
+  }
   .thumb {
     width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
+    display: block;
   }
   .body {
     padding: 1.1rem 1.2rem 1.3rem;
@@ -73,13 +120,20 @@ const imageAlt = heroAlt || title || 'Post thumbnail';
     flex-direction: column;
     gap: 0.5rem;
   }
-  h3 {
+  h2 {
     margin: 0;
     font-size: 1.1rem;
     line-height: 1.3;
   }
-  .featured h3 {
+  .featured h2 {
     font-size: 1.5rem;
+  }
+  .title-link {
+    color: inherit;
+    text-decoration: none;
+  }
+  .title-link:hover {
+    color: var(--color-accent, #3949ab);
   }
   .description {
     margin: 0;
@@ -90,22 +144,30 @@ const imageAlt = heroAlt || title || 'Post thumbnail';
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  .meta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.2rem;
+  }
   .footer {
     font-size: 0.78rem;
     color: var(--color-text-muted, #666);
     margin-top: 0.3rem;
   }
-
   .featured {
     grid-column: 1 / -1;
   }
-  @media (min-width: 700px) {
+  @media (min-width: 800px) {
     .featured {
       flex-direction: row;
     }
+    .featured .post-card-image-link {
+      width: 65%;
+    }
     .featured .thumb {
-      width: 55%;
       aspect-ratio: auto;
+      height: 100%;
     }
     .featured .body {
       flex: 1;

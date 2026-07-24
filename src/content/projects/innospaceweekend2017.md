@@ -17,17 +17,19 @@ tags:
   - portfolio
   - web
   - example
+youtubeId: 4DccpiuX9Xw
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://innospaceweekend.de
+  youtube: https://youtu.be/4DccpiuX9Xw?is=uz0pkk9eU5Yykm0L
 impact: {}
+client: DLR
+relatedExperience: ["exp-design-and-data"]
+heroImage: /images/projects/innospace-weekend.jpg
+heroAlt: "INNOspace Weekend Logo"
+imageCredit: DLR
+sectors: ["logistics","automotive","space"]
 ---
 # 
 
-Client: German Aerospace Center (DLR) (https://app.notion.com/p/German-Aerospace-Center-DLR-3803a96540ad8020bb1cd16a20d1a545?pvs=21)
-Organisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)
-Sectors: Logistics (https://app.notion.com/p/Logistics-3803a96540ad80079662c22d61e9a8ab?pvs=21), Automotive (https://app.notion.com/p/Automotive-3803a96540ad803db297cd7efd3f17d0?pvs=21), Space and Satellite Sector (https://app.notion.com/p/Space-and-Satellite-Sector-36c3a96540ad80918302f1c0b50eb24f?pvs=21)
-
-[https://youtu.be/4DccpiuX9Xw?is=uz0pkk9eU5Yykm0L](https://youtu.be/4DccpiuX9Xw?is=uz0pkk9eU5Yykm0L)
 
 [https://youtu.be/3ifypFNULlM?is=yCdpBEfI-y1RnP9z](https://youtu.be/3ifypFNULlM?is=yCdpBEfI-y1RnP9z)

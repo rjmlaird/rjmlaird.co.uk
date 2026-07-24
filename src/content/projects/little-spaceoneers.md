@@ -18,10 +18,9 @@ tags:
   - web
   - example
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://spaceoneers.io
 impact: {}
+relatedExperience: ["exp-design-and-data"]
+
 ---
 # 
-
-Organisations: Design & Data GmbH (https://app.notion.com/p/Design-Data-GmbH-37b3a96540ad80fa8598ebd7f766d9db?pvs=21)

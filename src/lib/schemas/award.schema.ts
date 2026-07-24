@@ -6,7 +6,7 @@ export const awardSchema = z.object({
   date: z.string().trim(),
   description: z.string().trim().default(""),
   category: z.string().trim().optional(),
-  url: z.string().trim().pipe(z.url()).optional(),
+  url: z.url().optional(),
   featured: z.boolean().default(false),
 });
 

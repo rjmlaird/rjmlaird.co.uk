@@ -14,15 +14,14 @@ features:
   - Feature one
   - Feature two
 tags:
-  - portfolio
-  - web
-  - example
+  - astronomy
+  - astrophysics
+  - phd
 links:
   github: https://github.com/yourname/example-project
   live: https://example.com
 impact: {}
+relatedEducation: ["edu-kent-astronomy"]
 ---
 
 # 
-
-Organisations: University of Kent (https://app.notion.com/p/University-of-Kent-37b3a96540ad80f0860fd523996d55e1?pvs=21)

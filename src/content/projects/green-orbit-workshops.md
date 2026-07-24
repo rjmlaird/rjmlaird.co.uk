@@ -18,10 +18,8 @@ tags:
   - web
   - example
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://greenorbit.academy
 impact: {}
+relatedExperience: ["exp-green-orbit-founder"]
 ---
 # 
-
-Organisations: Green Orbit Digital (https://app.notion.com/p/Green-Orbit-Digital-37b3a96540ad80cc83b3dece6841552f?pvs=21)

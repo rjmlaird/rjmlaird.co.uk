@@ -18,10 +18,9 @@ tags:
   - web
   - example
 links:
-  github: https://github.com/yourname/example-project
-  live: https://example.com
+  web: https://example.com
 impact: {}
+client: European Space Agency
+relatedExperience: ["exp-eso-intern"]
 ---
 # 
-
-Organisations: European Southern Observatory (https://app.notion.com/p/European-Southern-Observatory-37b3a96540ad807eb7bbc2a5283e7a66?pvs=21)

@@ -1,0 +1,178 @@
+---
+import Layout from "./Layout.astro";
+import type { CollectionEntry } from "astro:content";
+import PodcastMeta from "../components/PodcastMeta.astro";
+import PodcastSidebar from "../components/PodcastSidebar.astro";
+import Figure from "../components/Figure.astro";
+import PodcastEmbed from "../components/PodcastEmbed.astro";
+
+interface Props {
+  podcast?: CollectionEntry<"podcasts">;
+  title?: string;
+  description?: string;
+}
+
+const { podcast, title: propTitle, description: propDescription } = Astro.props as Props;
+const data = podcast?.data ?? {};
+
+const sourceTitle = data.title ?? "";
+const sourceDescription = data.description ?? "";
+const excerpt = data.excerpt;
+const updatedDate = data.updatedDate;
+const categories = data.categories ?? [];
+const tags = data.tags ?? [];
+const heroImage = data.heroImage;
+const heroAlt = data.heroAlt;
+const imageCredit = data.imageCredit;
+const canonical = data.canonical;
+const noindex = data.noindex ?? false;
+
+const podcastCoverImage = data.podcastCoverImage;
+const podcastTitle = data.podcastTitle;
+const podcastDescription = data.podcastDescription;
+const podcastWebsite = data.podcastWebsite;
+const podcastFeedUrl = data.podcastFeedUrl;
+const podcastPublisher = data.podcastPublisher;
+const podcastLanguage = data.podcastLanguage;
+const podcastApplePodcasts = data.podcastApplePodcasts;
+const podcastSpotify = data.podcastSpotify;
+const podcastYouTube = data.podcastYouTube;
+const host = data.host;
+const guest = data.guest;
+const season = data.season;
+const episodeNumber = data.episodeNumber;
+const publishedDate = data.publishedDate;
+const duration = data.duration;
+const transcriptUrl = data.transcriptUrl;
+const shareUrl = data.shareUrl;
+const audioUrl = data.audioUrl;
+
+const title = propTitle || sourceTitle;
+const description = propDescription || sourceDescription || excerpt;
+const safeTags = Array.isArray(tags) ? tags : [];
+const safeCategories = Array.isArray(categories) ? categories : [];
+
+const resolvedHeroSrc = heroImage || "";
+const resolvedHeroAlt = heroAlt || title || "Hero image";
+const resolvedPodcastCoverImage = podcastCoverImage || "";
+const resolvedEmbedSrc = shareUrl || audioUrl || "";
+
+const pageTitle = title || Astro.params.id || "Podcast";
+const pageDescription = description || `Details for ${pageTitle}.`;
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  image={resolvedHeroSrc || undefined}
+  canonical={canonical}
+  noindex={noindex}
+>
+  <main id="content">
+    <article class="podcast">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li><a href="/podcasts/">Podcasts</a></li>
+          <li aria-current="page">{pageTitle}</li>
+        </ol>
+      </nav>
+
+      <header class="podcast-header">
+        <div class="title-wrap">
+          <h1>{pageTitle}</h1>
+        </div>
+      </header>
+
+      {resolvedHeroSrc && (
+        <Figure
+          src={resolvedHeroSrc}
+          alt={resolvedHeroAlt}
+          credit={imageCredit ? `${imageCredit}` : undefined}
+          wide
+        />
+      )}
+
+      <PodcastMeta
+        podcastPublisher={podcastPublisher}
+        podcastCategories={safeCategories}
+        tags={safeTags}
+        podcastTitle={podcastTitle || pageTitle}
+        episodeNumber={episodeNumber}
+        season={season}
+        publishedDate={publishedDate}
+        duration={duration}
+        host={host}
+        guest={guest}
+        updatedDate={updatedDate}
+      />
+
+      <section class="podcast-layout">
+        <aside class="podcast-layout__sidebar">
+          <PodcastSidebar
+            podcastTitle={podcastTitle || pageTitle}
+            podcastDescription={podcastDescription}
+            podcastWebsite={podcastWebsite}
+            podcastFeedUrl={podcastFeedUrl}
+            podcastPublisher={podcastPublisher}
+            podcastLanguage={podcastLanguage}
+            podcastCoverImage={resolvedPodcastCoverImage || resolvedHeroSrc}
+            podcastCategories={safeCategories}
+            podcastApplePodcasts={podcastApplePodcasts}
+            podcastSpotify={podcastSpotify}
+            podcastYouTube={podcastYouTube}
+            host={host}
+            guest={guest}
+            season={season}
+            episodeNumber={episodeNumber}
+            publishedDate={publishedDate}
+            duration={duration}
+            transcriptUrl={transcriptUrl}
+            shareUrl={shareUrl}
+            audioUrl={audioUrl}
+            relatedEpisodes={[]}
+            relatedPodcasts={[]}
+          />
+        </aside>
+
+        <div class="podcast-layout__content">
+          {resolvedEmbedSrc && (
+            <div class="podcast-embed">
+              <PodcastEmbed src={resolvedEmbedSrc} title={podcastTitle || pageTitle} />
+            </div>
+          )}
+          <slot />
+        </div>
+      </section>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  .podcast-layout {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .podcast-layout__content,
+  .podcast-layout__sidebar {
+    min-width: 0;
+  }
+
+  .podcast-embed {
+    margin: 1rem 0 1.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .podcast-layout {
+      grid-template-columns: minmax(0, 2fr) minmax(800px, 1fr);
+      align-items: start;
+    }
+
+    .podcast-layout__sidebar {
+      position: sticky;
+      top: 2rem;
+    }
+  }
+</style>

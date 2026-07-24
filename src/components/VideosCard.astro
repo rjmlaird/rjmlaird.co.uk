@@ -6,7 +6,7 @@ interface Article {
   publication?: string;
   startDate?: string;
   date?: string; // Added to support both naming conventions safely
-  topic?: string;
+  tag?: string;
   image?: string;
   url?: string;
   variant?: "teal" | "violet" | "coral";
@@ -25,7 +25,7 @@ const title = data.title ?? "Untitled";
 const excerpt = data.excerpt ?? "";
 const publication = data.publication ?? "";
 const startDate = data.startDate ?? data.date ?? "";
-const topic = data.topic ?? "";
+const tag = data.tag ?? "";
 const link = data.url || "#";
 
 const getYouTubeId = (url: string) => {
@@ -78,9 +78,11 @@ const fallbackThumb = data.image || (videoId ? `https://i.ytimg.com/vi/${videoId
 
     {excerpt && <p>{excerpt}</p>}
 
-    {topic && (
+    {tag && (
       <div class="pt">
-        <span class="tag">{topic}</span>
+        <a href={`/tags/${tag}`} class="tag">
+          {tag}
+        </a>
       </div>
     )}
   </div>

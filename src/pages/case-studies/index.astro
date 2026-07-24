@@ -1,124 +1,85 @@
 ---
+// src/pages/case-studies/index.astro
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
+import ProjectCard from "../../components/Projects/ProjectCard.astro";
+import Filters from "../../components/Projects/Filters.astro";
 
-const caseStudies = (
-  await getCollection("caseStudy", ({ data }) => data.draft !== true)
-).sort((a, b) => {
-  const aDate = a.data.startDate?.valueOf() ?? 0;
-  const bDate = b.data.startDate?.valueOf() ?? 0;
-  return bDate - aDate;
-});
+const caseStudies = await getCollection("caseStudies", ({ data }) => data.draft !== true);
+
+const sortedCaseStudies = caseStudies.sort((a, b) =>
+  (a.data.title ?? "").localeCompare(b.data.title ?? "")
+);
 ---
 
 <Layout
   title="Case Studies"
-  description="In-depth case studies covering space, sustainability and science-communication work — client, outcomes, and tools used for each."
+  description="Space, sustainability and science-communication case studies — filter by date, client, tags, type and status."
 >
-  <section class="section cs-gallery">
+  <section class="project-index">
     <div class="container pg-shell">
       <header class="pg-head">
         <p class="eyebrow">Case Studies</p>
 
         <h1 class="ch fade">
-          Results across <em>space, sustainability &amp; science policy</em>
+          Case Studies across <em>space, sustainability &amp; science policy</em>
         </h1>
-
-        <div class="pg-intro">
-          <p class="pg-lead">
-            In-depth looks at completed projects — the brief, the approach, and what changed as a result.
-          </p>
-          <p class="pg-note">
-            Browse the full set of published case studies below.
-          </p>
-        </div>
       </header>
 
-      <div class="pg-grid">
-        {caseStudies.map((entry) => {
-          const slug =
-            entry.id.split("/").pop()?.replace(/\.[^.]+$/, "") ?? entry.id;
-          const dateLabel = entry.data.startDate
-            ? new Date(entry.data.startDate).toLocaleDateString("en-GB", {
-                month: "short",
-                year: "numeric",
-              })
-            : "";
-          const badges = [entry.data.status].filter(Boolean) as string[];
+      <Filters projects={sortedCaseStudies} />
 
-          return (
-            <article class="publication-item">
-              <a href={`/case-studies/${slug}/`}>
-                <div class="cs-top">
-                  <h2>{entry.data.title}</h2>
-                  {dateLabel && <time datetime={new Date(entry.data.startDate!).toISOString()}>{dateLabel}</time>}
-                </div>
-                {badges.length > 0 && (
-                  <div class="cs-badges" aria-label="Type and status">
-                    {badges.map((b) => <span class="cs-badge">{b}</span>)}
-                  </div>
-                )}
-                {entry.data.description && <p>{entry.data.description}</p>}
-                {entry.data.tags?.length ? (
-                  <div class="cs-tags" aria-label="Tags">
-                    {entry.data.tags.slice(0, 4).map((tag) => <span class="cs-tag">#{tag}</span>)}
-                  </div>
-                ) : null}
-              </a>
-            </article>
-          );
-        })}
+      <div class="grid" id="projectGrid">
+        {sortedCaseStudies.map((caseStudy) => (
+          <ProjectCard caseStudy={caseStudy} />
+        ))}
       </div>
-
-      {caseStudies.length === 0 && (
-        <p class="empty">No case studies published yet.</p>
-      )}
     </div>
   </section>
 </Layout>
 
 <style>
-  .cs-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
+  .project-index {
+    padding: 2rem 1rem 3rem;
   }
-  .cs-top time {
-    flex-shrink: 0;
-    font-size: 0.75rem;
-    color: var(--m);
-    white-space: nowrap;
+
+  .pg-head {
+    margin-bottom: 1.5rem;
   }
-  .cs-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 0.6rem;
-  }
-  .cs-badge {
-    font-family: var(--font-display);
-    font-size: 0.66rem;
-    font-weight: 600;
+
+  .eyebrow {
+    margin: 0 0 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #666);
+    text-transform: uppercase;
     letter-spacing: 0.04em;
-    text-transform: capitalize;
-    padding: 0.22rem 0.55rem;
-    border-radius: 999px;
-    border: 1px solid var(--bm);
-    color: var(--m);
   }
-  .cs-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.75rem;
+
+  .ch {
+    margin: 0;
+    line-height: 1.15;
   }
-  .cs-tag {
-    font-size: 0.72rem;
-    color: var(--m);
+
+  .ch em {
+    font-style: normal;
+    color: var(--color-accent, #3949ab);
   }
-  .empty {
-    color: var(--m);
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 </style>

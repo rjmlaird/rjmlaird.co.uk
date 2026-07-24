@@ -1,7 +1,7 @@
 ---
 name: Ryan Laird
 author: ryan-laird
-role: Writer and builder
-bio: Ryan Laird writes and builds content-focused web projects.
+role: Chartered Marketer
+bio: Director and founder of Green Orbit Digital, specialising in sustainable marketing systems for the global space sector. Focused on data-led growth strategies aligned with environmental responsibility across the space ecosystem.
 avatar: /img/person/ryan-laird.jpg
 ---
